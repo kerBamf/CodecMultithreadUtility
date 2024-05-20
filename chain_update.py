@@ -1,8 +1,20 @@
 import requests
 import xml.etree.ElementTree as ET
 
-software_versions = {
-    ''
+kit_versions = {
+    '9.15': {'file': 'cmterm-s53200ce9_15_3_22.k3.cop.sgn', 'sha': ''},
+    '10.19': {'file': 'cmterm-s53200ce10_19_5_6.k3.cop.sgn', 'sha': ''},
+    '10.15': {'file': 'cmterm-s53200ce10_15_4_1.k3.cop.sgn', 'sha': ''},
+    '11.5': {'file': 'cmterm-s53200ce11_5_2_4.k4.cop.sha512', 'sha': ''},
+    '11.9': {'file': 'cmterm-s53200ce11_9_3_1.k4.cop.sha512', 'sha': ''},
+    '11.14': {'file': 'cmterm-s53200ce11_14_2_3.k4.cop.sha512', 'sha': ''}
+}
+
+pro_versions = {
+    '10.15': {'file': 'cmterm-s53300ce10_15_4_1.k3.cop.sgn', 'sha': ''},
+    '10.19': {'file': 'cmterm-s53300ce10_19_5_6.k3.cop.sgn', 'sha': ''},
+    '11.9': {'file': 'cmterm-s53300ce11_9_2_4.k4.cop.sha512', 'sha': ''},
+    '11.14': {'file': 'cmterm-s53300ce11_14_2_3.k4.cop.sha512', 'sha': ''},
 }
 
 def check_software(ip):
@@ -18,7 +30,8 @@ def check_software(ip):
 
     return parsed_version
 
-def upgrade
+def upgrade(version, sha):
+
 
 # check_software('172.16.131.163')
 def chain_update(ip):
