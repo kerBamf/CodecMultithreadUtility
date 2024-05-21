@@ -43,8 +43,8 @@ def check_software(ip):
     try:
         soft_xml = requests.get(f'https://{ip}/getxml?location=/Status/SystemUnit/Software/Version', headers=headers, verify=False)
         xml_root = ET.fromstring(soft_xml.text)
-        print(soft_xml.text)
         parsed_version = xml_root[0][0][0].text.replace('ce','').split('.')
+        print(f'Software found: {parsed_version}')
         return parsed_version
     except requests.exceptions.HTTPError as err:
         print(err.response)
@@ -162,13 +162,13 @@ def chain_update(ip):
         raise UpgradeException({'text': 'Codec is an SX80. Script is only designed to work on newer systems'})
 
     # Returns chain update function if code is on the latest version. Changes will need to be added later to allow for dynamic edits to code versions as newer ones come out.
-    if (sw_version[0] == 11 and sw_version[1] == 14):
+    if (int(sw_version[0]) == 11 and int(sw_version[1]) == 14):
         
         return 'Codec is running latest software. Exiting script'
     
     #Comparing code versions
-    if (sw_version[0] < 10):
-        if (sw_version[1] < 15):
+    if (int(sw_version[0]) < 10):
+        if (int(sw_version[1]) < 15):
             print('upgrade to version 9.15.3.22')
             try:
                 upgrade(hw_version, '9.15', ip)
@@ -180,14 +180,14 @@ def chain_update(ip):
                 upgrade(hw_version, '10.15', ip)
             except UpgradeException as err:
                 print(err.text)
-    elif (sw_version[0] == 10):
-        if (sw_version[1] < 15):
+    elif (int(sw_version[0]) == 10):
+        if (int(sw_version[1]) < 15):
             print('Upgrade to version 10.15.4')
             try:
                 upgrade(hw_version, '10.15', ip)
             except UpgradeException as err:
                 print(err.text)
-        elif (sw_version[1] >= 15 and sw_version[1] < 19):
+        elif (int(sw_version[1]) >= 15 and int(sw_version[1]) < 19):
             print('Upgrade to version 10.19.4.2')
             try:
                 upgrade(hw_version, '10.19', ip)
@@ -199,14 +199,14 @@ def chain_update(ip):
                 upgrade(hw_version, '11.5', ip)
             except UpgradeException as err:
                 print(err.text)
-    elif (sw_version[0] == 11):
-        if (sw_version[1] < 9 and hw_version):
+    elif (int(sw_version[0]) == 11):
+        if (int(sw_version[1]) < 9 and hw_version == 'kit'):
             print('Upgrade to version 11.9')
             try:
                 upgrade(hw_version, '11.9', ip)
             except UpgradeException as err:
                 print(err.text)
-        elif (sw_version[1] >= 9 and sw_version < 14):
+        elif (int(sw_version[1]) >= 9 and sw_version < 14):
             print('Upgrade to version 11.14')
             try:
                 upgrade(hw_version, '11.14', ip)
