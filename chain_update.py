@@ -21,19 +21,19 @@ class UpgradeException(Exception):
 
 #Defining filenames to be appended to filepath in the upgrade_command_xml() function
 kit_versions = {
-    '9.15': {'file': 'cmterm-s53200ce9_15_3_22.k3.cop.sgn'},
-    '10.19': {'file': 'cmterm-s53200ce10_19_5_6.k3.cop.sgn'},
-    '10.15': {'file': 'cmterm-s53200ce10_15_4_1.k3.cop.sgn'},
-    '11.5': {'file': 'cmterm-s53200ce11_5_2_4.k4.cop.sha512'},
-    '11.9': {'file': 'cmterm-s53200ce11_9_3_1.k4.cop.sha512'},
-    '11.14': {'file': 'cmterm-s53200ce11_14_2_3.k4.cop.sha512'}
+    '9.15': 'cmterm-s53200ce9_15_3_22.k3.cop.sgn',
+    '10.19': 'cmterm-s53200ce10_19_5_6.k3.cop.sgn',
+    '10.15': 'cmterm-s53200ce10_15_4_1.k3.cop.sgn',
+    '11.5': 'cmterm-s53200ce11_5_2_4.k4.cop.sha512',
+    '11.9': 'cmterm-s53200ce11_9_3_1.k4.cop.sha512',
+    '11.14': 'cmterm-s53200ce11_14_2_3.k4.cop.sha512'
 }
 
 pro_versions = {
-    '10.15': {'file': 'cmterm-s53300ce10_15_4_1.k3.cop.sgn'},
-    '10.19': {'file': 'cmterm-s53300ce10_19_5_6.k3.cop.sgn'},
-    '11.9': {'file': 'cmterm-s53300ce11_9_2_4.k4.cop.sha512'},
-    '11.14': {'file': 'cmterm-s53300ce11_14_2_3.k4.cop.sha512'},
+    '10.15': 'cmterm-s53300ce10_15_4_1.k3.cop.sgn', 
+    '10.19': 'cmterm-s53300ce10_19_5_6.k3.cop.sgn',
+    '11.9': 'cmterm-s53300ce11_9_2_4.k4.cop.sha512',
+    '11.14': 'cmterm-s53300ce11_14_2_3.k4.cop.sha512',
 }
 
 #Checks software version. Used by chain_upgrade() command to determine where to start in the upgrade path. Returns a list of numbers where each list item pertains to a software version/sub-version.
@@ -106,9 +106,11 @@ def upgrade(hw_version, sw_version, ip):
             awake == True
             new_time = math.floor(time.time())
             time_passed = new_time - start
+            time.sleep(5)
         else:
             awake = False
             restarted = True
+            time.sleep(5)
 
     if (restarted == False):
         print('Codec upgrade failed. Please troubleshoot.')
@@ -123,10 +125,12 @@ def upgrade(hw_version, sw_version, ip):
         ping = os.system(f"ping -c 1 {ip}")
         if (ping == 0):
             awake == True
+            time.sleep(5)
         else:
             awake == False
             new_time = math.floor(time.time())
             time_passed = start - new_time
+            time.sleep(5)
 
     if (awake == False):
         raise UpgradeException({'text': 'Codec failed to restart. Please investigate'})
