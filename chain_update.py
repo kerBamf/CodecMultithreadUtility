@@ -53,14 +53,32 @@ def check_software(ip):
 
 #Checks hardware version of the codec. Used to determine which upgrade files to use 
 def check_hardware(ip):
-    headers = {f'Authorization': 'basic {}'}
+    headers = {'Authorization': f'basic {PASSCODE}'}
     
+    hardware_list = {
+        'pro': ['Codec Pro', 'Room Bar'],
+        'kit': ['Room Kit', 'Room Kit Mini', 'Codec Plus'],
+        'SX80': 'SX80'
+    }
+
     try:
-        soft_xml = requests.get(f'http://{ip}/getxml?location=/Status/SystemUnit/ProductPlatform', headers=headers)
-        xml_root = ET.fromstring(soft_xml.text)
+        soft_xml = requests.get(f'http://{ip}/getxml?location=/Status/SystemUnit/ProductPlatform', headers=headers, verify=False)
         print(soft_xml.text)
+        xml_root = ET.fromstring(soft_xml.text)
         parsed_version = xml_root[0][0].text
-        return parsed_version
+        if (parsed_version == 'SX80'):
+            print('SX80 found')
+            return 'SX80'
+        for unit in hardware_list['pro']:
+            if (parsed_version == unit):
+                print('Pro found')
+                return 'pro'
+        for unit in hardware_list['kit']:
+            if (parsed_version == unit):
+                print('Kit found')
+                return 'kit'
+        
+        print(parsed_version)
     except requests.exceptions.HTTPError as err:
         print(err.response)
         return False
@@ -82,20 +100,18 @@ def upgrade(version, ip):
 def chain_update(ip):
 
     software_version = check_software(ip)
-
     hardware_version = check_hardware(ip)
 
     if (software_version == False):
         print('Error retrieving code version from codec. Exiting function.')
         return
     
-    if (software_version == False):
+    if (hardware_version == False):
         print('Error retrieving hardware version from codec. Exiting function.')
 
     # Returns chain update function if code is on the latest version. Changes will need to be added later to allow for dynamic edits to code versions as newer ones come out.
     if (software_version[0] == 11 and software_version[1] == 14):
         return
-
     
     #Comparing code versions
     if (software_version[0] < 10):
@@ -112,7 +128,7 @@ def chain_update(ip):
         else:
             print('Upgrade to version 11.1.2.4')
     elif (software_version[0] == 11):
-        if (software_version[1] < 9):
+        if (software_version[1] < 9 and hardware_version):
             print('Upgrade to version 11.9')
         elif (software_version[1] >= 9 and software_version < 14):
             print('Upgrade to version 11.14')
