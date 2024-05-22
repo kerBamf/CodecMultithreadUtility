@@ -152,8 +152,8 @@ def upgrade_command_xml(hw_version, sw_version):
 # check_software('172.16.131.163')
 def chain_update(ip):
 
-    sw_version = check_software(ip) #Returns list of numbers for codec versions/sub-versions, or False for errors
     hw_version = check_hardware(ip) #Returns 'kit,' 'pro', or 'SX80', or False for errors
+    sw_version = check_software(ip) #Returns list of numbers for codec versions/sub-versions, or False for errors
 
     #Exit conditions to cancel function should there be an error
     if (sw_version == False):
