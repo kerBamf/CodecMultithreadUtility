@@ -103,14 +103,13 @@ def upgrade(hw_version, sw_version, ip):
     while awake == True and time_passed < 60*10:
         ping = os.system(f"ping -c 1 {ip}")
         if (ping == 0):
-            awake == True
+            awake = True
             new_time = math.floor(time.time())
             time_passed = new_time - start
-            time.sleep(5)
+            time.sleep(1)
         else:
             awake = False
             restarted = True
-            time.sleep(5)
 
     if (restarted == False):
         print('Codec upgrade failed. Please troubleshoot.')
@@ -124,13 +123,12 @@ def upgrade(hw_version, sw_version, ip):
     while awake == False and time_passed < 60*8:
         ping = os.system(f"ping -c 1 {ip}")
         if (ping == 0):
-            awake == True
-            time.sleep(5)
+            awake = True
         else:
-            awake == False
+            awake = False
             new_time = math.floor(time.time())
             time_passed = start - new_time
-            time.sleep(5)
+            time.sleep(1)
 
     if (awake == False):
         raise UpgradeException({'text': 'Codec failed to restart. Please investigate'})
