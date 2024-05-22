@@ -43,9 +43,10 @@ def check_software(ip):
     try:
         soft_xml = requests.get(f'https://{ip}/getxml?location=/Status/SystemUnit/Software/Version', headers=headers, verify=False)
         xml_root = ET.fromstring(soft_xml.text)
-        parsed_version = xml_root[0][0][0].text.replace('ce','').split('.')
-        print(f'Software found: {parsed_version}')
-        return parsed_version
+        soft_text = xml_root[0][0][0].text
+        split_version = soft_text.replace('ce','').split('.')
+        print(f'Software found: {soft_text}')
+        return split_version
     except requests.exceptions.HTTPError as err:
         print(err.response)
         return False
@@ -63,21 +64,17 @@ def check_hardware(ip):
 
     try:
         soft_xml = requests.get(f'http://{ip}/getxml?location=/Status/SystemUnit/ProductPlatform', headers=headers, verify=False)
-        print(soft_xml.text)
         xml_root = ET.fromstring(soft_xml.text)
         parsed_version = xml_root[0][0].text
+        print(f'Hardware found: {parsed_version}')
         if (parsed_version == 'SX80'):
-            print('SX80 found')
             return 'SX80'
         for unit in hardware_list['pro']:
             if (parsed_version == unit):
-                print('Pro found')
                 return 'pro'
         for unit in hardware_list['kit']:
             if (parsed_version == unit):
-                print('Kit found')
                 return 'kit'
-        print(parsed_version)
 
     except requests.exceptions.HTTPError as err:
         print(err.response)
@@ -169,7 +166,7 @@ def chain_update(ip):
 
     # Returns chain update function if code is on the latest version. Changes will need to be added later to allow for dynamic edits to code versions as newer ones come out.
     if (int(sw_version[0]) == 11 and int(sw_version[1]) == 14):
-        
+        print('Codec is runnnig latest software. Exiting script')
         return 'Codec is running latest software. Exiting script'
     
     #Comparing code versions
@@ -224,6 +221,10 @@ def chain_update(ip):
     if (new_sw_version == sw_version):
         raise UpgradeException({'text': 'Codec restarted, but failed to update properly. Please investigate'})
     
+    confirmation = '.'.join(new_sw_version)
+    
+    print(f'\r\n{confirmation} successfully installed\r\n')
+
     chain_update(ip)
 
     print('Codec successfully upgraded')
