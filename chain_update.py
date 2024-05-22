@@ -116,7 +116,7 @@ def upgrade(hw_version, sw_version, ip):
         print('Codec upgrade failed. Please troubleshoot.')
         raise UpgradeException({'text':'Codec failed to pull update properly'})
         
-    time.sleep(60 * 3)
+    time.sleep(60)
 
     #Lost ping should mean codec restarted
     time_passed = 0
@@ -135,7 +135,7 @@ def upgrade(hw_version, sw_version, ip):
     if (awake == False):
         raise UpgradeException({'text': 'Codec failed to restart. Please investigate'})
     
-    time.sleep(30)
+    time.sleep(60)
 
     return 'Upgrade complete'
 
@@ -225,6 +225,8 @@ def chain_update(ip):
         raise UpgradeException({'text': 'Codec restarted, but failed to update properly. Please investigate'})
     
     chain_update(ip)
+
+    print('Codec successfully upgraded')
 
     return 'Codec successfully upgraded'
 

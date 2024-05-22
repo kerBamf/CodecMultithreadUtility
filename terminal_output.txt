@@ -1,0 +1,998 @@
+
+--- 172.16.131.163 ping statistics ---
+1 packets transmitted, 1 packets received, 0.0% packet loss
+round-trip min/avg/max/stddev = 4.233/4.233/4.233/0.000 ms
+PING 172.16.131.163 (172.16.131.163): 56 data bytes
+64 bytes from 172.16.131.163: icmp_seq=0 ttl=59 time=9.308 ms
+
+--- 172.16.131.163 ping statistics ---
+1 packets transmitted, 1 packets received, 0.0% packet loss
+round-trip min/avg/max/stddev = 9.308/9.308/9.308/0.000 ms
+PING 172.16.131.163 (172.16.131.163): 56 data bytes
+64 bytes from 172.16.131.163: icmp_seq=0 ttl=59 time=9.553 ms
+
+--- 172.16.131.163 ping statistics ---
+1 packets transmitted, 1 packets received, 0.0% packet loss
+round-trip min/avg/max/stddev = 9.553/9.553/9.553/0.000 ms
+PING 172.16.131.163 (172.16.131.163): 56 data bytes
+64 bytes from 172.16.131.163: icmp_seq=0 ttl=59 time=19.443 ms
+
+--- 172.16.131.163 ping statistics ---
+1 packets transmitted, 1 packets received, 0.0% packet loss
+round-trip min/avg/max/stddev = 19.443/19.443/19.443/0.000 ms
+PING 172.16.131.163 (172.16.131.163): 56 data bytes
+64 bytes from 172.16.131.163: icmp_seq=0 ttl=59 time=9.457 ms
+
+--- 172.16.131.163 ping statistics ---
+1 packets transmitted, 1 packets received, 0.0% packet loss
+round-trip min/avg/max/stddev = 9.457/9.457/9.457/0.000 ms
+PING 172.16.131.163 (172.16.131.163): 56 data bytes
+64 bytes from 172.16.131.163: icmp_seq=0 ttl=59 time=9.170 ms
+
+--- 172.16.131.163 ping statistics ---
+1 packets transmitted, 1 packets received, 0.0% packet loss
+round-trip min/avg/max/stddev = 9.170/9.170/9.170/0.000 ms
+PING 172.16.131.163 (172.16.131.163): 56 data bytes
+64 bytes from 172.16.131.163: icmp_seq=0 ttl=59 time=10.402 ms
+
+--- 172.16.131.163 ping statistics ---
+1 packets transmitted, 1 packets received, 0.0% packet loss
+round-trip min/avg/max/stddev = 10.402/10.402/10.402/0.000 ms
+PING 172.16.131.163 (172.16.131.163): 56 data bytes
+64 bytes from 172.16.131.163: icmp_seq=0 ttl=59 time=5.181 ms
+
+--- 172.16.131.163 ping statistics ---
+1 packets transmitted, 1 packets received, 0.0% packet loss
+round-trip min/avg/max/stddev = 5.181/5.181/5.181/0.000 ms
+PING 172.16.131.163 (172.16.131.163): 56 data bytes
+
+--- 172.16.131.163 ping statistics ---
+1 packets transmitted, 0 packets received, 100.0% packet loss
+System shut down
+PING 172.16.131.163 (172.16.131.163): 56 data bytes
+64 bytes from 172.16.131.163: icmp_seq=0 ttl=59 time=9.281 ms
+
+--- 172.16.131.163 ping statistics ---
+1 packets transmitted, 1 packets received, 0.0% packet loss
+round-trip min/avg/max/stddev = 9.281/9.281/9.281/0.000 ms
+System is back up
+/Users/pedigoz/.local/share/virtualenvs/UpdateScript-OxqAv6Vc/lib/python3.12/site-packages/urllib3/connectionpool.py:1103: InsecureRequestWarning: Unverified HTTPS request is being made to host '172.16.131.163'. Adding certificate verification is strongly advised. See: https://urllib3.readthedocs.io/en/latest/advanced-usage.html#tls-warnings
+  warnings.warn(
+Software found: ['11', '5', '4', '6', '08c783a4691']
+/Users/pedigoz/.local/share/virtualenvs/UpdateScript-OxqAv6Vc/lib/python3.12/site-packages/urllib3/connectionpool.py:1103: InsecureRequestWarning: Unverified HTTPS request is being made to host '172.16.131.163'. Adding certificate verification is strongly advised. See: https://urllib3.readthedocs.io/en/latest/advanced-usage.html#tls-warnings
+  warnings.warn(
+Software found: ['11', '5', '4', '6', '08c783a4691']
+<?xml version="1.0"?>
+<Status product="Cisco Codec" version="ce11.5.4.6.08c783a4691" apiVersion="4">
+  <SystemUnit>
+    <ProductPlatform>Codec Pro</ProductPlatform>
+  </SystemUnit>
+</Status>
+
+Pro found
+Upgrade to version 11.9
+Traceback (most recent call last):
+  File "/Users/pedigoz/Documents/MSK_Coding_Projects/UpdateScript/chain_update.py", line 236, in <module>
+    chain_update('172.16.131.163')
+  File "/Users/pedigoz/Documents/MSK_Coding_Projects/UpdateScript/chain_update.py", line 232, in chain_update
+    chain_update(ip)
+  File "/Users/pedigoz/Documents/MSK_Coding_Projects/UpdateScript/chain_update.py", line 217, in chain_update
+    upgrade(hw_version, '11.9', ip)
+  File "/Users/pedigoz/Documents/MSK_Coding_Projects/UpdateScript/chain_update.py", line 91, in upgrade
+    payload = upgrade_command_xml(hw_version, sw_version)
+              ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/pedigoz/Documents/MSK_Coding_Projects/UpdateScript/chain_update.py", line 147, in upgrade_command_xml
+    file_string = pro_versions[sw_version]
+                  ~~~~~~~~~~~~^^^^^^^^^^^^
+KeyError: '11.9'
+(UpdateScript) ➜  UpdateScript git:(main) ✗ python3 chain_update.py
+/Users/pedigoz/.local/share/virtualenvs/UpdateScript-OxqAv6Vc/lib/python3.12/site-packages/urllib3/connectionpool.py:1103: InsecureRequestWarning: Unverified HTTPS request is being made to host '172.16.131.163'. Adding certificate verification is strongly advised. See: https://urllib3.readthedocs.io/en/latest/advanced-usage.html#tls-warnings
+  warnings.warn(
+Software found: ['11', '5', '4', '6', '08c783a4691']
+<?xml version="1.0"?>
+<Status product="Cisco Codec" version="ce11.5.4.6.08c783a4691" apiVersion="4">
+  <SystemUnit>
+    <ProductPlatform>Codec Pro</ProductPlatform>
+  </SystemUnit>
+</Status>
+
+Pro found
+/Users/pedigoz/.local/share/virtualenvs/UpdateScript-OxqAv6Vc/lib/python3.12/site-packages/urllib3/connectionpool.py:1103: InsecureRequestWarning: Unverified HTTPS request is being made to host '172.16.131.163'. Adding certificate verification is strongly advised. See: https://urllib3.readthedocs.io/en/latest/advanced-usage.html#tls-warnings
+  warnings.warn(
+Software found: ['11', '5', '4', '6', '08c783a4691']
+Traceback (most recent call last):
+  File "/Users/pedigoz/Documents/MSK_Coding_Projects/UpdateScript/chain_update.py", line 231, in <module>
+    chain_update('172.16.131.163')
+  File "/Users/pedigoz/Documents/MSK_Coding_Projects/UpdateScript/chain_update.py", line 225, in chain_update
+    raise UpgradeException({'text': 'Codec restarted, but failed to update properly. Please investigate'})
+UpgradeException: {'text': 'Codec restarted, but failed to update properly. Please investigate'}
+(UpdateScript) ➜  UpdateScript git:(main) ✗ python3 chain_update.py
+/Users/pedigoz/.local/share/virtualenvs/UpdateScript-OxqAv6Vc/lib/python3.12/site-packages/urllib3/connectionpool.py:1103: InsecureRequestWarning: Unverified HTTPS request is being made to host '172.16.131.163'. Adding certificate verification is strongly advised. See: https://urllib3.readthedocs.io/en/latest/advanced-usage.html#tls-warnings
+  warnings.warn(
+Software found: ['11', '5', '4', '6', '08c783a4691']
+<?xml version="1.0"?>
+<Status product="Cisco Codec" version="ce11.5.4.6.08c783a4691" apiVersion="4">
+  <SystemUnit>
+    <ProductPlatform>Codec Pro</ProductPlatform>
+  </SystemUnit>
+</Status>
+
+Pro found
+Upgrade to version 11.14
+<?xml version="1.0"?>
+<Command>
+<SystemUnitSoftwareUpgradeResult status="OK"/>
+</Command>
+
+PING 172.16.131.163 (172.16.131.163): 56 data bytes
+64 bytes from 172.16.131.163: icmp_seq=0 ttl=59 time=3.312 ms
+
+--- 172.16.131.163 ping statistics ---
+1 packets transmitted, 1 packets received, 0.0% packet loss
+round-trip min/avg/max/stddev = 3.312/3.312/3.312/0.000 ms
+PING 172.16.131.163 (172.16.131.163): 56 data bytes
+64 bytes from 172.16.131.163: icmp_seq=0 ttl=59 time=3.123 ms
+
+--- 172.16.131.163 ping statistics ---
+1 packets transmitted, 1 packets received, 0.0% packet loss
+round-trip min/avg/max/stddev = 3.123/3.123/3.123/0.000 ms
+PING 172.16.131.163 (172.16.131.163): 56 data bytes
+64 bytes from 172.16.131.163: icmp_seq=0 ttl=59 time=9.285 ms
+
+--- 172.16.131.163 ping statistics ---
+1 packets transmitted, 1 packets received, 0.0% packet loss
+round-trip min/avg/max/stddev = 9.285/9.285/9.285/0.000 ms
+PING 172.16.131.163 (172.16.131.163): 56 data bytes
+64 bytes from 172.16.131.163: icmp_seq=0 ttl=59 time=10.035 ms
+
+--- 172.16.131.163 ping statistics ---
+1 packets transmitted, 1 packets received, 0.0% packet loss
+round-trip min/avg/max/stddev = 10.035/10.035/10.035/0.000 ms
+PING 172.16.131.163 (172.16.131.163): 56 data bytes
+64 bytes from 172.16.131.163: icmp_seq=0 ttl=59 time=9.713 ms
+
+--- 172.16.131.163 ping statistics ---
+1 packets transmitted, 1 packets received, 0.0% packet loss
+round-trip min/avg/max/stddev = 9.713/9.713/9.713/0.000 ms
+PING 172.16.131.163 (172.16.131.163): 56 data bytes
+64 bytes from 172.16.131.163: icmp_seq=0 ttl=59 time=9.294 ms
+
+--- 172.16.131.163 ping statistics ---
+1 packets transmitted, 1 packets received, 0.0% packet loss
+round-trip min/avg/max/stddev = 9.294/9.294/9.294/0.000 ms
+PING 172.16.131.163 (172.16.131.163): 56 data bytes
+64 bytes from 172.16.131.163: icmp_seq=0 ttl=59 time=9.315 ms
+
+--- 172.16.131.163 ping statistics ---
+1 packets transmitted, 1 packets received, 0.0% packet loss
+round-trip min/avg/max/stddev = 9.315/9.315/9.315/0.000 ms
+PING 172.16.131.163 (172.16.131.163): 56 data bytes
+64 bytes from 172.16.131.163: icmp_seq=0 ttl=59 time=3.391 ms
+
+--- 172.16.131.163 ping statistics ---
+1 packets transmitted, 1 packets received, 0.0% packet loss
+round-trip min/avg/max/stddev = 3.391/3.391/3.391/0.000 ms
+PING 172.16.131.163 (172.16.131.163): 56 data bytes
+64 bytes from 172.16.131.163: icmp_seq=0 ttl=59 time=3.394 ms
+
+--- 172.16.131.163 ping statistics ---
+1 packets transmitted, 1 packets received, 0.0% packet loss
+round-trip min/avg/max/stddev = 3.394/3.394/3.394/0.000 ms
+PING 172.16.131.163 (172.16.131.163): 56 data bytes
+64 bytes from 172.16.131.163: icmp_seq=0 ttl=59 time=9.342 ms
+
+--- 172.16.131.163 ping statistics ---
+1 packets transmitted, 1 packets received, 0.0% packet loss
+round-trip min/avg/max/stddev = 9.342/9.342/9.342/0.000 ms
+PING 172.16.131.163 (172.16.131.163): 56 data bytes
+64 bytes from 172.16.131.163: icmp_seq=0 ttl=59 time=9.594 ms
+
+--- 172.16.131.163 ping statistics ---
+1 packets transmitted, 1 packets received, 0.0% packet loss
+round-trip min/avg/max/stddev = 9.594/9.594/9.594/0.000 ms
+PING 172.16.131.163 (172.16.131.163): 56 data bytes
+64 bytes from 172.16.131.163: icmp_seq=0 ttl=59 time=9.284 ms
+
+--- 172.16.131.163 ping statistics ---
+1 packets transmitted, 1 packets received, 0.0% packet loss
+round-trip min/avg/max/stddev = 9.284/9.284/9.284/0.000 ms
+PING 172.16.131.163 (172.16.131.163): 56 data bytes
+64 bytes from 172.16.131.163: icmp_seq=0 ttl=59 time=9.346 ms
+
+--- 172.16.131.163 ping statistics ---
+1 packets transmitted, 1 packets received, 0.0% packet loss
+round-trip min/avg/max/stddev = 9.346/9.346/9.346/0.000 ms
+PING 172.16.131.163 (172.16.131.163): 56 data bytes
+64 bytes from 172.16.131.163: icmp_seq=0 ttl=59 time=9.528 ms
+
+--- 172.16.131.163 ping statistics ---
+1 packets transmitted, 1 packets received, 0.0% packet loss
+round-trip min/avg/max/stddev = 9.528/9.528/9.528/0.000 ms
+PING 172.16.131.163 (172.16.131.163): 56 data bytes
+64 bytes from 172.16.131.163: icmp_seq=0 ttl=59 time=9.771 ms
+
+--- 172.16.131.163 ping statistics ---
+1 packets transmitted, 1 packets received, 0.0% packet loss
+round-trip min/avg/max/stddev = 9.771/9.771/9.771/0.000 ms
+PING 172.16.131.163 (172.16.131.163): 56 data bytes
+64 bytes from 172.16.131.163: icmp_seq=0 ttl=59 time=6.579 ms
+
+--- 172.16.131.163 ping statistics ---
+1 packets transmitted, 1 packets received, 0.0% packet loss
+round-trip min/avg/max/stddev = 6.579/6.579/6.579/0.000 ms
+PING 172.16.131.163 (172.16.131.163): 56 data bytes
+64 bytes from 172.16.131.163: icmp_seq=0 ttl=59 time=9.467 ms
+
+--- 172.16.131.163 ping statistics ---
+1 packets transmitted, 1 packets received, 0.0% packet loss
+round-trip min/avg/max/stddev = 9.467/9.467/9.467/0.000 ms
+PING 172.16.131.163 (172.16.131.163): 56 data bytes
+64 bytes from 172.16.131.163: icmp_seq=0 ttl=59 time=9.823 ms
+
+--- 172.16.131.163 ping statistics ---
+1 packets transmitted, 1 packets received, 0.0% packet loss
+round-trip min/avg/max/stddev = 9.823/9.823/9.823/0.000 ms
+PING 172.16.131.163 (172.16.131.163): 56 data bytes
+64 bytes from 172.16.131.163: icmp_seq=0 ttl=59 time=9.225 ms
+
+--- 172.16.131.163 ping statistics ---
+1 packets transmitted, 1 packets received, 0.0% packet loss
+round-trip min/avg/max/stddev = 9.225/9.225/9.225/0.000 ms
+PING 172.16.131.163 (172.16.131.163): 56 data bytes
+64 bytes from 172.16.131.163: icmp_seq=0 ttl=59 time=9.664 ms
+
+--- 172.16.131.163 ping statistics ---
+1 packets transmitted, 1 packets received, 0.0% packet loss
+round-trip min/avg/max/stddev = 9.664/9.664/9.664/0.000 ms
+PING 172.16.131.163 (172.16.131.163): 56 data bytes
+64 bytes from 172.16.131.163: icmp_seq=0 ttl=59 time=6.555 ms
+
+--- 172.16.131.163 ping statistics ---
+1 packets transmitted, 1 packets received, 0.0% packet loss
+round-trip min/avg/max/stddev = 6.555/6.555/6.555/0.000 ms
+PING 172.16.131.163 (172.16.131.163): 56 data bytes
+
+--- 172.16.131.163 ping statistics ---
+1 packets transmitted, 0 packets received, 100.0% packet loss
+System shut down
+PING 172.16.131.163 (172.16.131.163): 56 data bytes
+64 bytes from 172.16.131.163: icmp_seq=0 ttl=59 time=9.877 ms
+
+--- 172.16.131.163 ping statistics ---
+1 packets transmitted, 1 packets received, 0.0% packet loss
+round-trip min/avg/max/stddev = 9.877/9.877/9.877/0.000 ms
+System is back up
+/Users/pedigoz/.local/share/virtualenvs/UpdateScript-OxqAv6Vc/lib/python3.12/site-packages/urllib3/connectionpool.py:1103: InsecureRequestWarning: Unverified HTTPS request is being made to host '172.16.131.163'. Adding certificate verification is strongly advised. See: https://urllib3.readthedocs.io/en/latest/advanced-usage.html#tls-warnings
+  warnings.warn(
+Software found: ['11', '14', '2', '3', 'e98a3091ff6']
+/Users/pedigoz/.local/share/virtualenvs/UpdateScript-OxqAv6Vc/lib/python3.12/site-packages/urllib3/connectionpool.py:1103: InsecureRequestWarning: Unverified HTTPS request is being made to host '172.16.131.163'. Adding certificate verification is strongly advised. See: https://urllib3.readthedocs.io/en/latest/advanced-usage.html#tls-warnings
+  warnings.warn(
+Software found: ['11', '14', '2', '3', 'e98a3091ff6']
+<?xml version="1.0"?>
+<Status product="Cisco Codec" version="ce11.14.2.3.e98a3091ff6" apiVersion="4">
+  <SystemUnit>
+    <ProductPlatform>Codec Pro</ProductPlatform>
+  </SystemUnit>
+</Status>
+
+Pro found
+(UpdateScript) ➜  UpdateScript git:(main) ✗ 
+➜  UpdateScript git:(main) ✗ git add .
+➜  UpdateScript git:(main) ✗ git commit -m "Fixed some conditionals that were stopping the script"
+[main 155c31f] Fixed some conditionals that were stopping the script
+ 1 file changed, 7 insertions(+), 3 deletions(-)
+➜  UpdateScript git:(main) git push origin main
+Enumerating objects: 5, done.
+Counting objects: 100% (5/5), done.
+Delta compression using up to 12 threads
+Compressing objects: 100% (3/3), done.
+Writing objects: 100% (3/3), 462 bytes | 462.00 KiB/s, done.
+Total 3 (delta 2), reused 0 (delta 0), pack-reused 0
+remote: Resolving deltas: 100% (2/2), completed with 2 local objects.
+To https://github.com/kerBamf/RoomOSChainUpdate.git
+   638d902..155c31f  main -> main
+➜  UpdateScript git:(main) pipenv shell
+Loading .env environment variables...
+Loading .env environment variables...
+Launching subshell in virtual environment...
+ . /Users/pedigoz/.local/share/virtualenvs/UpdateScript-OxqAv6Vc/bin/activate
+➜  UpdateScript  . /Users/pedigoz/.local/share/virtualenvs/UpdateScript-OxqAv6Vc/bin/activate
+(UpdateScript) ➜  UpdateScript git:(main) ✗ python3 chain_update.py 
+/Users/pedigoz/.local/share/virtualenvs/UpdateScript-OxqAv6Vc/lib/python3.12/site-packages/urllib3/connectionpool.py:1103: InsecureRequestWarning: Unverified HTTPS request is being made to host '172.16.131.163'. Adding certificate verification is strongly advised. See: https://urllib3.readthedocs.io/en/latest/advanced-usage.html#tls-warnings
+  warnings.warn(
+Software found: ['10', '3', '2', '0', '85049347ae0']
+<?xml version="1.0"?>
+<Status product="Cisco Codec" version="ce10.3.2.0.85049347ae0" apiVersion="4">
+  <SystemUnit>
+    <ProductPlatform>Codec Pro</ProductPlatform>
+  </SystemUnit>
+</Status>
+
+Pro found
+Upgrade to version 10.15.4
+<?xml version="1.0"?>
+<Command>
+<SystemUnitSoftwareUpgradeResult status="OK"/>
+</Command>
+
+PING 172.16.131.163 (172.16.131.163): 56 data bytes
+64 bytes from 172.16.131.163: icmp_seq=0 ttl=59 time=2.653 ms
+
+--- 172.16.131.163 ping statistics ---
+1 packets transmitted, 1 packets received, 0.0% packet loss
+round-trip min/avg/max/stddev = 2.653/2.653/2.653/0.000 ms
+PING 172.16.131.163 (172.16.131.163): 56 data bytes
+64 bytes from 172.16.131.163: icmp_seq=0 ttl=59 time=2.471 ms
+
+--- 172.16.131.163 ping statistics ---
+1 packets transmitted, 1 packets received, 0.0% packet loss
+round-trip min/avg/max/stddev = 2.471/2.471/2.471/0.000 ms
+PING 172.16.131.163 (172.16.131.163): 56 data bytes
+64 bytes from 172.16.131.163: icmp_seq=0 ttl=59 time=3.271 ms
+
+--- 172.16.131.163 ping statistics ---
+1 packets transmitted, 1 packets received, 0.0% packet loss
+round-trip min/avg/max/stddev = 3.271/3.271/3.271/0.000 ms
+PING 172.16.131.163 (172.16.131.163): 56 data bytes
+64 bytes from 172.16.131.163: icmp_seq=0 ttl=59 time=2.511 ms
+
+--- 172.16.131.163 ping statistics ---
+1 packets transmitted, 1 packets received, 0.0% packet loss
+round-trip min/avg/max/stddev = 2.511/2.511/2.511/0.000 ms
+PING 172.16.131.163 (172.16.131.163): 56 data bytes
+64 bytes from 172.16.131.163: icmp_seq=0 ttl=59 time=2.682 ms
+
+--- 172.16.131.163 ping statistics ---
+1 packets transmitted, 1 packets received, 0.0% packet loss
+round-trip min/avg/max/stddev = 2.682/2.682/2.682/0.000 ms
+PING 172.16.131.163 (172.16.131.163): 56 data bytes
+64 bytes from 172.16.131.163: icmp_seq=0 ttl=59 time=2.483 ms
+
+--- 172.16.131.163 ping statistics ---
+1 packets transmitted, 1 packets received, 0.0% packet loss
+round-trip min/avg/max/stddev = 2.483/2.483/2.483/0.000 ms
+PING 172.16.131.163 (172.16.131.163): 56 data bytes
+64 bytes from 172.16.131.163: icmp_seq=0 ttl=59 time=2.532 ms
+
+--- 172.16.131.163 ping statistics ---
+1 packets transmitted, 1 packets received, 0.0% packet loss
+round-trip min/avg/max/stddev = 2.532/2.532/2.532/0.000 ms
+PING 172.16.131.163 (172.16.131.163): 56 data bytes
+64 bytes from 172.16.131.163: icmp_seq=0 ttl=59 time=2.388 ms
+
+--- 172.16.131.163 ping statistics ---
+1 packets transmitted, 1 packets received, 0.0% packet loss
+round-trip min/avg/max/stddev = 2.388/2.388/2.388/0.000 ms
+PING 172.16.131.163 (172.16.131.163): 56 data bytes
+64 bytes from 172.16.131.163: icmp_seq=0 ttl=59 time=2.537 ms
+
+--- 172.16.131.163 ping statistics ---
+1 packets transmitted, 1 packets received, 0.0% packet loss
+round-trip min/avg/max/stddev = 2.537/2.537/2.537/0.000 ms
+PING 172.16.131.163 (172.16.131.163): 56 data bytes
+64 bytes from 172.16.131.163: icmp_seq=0 ttl=59 time=2.534 ms
+
+--- 172.16.131.163 ping statistics ---
+1 packets transmitted, 1 packets received, 0.0% packet loss
+round-trip min/avg/max/stddev = 2.534/2.534/2.534/0.000 ms
+PING 172.16.131.163 (172.16.131.163): 56 data bytes
+64 bytes from 172.16.131.163: icmp_seq=0 ttl=59 time=2.573 ms
+
+--- 172.16.131.163 ping statistics ---
+1 packets transmitted, 1 packets received, 0.0% packet loss
+round-trip min/avg/max/stddev = 2.573/2.573/2.573/0.000 ms
+PING 172.16.131.163 (172.16.131.163): 56 data bytes
+64 bytes from 172.16.131.163: icmp_seq=0 ttl=59 time=2.577 ms
+
+--- 172.16.131.163 ping statistics ---
+1 packets transmitted, 1 packets received, 0.0% packet loss
+round-trip min/avg/max/stddev = 2.577/2.577/2.577/0.000 ms
+PING 172.16.131.163 (172.16.131.163): 56 data bytes
+64 bytes from 172.16.131.163: icmp_seq=0 ttl=59 time=2.582 ms
+
+--- 172.16.131.163 ping statistics ---
+1 packets transmitted, 1 packets received, 0.0% packet loss
+round-trip min/avg/max/stddev = 2.582/2.582/2.582/0.000 ms
+PING 172.16.131.163 (172.16.131.163): 56 data bytes
+64 bytes from 172.16.131.163: icmp_seq=0 ttl=59 time=2.496 ms
+
+--- 172.16.131.163 ping statistics ---
+1 packets transmitted, 1 packets received, 0.0% packet loss
+round-trip min/avg/max/stddev = 2.496/2.496/2.496/0.000 ms
+PING 172.16.131.163 (172.16.131.163): 56 data bytes
+64 bytes from 172.16.131.163: icmp_seq=0 ttl=59 time=2.575 ms
+
+--- 172.16.131.163 ping statistics ---
+1 packets transmitted, 1 packets received, 0.0% packet loss
+round-trip min/avg/max/stddev = 2.575/2.575/2.575/0.000 ms
+PING 172.16.131.163 (172.16.131.163): 56 data bytes
+64 bytes from 172.16.131.163: icmp_seq=0 ttl=59 time=2.751 ms
+
+--- 172.16.131.163 ping statistics ---
+1 packets transmitted, 1 packets received, 0.0% packet loss
+round-trip min/avg/max/stddev = 2.751/2.751/2.751/0.000 ms
+PING 172.16.131.163 (172.16.131.163): 56 data bytes
+64 bytes from 172.16.131.163: icmp_seq=0 ttl=59 time=2.603 ms
+
+--- 172.16.131.163 ping statistics ---
+1 packets transmitted, 1 packets received, 0.0% packet loss
+round-trip min/avg/max/stddev = 2.603/2.603/2.603/0.000 ms
+PING 172.16.131.163 (172.16.131.163): 56 data bytes
+64 bytes from 172.16.131.163: icmp_seq=0 ttl=59 time=2.530 ms
+
+--- 172.16.131.163 ping statistics ---
+1 packets transmitted, 1 packets received, 0.0% packet loss
+round-trip min/avg/max/stddev = 2.530/2.530/2.530/0.000 ms
+PING 172.16.131.163 (172.16.131.163): 56 data bytes
+64 bytes from 172.16.131.163: icmp_seq=0 ttl=59 time=2.509 ms
+
+--- 172.16.131.163 ping statistics ---
+1 packets transmitted, 1 packets received, 0.0% packet loss
+round-trip min/avg/max/stddev = 2.509/2.509/2.509/0.000 ms
+PING 172.16.131.163 (172.16.131.163): 56 data bytes
+64 bytes from 172.16.131.163: icmp_seq=0 ttl=59 time=2.509 ms
+
+--- 172.16.131.163 ping statistics ---
+1 packets transmitted, 1 packets received, 0.0% packet loss
+round-trip min/avg/max/stddev = 2.509/2.509/2.509/0.000 ms
+PING 172.16.131.163 (172.16.131.163): 56 data bytes
+64 bytes from 172.16.131.163: icmp_seq=0 ttl=59 time=2.503 ms
+
+--- 172.16.131.163 ping statistics ---
+1 packets transmitted, 1 packets received, 0.0% packet loss
+round-trip min/avg/max/stddev = 2.503/2.503/2.503/0.000 ms
+PING 172.16.131.163 (172.16.131.163): 56 data bytes
+64 bytes from 172.16.131.163: icmp_seq=0 ttl=59 time=2.572 ms
+
+--- 172.16.131.163 ping statistics ---
+1 packets transmitted, 1 packets received, 0.0% packet loss
+round-trip min/avg/max/stddev = 2.572/2.572/2.572/0.000 ms
+PING 172.16.131.163 (172.16.131.163): 56 data bytes
+64 bytes from 172.16.131.163: icmp_seq=0 ttl=59 time=2.566 ms
+
+--- 172.16.131.163 ping statistics ---
+1 packets transmitted, 1 packets received, 0.0% packet loss
+round-trip min/avg/max/stddev = 2.566/2.566/2.566/0.000 ms
+PING 172.16.131.163 (172.16.131.163): 56 data bytes
+64 bytes from 172.16.131.163: icmp_seq=0 ttl=59 time=4.012 ms
+
+--- 172.16.131.163 ping statistics ---
+1 packets transmitted, 1 packets received, 0.0% packet loss
+round-trip min/avg/max/stddev = 4.012/4.012/4.012/0.000 ms
+PING 172.16.131.163 (172.16.131.163): 56 data bytes
+64 bytes from 172.16.131.163: icmp_seq=0 ttl=59 time=2.576 ms
+
+--- 172.16.131.163 ping statistics ---
+1 packets transmitted, 1 packets received, 0.0% packet loss
+round-trip min/avg/max/stddev = 2.576/2.576/2.576/0.000 ms
+PING 172.16.131.163 (172.16.131.163): 56 data bytes
+64 bytes from 172.16.131.163: icmp_seq=0 ttl=59 time=2.633 ms
+
+--- 172.16.131.163 ping statistics ---
+1 packets transmitted, 1 packets received, 0.0% packet loss
+round-trip min/avg/max/stddev = 2.633/2.633/2.633/0.000 ms
+PING 172.16.131.163 (172.16.131.163): 56 data bytes
+64 bytes from 172.16.131.163: icmp_seq=0 ttl=59 time=2.448 ms
+
+--- 172.16.131.163 ping statistics ---
+1 packets transmitted, 1 packets received, 0.0% packet loss
+round-trip min/avg/max/stddev = 2.448/2.448/2.448/0.000 ms
+PING 172.16.131.163 (172.16.131.163): 56 data bytes
+64 bytes from 172.16.131.163: icmp_seq=0 ttl=59 time=2.491 ms
+
+--- 172.16.131.163 ping statistics ---
+1 packets transmitted, 1 packets received, 0.0% packet loss
+round-trip min/avg/max/stddev = 2.491/2.491/2.491/0.000 ms
+PING 172.16.131.163 (172.16.131.163): 56 data bytes
+64 bytes from 172.16.131.163: icmp_seq=0 ttl=59 time=2.584 ms
+
+--- 172.16.131.163 ping statistics ---
+1 packets transmitted, 1 packets received, 0.0% packet loss
+round-trip min/avg/max/stddev = 2.584/2.584/2.584/0.000 ms
+PING 172.16.131.163 (172.16.131.163): 56 data bytes
+64 bytes from 172.16.131.163: icmp_seq=0 ttl=59 time=2.566 ms
+
+--- 172.16.131.163 ping statistics ---
+1 packets transmitted, 1 packets received, 0.0% packet loss
+round-trip min/avg/max/stddev = 2.566/2.566/2.566/0.000 ms
+PING 172.16.131.163 (172.16.131.163): 56 data bytes
+64 bytes from 172.16.131.163: icmp_seq=0 ttl=59 time=2.508 ms
+
+--- 172.16.131.163 ping statistics ---
+1 packets transmitted, 1 packets received, 0.0% packet loss
+round-trip min/avg/max/stddev = 2.508/2.508/2.508/0.000 ms
+PING 172.16.131.163 (172.16.131.163): 56 data bytes
+64 bytes from 172.16.131.163: icmp_seq=0 ttl=59 time=2.535 ms
+
+--- 172.16.131.163 ping statistics ---
+1 packets transmitted, 1 packets received, 0.0% packet loss
+round-trip min/avg/max/stddev = 2.535/2.535/2.535/0.000 ms
+PING 172.16.131.163 (172.16.131.163): 56 data bytes
+64 bytes from 172.16.131.163: icmp_seq=0 ttl=59 time=2.529 ms
+
+--- 172.16.131.163 ping statistics ---
+1 packets transmitted, 1 packets received, 0.0% packet loss
+round-trip min/avg/max/stddev = 2.529/2.529/2.529/0.000 ms
+PING 172.16.131.163 (172.16.131.163): 56 data bytes
+64 bytes from 172.16.131.163: icmp_seq=0 ttl=59 time=2.559 ms
+
+--- 172.16.131.163 ping statistics ---
+1 packets transmitted, 1 packets received, 0.0% packet loss
+round-trip min/avg/max/stddev = 2.559/2.559/2.559/0.000 ms
+PING 172.16.131.163 (172.16.131.163): 56 data bytes
+64 bytes from 172.16.131.163: icmp_seq=0 ttl=59 time=3.003 ms
+
+--- 172.16.131.163 ping statistics ---
+1 packets transmitted, 1 packets received, 0.0% packet loss
+round-trip min/avg/max/stddev = 3.003/3.003/3.003/0.000 ms
+PING 172.16.131.163 (172.16.131.163): 56 data bytes
+64 bytes from 172.16.131.163: icmp_seq=0 ttl=59 time=2.661 ms
+
+--- 172.16.131.163 ping statistics ---
+1 packets transmitted, 1 packets received, 0.0% packet loss
+round-trip min/avg/max/stddev = 2.661/2.661/2.661/0.000 ms
+PING 172.16.131.163 (172.16.131.163): 56 data bytes
+64 bytes from 172.16.131.163: icmp_seq=0 ttl=59 time=2.555 ms
+
+--- 172.16.131.163 ping statistics ---
+1 packets transmitted, 1 packets received, 0.0% packet loss
+round-trip min/avg/max/stddev = 2.555/2.555/2.555/0.000 ms
+PING 172.16.131.163 (172.16.131.163): 56 data bytes
+64 bytes from 172.16.131.163: icmp_seq=0 ttl=59 time=5.085 ms
+
+--- 172.16.131.163 ping statistics ---
+1 packets transmitted, 1 packets received, 0.0% packet loss
+round-trip min/avg/max/stddev = 5.085/5.085/5.085/0.000 ms
+PING 172.16.131.163 (172.16.131.163): 56 data bytes
+64 bytes from 172.16.131.163: icmp_seq=0 ttl=59 time=3.060 ms
+
+--- 172.16.131.163 ping statistics ---
+1 packets transmitted, 1 packets received, 0.0% packet loss
+round-trip min/avg/max/stddev = 3.060/3.060/3.060/0.000 ms
+PING 172.16.131.163 (172.16.131.163): 56 data bytes
+64 bytes from 172.16.131.163: icmp_seq=0 ttl=59 time=2.431 ms
+
+--- 172.16.131.163 ping statistics ---
+1 packets transmitted, 1 packets received, 0.0% packet loss
+round-trip min/avg/max/stddev = 2.431/2.431/2.431/0.000 ms
+PING 172.16.131.163 (172.16.131.163): 56 data bytes
+64 bytes from 172.16.131.163: icmp_seq=0 ttl=59 time=2.600 ms
+
+--- 172.16.131.163 ping statistics ---
+1 packets transmitted, 1 packets received, 0.0% packet loss
+round-trip min/avg/max/stddev = 2.600/2.600/2.600/0.000 ms
+PING 172.16.131.163 (172.16.131.163): 56 data bytes
+64 bytes from 172.16.131.163: icmp_seq=0 ttl=59 time=2.480 ms
+
+--- 172.16.131.163 ping statistics ---
+1 packets transmitted, 1 packets received, 0.0% packet loss
+round-trip min/avg/max/stddev = 2.480/2.480/2.480/0.000 ms
+PING 172.16.131.163 (172.16.131.163): 56 data bytes
+64 bytes from 172.16.131.163: icmp_seq=0 ttl=59 time=2.573 ms
+
+--- 172.16.131.163 ping statistics ---
+1 packets transmitted, 1 packets received, 0.0% packet loss
+round-trip min/avg/max/stddev = 2.573/2.573/2.573/0.000 ms
+PING 172.16.131.163 (172.16.131.163): 56 data bytes
+64 bytes from 172.16.131.163: icmp_seq=0 ttl=59 time=2.494 ms
+
+--- 172.16.131.163 ping statistics ---
+1 packets transmitted, 1 packets received, 0.0% packet loss
+round-trip min/avg/max/stddev = 2.494/2.494/2.494/0.000 ms
+PING 172.16.131.163 (172.16.131.163): 56 data bytes
+64 bytes from 172.16.131.163: icmp_seq=0 ttl=59 time=2.717 ms
+
+--- 172.16.131.163 ping statistics ---
+1 packets transmitted, 1 packets received, 0.0% packet loss
+round-trip min/avg/max/stddev = 2.717/2.717/2.717/0.000 ms
+PING 172.16.131.163 (172.16.131.163): 56 data bytes
+64 bytes from 172.16.131.163: icmp_seq=0 ttl=59 time=2.435 ms
+
+--- 172.16.131.163 ping statistics ---
+1 packets transmitted, 1 packets received, 0.0% packet loss
+round-trip min/avg/max/stddev = 2.435/2.435/2.435/0.000 ms
+PING 172.16.131.163 (172.16.131.163): 56 data bytes
+64 bytes from 172.16.131.163: icmp_seq=0 ttl=59 time=2.531 ms
+
+--- 172.16.131.163 ping statistics ---
+1 packets transmitted, 1 packets received, 0.0% packet loss
+round-trip min/avg/max/stddev = 2.531/2.531/2.531/0.000 ms
+PING 172.16.131.163 (172.16.131.163): 56 data bytes
+64 bytes from 172.16.131.163: icmp_seq=0 ttl=59 time=2.495 ms
+
+--- 172.16.131.163 ping statistics ---
+1 packets transmitted, 1 packets received, 0.0% packet loss
+round-trip min/avg/max/stddev = 2.495/2.495/2.495/0.000 ms
+PING 172.16.131.163 (172.16.131.163): 56 data bytes
+64 bytes from 172.16.131.163: icmp_seq=0 ttl=59 time=2.558 ms
+
+--- 172.16.131.163 ping statistics ---
+1 packets transmitted, 1 packets received, 0.0% packet loss
+round-trip min/avg/max/stddev = 2.558/2.558/2.558/0.000 ms
+PING 172.16.131.163 (172.16.131.163): 56 data bytes
+64 bytes from 172.16.131.163: icmp_seq=0 ttl=59 time=2.502 ms
+
+--- 172.16.131.163 ping statistics ---
+1 packets transmitted, 1 packets received, 0.0% packet loss
+round-trip min/avg/max/stddev = 2.502/2.502/2.502/0.000 ms
+PING 172.16.131.163 (172.16.131.163): 56 data bytes
+64 bytes from 172.16.131.163: icmp_seq=0 ttl=59 time=2.521 ms
+
+--- 172.16.131.163 ping statistics ---
+1 packets transmitted, 1 packets received, 0.0% packet loss
+round-trip min/avg/max/stddev = 2.521/2.521/2.521/0.000 ms
+PING 172.16.131.163 (172.16.131.163): 56 data bytes
+64 bytes from 172.16.131.163: icmp_seq=0 ttl=59 time=2.543 ms
+
+--- 172.16.131.163 ping statistics ---
+1 packets transmitted, 1 packets received, 0.0% packet loss
+round-trip min/avg/max/stddev = 2.543/2.543/2.543/0.000 ms
+PING 172.16.131.163 (172.16.131.163): 56 data bytes
+64 bytes from 172.16.131.163: icmp_seq=0 ttl=59 time=2.587 ms
+
+--- 172.16.131.163 ping statistics ---
+1 packets transmitted, 1 packets received, 0.0% packet loss
+round-trip min/avg/max/stddev = 2.587/2.587/2.587/0.000 ms
+PING 172.16.131.163 (172.16.131.163): 56 data bytes
+64 bytes from 172.16.131.163: icmp_seq=0 ttl=59 time=3.291 ms
+
+--- 172.16.131.163 ping statistics ---
+1 packets transmitted, 1 packets received, 0.0% packet loss
+round-trip min/avg/max/stddev = 3.291/3.291/3.291/0.000 ms
+PING 172.16.131.163 (172.16.131.163): 56 data bytes
+64 bytes from 172.16.131.163: icmp_seq=0 ttl=59 time=2.712 ms
+
+--- 172.16.131.163 ping statistics ---
+1 packets transmitted, 1 packets received, 0.0% packet loss
+round-trip min/avg/max/stddev = 2.712/2.712/2.712/0.000 ms
+PING 172.16.131.163 (172.16.131.163): 56 data bytes
+64 bytes from 172.16.131.163: icmp_seq=0 ttl=59 time=3.082 ms
+
+--- 172.16.131.163 ping statistics ---
+1 packets transmitted, 1 packets received, 0.0% packet loss
+round-trip min/avg/max/stddev = 3.082/3.082/3.082/0.000 ms
+PING 172.16.131.163 (172.16.131.163): 56 data bytes
+64 bytes from 172.16.131.163: icmp_seq=0 ttl=59 time=2.805 ms
+
+--- 172.16.131.163 ping statistics ---
+1 packets transmitted, 1 packets received, 0.0% packet loss
+round-trip min/avg/max/stddev = 2.805/2.805/2.805/0.000 ms
+PING 172.16.131.163 (172.16.131.163): 56 data bytes
+64 bytes from 172.16.131.163: icmp_seq=0 ttl=59 time=3.121 ms
+
+--- 172.16.131.163 ping statistics ---
+1 packets transmitted, 1 packets received, 0.0% packet loss
+round-trip min/avg/max/stddev = 3.121/3.121/3.121/0.000 ms
+PING 172.16.131.163 (172.16.131.163): 56 data bytes
+64 bytes from 172.16.131.163: icmp_seq=0 ttl=59 time=2.750 ms
+
+--- 172.16.131.163 ping statistics ---
+1 packets transmitted, 1 packets received, 0.0% packet loss
+round-trip min/avg/max/stddev = 2.750/2.750/2.750/0.000 ms
+PING 172.16.131.163 (172.16.131.163): 56 data bytes
+64 bytes from 172.16.131.163: icmp_seq=0 ttl=59 time=2.601 ms
+
+--- 172.16.131.163 ping statistics ---
+1 packets transmitted, 1 packets received, 0.0% packet loss
+round-trip min/avg/max/stddev = 2.601/2.601/2.601/0.000 ms
+PING 172.16.131.163 (172.16.131.163): 56 data bytes
+64 bytes from 172.16.131.163: icmp_seq=0 ttl=59 time=2.479 ms
+
+--- 172.16.131.163 ping statistics ---
+1 packets transmitted, 1 packets received, 0.0% packet loss
+round-trip min/avg/max/stddev = 2.479/2.479/2.479/0.000 ms
+PING 172.16.131.163 (172.16.131.163): 56 data bytes
+64 bytes from 172.16.131.163: icmp_seq=0 ttl=59 time=2.783 ms
+
+--- 172.16.131.163 ping statistics ---
+1 packets transmitted, 1 packets received, 0.0% packet loss
+round-trip min/avg/max/stddev = 2.783/2.783/2.783/0.000 ms
+PING 172.16.131.163 (172.16.131.163): 56 data bytes
+64 bytes from 172.16.131.163: icmp_seq=0 ttl=59 time=3.449 ms
+
+--- 172.16.131.163 ping statistics ---
+1 packets transmitted, 1 packets received, 0.0% packet loss
+round-trip min/avg/max/stddev = 3.449/3.449/3.449/0.000 ms
+PING 172.16.131.163 (172.16.131.163): 56 data bytes
+64 bytes from 172.16.131.163: icmp_seq=0 ttl=59 time=2.679 ms
+
+--- 172.16.131.163 ping statistics ---
+1 packets transmitted, 1 packets received, 0.0% packet loss
+round-trip min/avg/max/stddev = 2.679/2.679/2.679/0.000 ms
+PING 172.16.131.163 (172.16.131.163): 56 data bytes
+64 bytes from 172.16.131.163: icmp_seq=0 ttl=59 time=2.575 ms
+
+--- 172.16.131.163 ping statistics ---
+1 packets transmitted, 1 packets received, 0.0% packet loss
+round-trip min/avg/max/stddev = 2.575/2.575/2.575/0.000 ms
+PING 172.16.131.163 (172.16.131.163): 56 data bytes
+64 bytes from 172.16.131.163: icmp_seq=0 ttl=59 time=2.822 ms
+
+--- 172.16.131.163 ping statistics ---
+1 packets transmitted, 1 packets received, 0.0% packet loss
+round-trip min/avg/max/stddev = 2.822/2.822/2.822/0.000 ms
+PING 172.16.131.163 (172.16.131.163): 56 data bytes
+64 bytes from 172.16.131.163: icmp_seq=0 ttl=59 time=2.731 ms
+
+--- 172.16.131.163 ping statistics ---
+1 packets transmitted, 1 packets received, 0.0% packet loss
+round-trip min/avg/max/stddev = 2.731/2.731/2.731/0.000 ms
+PING 172.16.131.163 (172.16.131.163): 56 data bytes
+64 bytes from 172.16.131.163: icmp_seq=0 ttl=59 time=3.102 ms
+
+--- 172.16.131.163 ping statistics ---
+1 packets transmitted, 1 packets received, 0.0% packet loss
+round-trip min/avg/max/stddev = 3.102/3.102/3.102/0.000 ms
+PING 172.16.131.163 (172.16.131.163): 56 data bytes
+64 bytes from 172.16.131.163: icmp_seq=0 ttl=59 time=2.512 ms
+
+--- 172.16.131.163 ping statistics ---
+1 packets transmitted, 1 packets received, 0.0% packet loss
+round-trip min/avg/max/stddev = 2.512/2.512/2.512/0.000 ms
+PING 172.16.131.163 (172.16.131.163): 56 data bytes
+64 bytes from 172.16.131.163: icmp_seq=0 ttl=59 time=2.439 ms
+
+--- 172.16.131.163 ping statistics ---
+1 packets transmitted, 1 packets received, 0.0% packet loss
+round-trip min/avg/max/stddev = 2.439/2.439/2.439/0.000 ms
+PING 172.16.131.163 (172.16.131.163): 56 data bytes
+64 bytes from 172.16.131.163: icmp_seq=0 ttl=59 time=3.126 ms
+
+--- 172.16.131.163 ping statistics ---
+1 packets transmitted, 1 packets received, 0.0% packet loss
+round-trip min/avg/max/stddev = 3.126/3.126/3.126/0.000 ms
+PING 172.16.131.163 (172.16.131.163): 56 data bytes
+64 bytes from 172.16.131.163: icmp_seq=0 ttl=59 time=2.671 ms
+
+--- 172.16.131.163 ping statistics ---
+1 packets transmitted, 1 packets received, 0.0% packet loss
+round-trip min/avg/max/stddev = 2.671/2.671/2.671/0.000 ms
+PING 172.16.131.163 (172.16.131.163): 56 data bytes
+64 bytes from 172.16.131.163: icmp_seq=0 ttl=59 time=6.379 ms
+
+--- 172.16.131.163 ping statistics ---
+1 packets transmitted, 1 packets received, 0.0% packet loss
+round-trip min/avg/max/stddev = 6.379/6.379/6.379/0.000 ms
+PING 172.16.131.163 (172.16.131.163): 56 data bytes
+64 bytes from 172.16.131.163: icmp_seq=0 ttl=59 time=2.662 ms
+
+--- 172.16.131.163 ping statistics ---
+1 packets transmitted, 1 packets received, 0.0% packet loss
+round-trip min/avg/max/stddev = 2.662/2.662/2.662/0.000 ms
+PING 172.16.131.163 (172.16.131.163): 56 data bytes
+64 bytes from 172.16.131.163: icmp_seq=0 ttl=59 time=3.702 ms
+
+--- 172.16.131.163 ping statistics ---
+1 packets transmitted, 1 packets received, 0.0% packet loss
+round-trip min/avg/max/stddev = 3.702/3.702/3.702/0.000 ms
+PING 172.16.131.163 (172.16.131.163): 56 data bytes
+64 bytes from 172.16.131.163: icmp_seq=0 ttl=59 time=2.519 ms
+
+--- 172.16.131.163 ping statistics ---
+1 packets transmitted, 1 packets received, 0.0% packet loss
+round-trip min/avg/max/stddev = 2.519/2.519/2.519/0.000 ms
+PING 172.16.131.163 (172.16.131.163): 56 data bytes
+64 bytes from 172.16.131.163: icmp_seq=0 ttl=59 time=2.548 ms
+
+--- 172.16.131.163 ping statistics ---
+1 packets transmitted, 1 packets received, 0.0% packet loss
+round-trip min/avg/max/stddev = 2.548/2.548/2.548/0.000 ms
+PING 172.16.131.163 (172.16.131.163): 56 data bytes
+64 bytes from 172.16.131.163: icmp_seq=0 ttl=59 time=2.521 ms
+
+--- 172.16.131.163 ping statistics ---
+1 packets transmitted, 1 packets received, 0.0% packet loss
+round-trip min/avg/max/stddev = 2.521/2.521/2.521/0.000 ms
+PING 172.16.131.163 (172.16.131.163): 56 data bytes
+64 bytes from 172.16.131.163: icmp_seq=0 ttl=59 time=2.859 ms
+
+--- 172.16.131.163 ping statistics ---
+1 packets transmitted, 1 packets received, 0.0% packet loss
+round-trip min/avg/max/stddev = 2.859/2.859/2.859/0.000 ms
+PING 172.16.131.163 (172.16.131.163): 56 data bytes
+64 bytes from 172.16.131.163: icmp_seq=0 ttl=59 time=2.585 ms
+
+--- 172.16.131.163 ping statistics ---
+1 packets transmitted, 1 packets received, 0.0% packet loss
+round-trip min/avg/max/stddev = 2.585/2.585/2.585/0.000 ms
+PING 172.16.131.163 (172.16.131.163): 56 data bytes
+64 bytes from 172.16.131.163: icmp_seq=0 ttl=59 time=2.594 ms
+
+--- 172.16.131.163 ping statistics ---
+1 packets transmitted, 1 packets received, 0.0% packet loss
+round-trip min/avg/max/stddev = 2.594/2.594/2.594/0.000 ms
+PING 172.16.131.163 (172.16.131.163): 56 data bytes
+64 bytes from 172.16.131.163: icmp_seq=0 ttl=59 time=2.714 ms
+
+--- 172.16.131.163 ping statistics ---
+1 packets transmitted, 1 packets received, 0.0% packet loss
+round-trip min/avg/max/stddev = 2.714/2.714/2.714/0.000 ms
+PING 172.16.131.163 (172.16.131.163): 56 data bytes
+64 bytes from 172.16.131.163: icmp_seq=0 ttl=59 time=2.691 ms
+
+--- 172.16.131.163 ping statistics ---
+1 packets transmitted, 1 packets received, 0.0% packet loss
+round-trip min/avg/max/stddev = 2.691/2.691/2.691/0.000 ms
+PING 172.16.131.163 (172.16.131.163): 56 data bytes
+64 bytes from 172.16.131.163: icmp_seq=0 ttl=59 time=2.620 ms
+
+--- 172.16.131.163 ping statistics ---
+1 packets transmitted, 1 packets received, 0.0% packet loss
+round-trip min/avg/max/stddev = 2.620/2.620/2.620/0.000 ms
+PING 172.16.131.163 (172.16.131.163): 56 data bytes
+64 bytes from 172.16.131.163: icmp_seq=0 ttl=59 time=3.416 ms
+
+--- 172.16.131.163 ping statistics ---
+1 packets transmitted, 1 packets received, 0.0% packet loss
+round-trip min/avg/max/stddev = 3.416/3.416/3.416/0.000 ms
+PING 172.16.131.163 (172.16.131.163): 56 data bytes
+64 bytes from 172.16.131.163: icmp_seq=0 ttl=59 time=2.799 ms
+
+--- 172.16.131.163 ping statistics ---
+1 packets transmitted, 1 packets received, 0.0% packet loss
+round-trip min/avg/max/stddev = 2.799/2.799/2.799/0.000 ms
+PING 172.16.131.163 (172.16.131.163): 56 data bytes
+64 bytes from 172.16.131.163: icmp_seq=0 ttl=59 time=2.511 ms
+
+--- 172.16.131.163 ping statistics ---
+1 packets transmitted, 1 packets received, 0.0% packet loss
+round-trip min/avg/max/stddev = 2.511/2.511/2.511/0.000 ms
+PING 172.16.131.163 (172.16.131.163): 56 data bytes
+64 bytes from 172.16.131.163: icmp_seq=0 ttl=59 time=2.478 ms
+
+--- 172.16.131.163 ping statistics ---
+1 packets transmitted, 1 packets received, 0.0% packet loss
+round-trip min/avg/max/stddev = 2.478/2.478/2.478/0.000 ms
+PING 172.16.131.163 (172.16.131.163): 56 data bytes
+64 bytes from 172.16.131.163: icmp_seq=0 ttl=59 time=2.402 ms
+
+--- 172.16.131.163 ping statistics ---
+1 packets transmitted, 1 packets received, 0.0% packet loss
+round-trip min/avg/max/stddev = 2.402/2.402/2.402/0.000 ms
+PING 172.16.131.163 (172.16.131.163): 56 data bytes
+64 bytes from 172.16.131.163: icmp_seq=0 ttl=59 time=2.706 ms
+
+--- 172.16.131.163 ping statistics ---
+1 packets transmitted, 1 packets received, 0.0% packet loss
+round-trip min/avg/max/stddev = 2.706/2.706/2.706/0.000 ms
+PING 172.16.131.163 (172.16.131.163): 56 data bytes
+
+--- 172.16.131.163 ping statistics ---
+1 packets transmitted, 0 packets received, 100.0% packet loss
+System shut down
+PING 172.16.131.163 (172.16.131.163): 56 data bytes
+64 bytes from 172.16.131.163: icmp_seq=0 ttl=59 time=2.604 ms
+
+--- 172.16.131.163 ping statistics ---
+1 packets transmitted, 1 packets received, 0.0% packet loss
+round-trip min/avg/max/stddev = 2.604/2.604/2.604/0.000 ms
+System is back up
+/Users/pedigoz/.local/share/virtualenvs/UpdateScript-OxqAv6Vc/lib/python3.12/site-packages/urllib3/connectionpool.py:1103: InsecureRequestWarning: Unverified HTTPS request is being made to host '172.16.131.163'. Adding certificate verification is strongly advised. See: https://urllib3.readthedocs.io/en/latest/advanced-usage.html#tls-warnings
+  warnings.warn(
+Software found: ['10', '15', '4', '1', 'a4d3db640f0']
+/Users/pedigoz/.local/share/virtualenvs/UpdateScript-OxqAv6Vc/lib/python3.12/site-packages/urllib3/connectionpool.py:1103: InsecureRequestWarning: Unverified HTTPS request is being made to host '172.16.131.163'. Adding certificate verification is strongly advised. See: https://urllib3.readthedocs.io/en/latest/advanced-usage.html#tls-warnings
+  warnings.warn(
+Software found: ['10', '15', '4', '1', 'a4d3db640f0']
+<?xml version="1.0"?>
+<Status product="Cisco Codec" version="ce10.15.4.1.a4d3db640f0" apiVersion="4">
+  <SystemUnit>
+    <ProductPlatform>Codec Pro</ProductPlatform>
+  </SystemUnit>
+</Status>
+
+Pro found
+Upgrade to version 10.19.4.2
+<?xml version="1.0"?>
+<Command>
+<SystemUnitSoftwareUpgradeResult status="Error">
+  <Reason>Got ([0] &lt;Failed to establish connection&gt;: &apos;Failed to connect to MMIS0177.mskcc.org port 9000 after 9 ms: Connection refused&apos;) during download</Reason>
+</SystemUnitSoftwareUpgradeResult>
+</Command>
+
+PING 172.16.131.163 (172.16.131.163): 56 data bytes
+64 bytes from 172.16.131.163: icmp_seq=0 ttl=59 time=2.616 ms
+
+--- 172.16.131.163 ping statistics ---
+1 packets transmitted, 1 packets received, 0.0% packet loss
+round-trip min/avg/max/stddev = 2.616/2.616/2.616/0.000 ms
+PING 172.16.131.163 (172.16.131.163): 56 data bytes
+64 bytes from 172.16.131.163: icmp_seq=0 ttl=59 time=2.750 ms
+
+--- 172.16.131.163 ping statistics ---
+1 packets transmitted, 1 packets received, 0.0% packet loss
+round-trip min/avg/max/stddev = 2.750/2.750/2.750/0.000 ms
+PING 172.16.131.163 (172.16.131.163): 56 data bytes
+64 bytes from 172.16.131.163: icmp_seq=0 ttl=59 time=2.509 ms
+
+--- 172.16.131.163 ping statistics ---
+1 packets transmitted, 1 packets received, 0.0% packet loss
+round-trip min/avg/max/stddev = 2.509/2.509/2.509/0.000 ms
+PING 172.16.131.163 (172.16.131.163): 56 data bytes
+64 bytes from 172.16.131.163: icmp_seq=0 ttl=59 time=2.596 ms
+
+--- 172.16.131.163 ping statistics ---
+1 packets transmitted, 1 packets received, 0.0% packet loss
+round-trip min/avg/max/stddev = 2.596/2.596/2.596/0.000 ms
+PING 172.16.131.163 (172.16.131.163): 56 data bytes
+64 bytes from 172.16.131.163: icmp_seq=0 ttl=59 time=2.606 ms
+
+--- 172.16.131.163 ping statistics ---
+1 packets transmitted, 1 packets received, 0.0% packet loss
+round-trip min/avg/max/stddev = 2.606/2.606/2.606/0.000 ms
+PING 172.16.131.163 (172.16.131.163): 56 data bytes
+64 bytes from 172.16.131.163: icmp_seq=0 ttl=59 time=2.442 ms
+
+--- 172.16.131.163 ping statistics ---
+1 packets transmitted, 1 packets received, 0.0% packet loss
+round-trip min/avg/max/stddev = 2.442/2.442/2.442/0.000 ms
+PING 172.16.131.163 (172.16.131.163): 56 data bytes
+64 bytes from 172.16.131.163: icmp_seq=0 ttl=59 time=2.545 ms
+
+--- 172.16.131.163 ping statistics ---
+1 packets transmitted, 1 packets received, 0.0% packet loss
+round-trip min/avg/max/stddev = 2.545/2.545/2.545/0.000 ms
+PING 172.16.131.163 (172.16.131.163): 56 data bytes
+64 bytes from 172.16.131.163: icmp_seq=0 ttl=59 time=3.585 ms
+
+--- 172.16.131.163 ping statistics ---
+1 packets transmitted, 1 packets received, 0.0% packet loss
+round-trip min/avg/max/stddev = 3.585/3.585/3.585/0.000 ms
+PING 172.16.131.163 (172.16.131.163): 56 data bytes
+64 bytes from 172.16.131.163: icmp_seq=0 ttl=59 time=3.222 ms
+
+--- 172.16.131.163 ping statistics ---
+1 packets transmitted, 1 packets received, 0.0% packet loss
+round-trip min/avg/max/stddev = 3.222/3.222/3.222/0.000 ms
+PING 172.16.131.163 (172.16.131.163): 56 data bytes
+64 bytes from 172.16.131.163: icmp_seq=0 ttl=59 time=2.622 ms
+
+--- 172.16.131.163 ping statistics ---
+1 packets transmitted, 1 packets received, 0.0% packet loss
+round-trip min/avg/max/stddev = 2.622/2.622/2.622/0.000 ms
+PING 172.16.131.163 (172.16.131.163): 56 data bytes
+64 bytes from 172.16.131.163: icmp_seq=0 ttl=59 time=2.562 ms
+
+--- 172.16.131.163 ping statistics ---
+1 packets transmitted, 1 packets received, 0.0% packet loss
+round-trip min/avg/max/stddev = 2.562/2.562/2.562/0.000 ms
+PING 172.16.131.163 (172.16.131.163): 56 data bytes
+64 bytes from 172.16.131.163: icmp_seq=0 ttl=59 time=2.730 ms
+
+--- 172.16.131.163 ping statistics ---
+1 packets transmitted, 1 packets received, 0.0% packet loss
+round-trip min/avg/max/stddev = 2.730/2.730/2.730/0.000 ms
+PING 172.16.131.163 (172.16.131.163): 56 data bytes
+64 bytes from 172.16.131.163: icmp_seq=0 ttl=59 time=2.984 ms
+
+--- 172.16.131.163 ping statistics ---
+1 packets transmitted, 1 packets received, 0.0% packet loss
+round-trip min/avg/max/stddev = 2.984/2.984/2.984/0.000 ms
+PING 172.16.131.163 (172.16.131.163): 56 data bytes
+64 bytes from 172.16.131.163: icmp_seq=0 ttl=59 time=2.526 ms
+
+--- 172.16.131.163 ping statistics ---
+1 packets transmitted, 1 packets received, 0.0% packet loss
+round-trip min/avg/max/stddev = 2.526/2.526/2.526/0.000 ms
+PING 172.16.131.163 (172.16.131.163): 56 data bytes
+64 bytes from 172.16.131.163: icmp_seq=0 ttl=59 time=2.993 ms
+
+--- 172.16.131.163 ping statistics ---
+1 packets transmitted, 1 packets received, 0.0% packet loss
+round-trip min/avg/max/stddev = 2.993/2.993/2.993/0.000 ms
+PING 172.16.131.163 (172.16.131.163): 56 data bytes
+
+--- 172.16.131.163 ping statistics ---
+1 packets transmitted, 0 packets received, 100.0% packet loss
+System shut down
+^CTraceback (most recent call last):
+  File "/Users/pedigoz/Documents/MSK_Coding_Projects/UpdateScript/chain_update.py", line 233, in <module>
+    chain_update('172.16.131.163')
+  File "/Users/pedigoz/Documents/MSK_Coding_Projects/UpdateScript/chain_update.py", line 227, in chain_update
+    chain_update(ip)
+  File "/Users/pedigoz/Documents/MSK_Coding_Projects/UpdateScript/chain_update.py", line 199, in chain_update
+    upgrade(hw_version, '10.19', ip)
+  File "/Users/pedigoz/Documents/MSK_Coding_Projects/UpdateScript/chain_update.py", line 119, in upgrade
+    time.sleep(60)
+KeyboardInterrupt
+
+(UpdateScript) ➜  UpdateScript git:(main) ✗ 
