@@ -32,7 +32,7 @@ kit_versions = {
 pro_versions = {
     '10.15': 'cmterm-s53300ce10_15_4_1.k3.cop.sgn', 
     '10.19': 'cmterm-s53300ce10_19_5_6.k3.cop.sgn',
-    '11.9': 'cmterm-s53300ce11_9_2_4.k4.cop.sha512',
+    '11.5': 'cmterm-s53300ce11_5_4_6.k4.cop.sha512',
     '11.14': 'cmterm-s53300ce11_14_2_3.k4.cop.sha512',
 }
 
@@ -110,6 +110,7 @@ def upgrade(hw_version, sw_version, ip):
         else:
             awake = False
             restarted = True
+            print('System shut down')
 
     if (restarted == False):
         print('Codec upgrade failed. Please troubleshoot.')
@@ -124,6 +125,7 @@ def upgrade(hw_version, sw_version, ip):
         ping = os.system(f"ping -c 1 {ip}")
         if (ping == 0):
             awake = True
+            print('System is back up')
         else:
             awake = False
             new_time = math.floor(time.time())
@@ -133,6 +135,8 @@ def upgrade(hw_version, sw_version, ip):
     if (awake == False):
         raise UpgradeException({'text': 'Codec failed to restart. Please investigate'})
     
+    time.sleep(30)
+
     return 'Upgrade complete'
 
 #Command used to populate XML string to be sent to codec by upgrade command
@@ -195,7 +199,7 @@ def chain_update(ip):
                 upgrade(hw_version, '10.19', ip)
             except UpgradeException as err:
                 print(err.text)
-        else:
+        elif (int(sw_version[1]) == 19):
             print('Upgrade to version 11.5')
             try:
                 upgrade(hw_version, '11.5', ip)
@@ -208,7 +212,7 @@ def chain_update(ip):
                 upgrade(hw_version, '11.9', ip)
             except UpgradeException as err:
                 print(err.text)
-        elif (int(sw_version[1]) >= 9 and sw_version < 14):
+        elif (int(sw_version[1]) < 14):
             print('Upgrade to version 11.14')
             try:
                 upgrade(hw_version, '11.14', ip)
