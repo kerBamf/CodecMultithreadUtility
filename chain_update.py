@@ -117,11 +117,13 @@ def upgrade(sys_name, hw_version, sw_version, ip):
     restarted = False
     print(f'Pinging {sys_name}...')
     while awake == True and time_passed < 60*10:
-        ping = subprocess.run(["ping", "-c", "1", {ip}], capture_output=True).returncode
+        ping = subprocess.run(["ping", "-c", "1", ip], capture_output=True).returncode
         if (ping == 0):
             awake = True
             new_time = math.floor(time.time())
             time_passed = new_time - start
+            if (time_passed % 10 == 0):
+                print(f'Still pinging {sys_name}')
             time.sleep(1)
         else:
             awake = False
@@ -138,7 +140,7 @@ def upgrade(sys_name, hw_version, sw_version, ip):
     time_passed = 0
     start = math.floor(time.time())
     while awake == False and time_passed < 60*8:
-        ping = subprocess.run(["ping", "-c", "1", {ip}], capture_output=True).returncode
+        ping = subprocess.run(["ping", "-c", "1", ip], capture_output=True).returncode
         if (ping == 0):
             awake = True
             print(f'{sys_name} has powered up, giving it a minute of breathing room.')
@@ -146,6 +148,8 @@ def upgrade(sys_name, hw_version, sw_version, ip):
             awake = False
             new_time = math.floor(time.time())
             time_passed = start - new_time
+            if (time_passed % 10 == 0):
+                print(f'Still pinging {sys_name}')
             time.sleep(1)
 
     if (awake == False):
@@ -252,8 +256,6 @@ def step_update(ip):
     print(f'{sys_name} successfully upgraded')
 
     return f'{sys_name} successfully upgraded'
-
-step_update('172.16.131.191') #Tech lab codec pro
 
 if __name__ == '__main__':
     step_update('172.16.131.191')
