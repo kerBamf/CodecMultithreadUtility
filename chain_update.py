@@ -80,9 +80,22 @@ def check_hardware(ip):
     except requests.exceptions.HTTPError as err:
         print(err.response)
         return False
+    
+def check_system_name(ip):
+    headers = {'Authorization': f'basic {PASSCODE}'}
+
+    try:
+        xml = requests.get(f'https://{ip}/getxml?location=/Status/SystemUnit/BroadcastName', headers=headers, verify=False)
+        xml_root = ET.fromstring(xml.text)
+        system_name = xml_root[0][0].text
+        print(f'Codec Name Found: {system_name}')
+        return system_name
+    except requests.exceptions.HTTPError as err:
+        print(err.response)
+        return False
 
 #Function called when upgrade is initiated. Hardware version determines filepath, software version determines file to be used
-def upgrade(hw_version, sw_version, ip):
+def upgrade(sys_name, hw_version, sw_version, ip):
     try:
         url = f'http://{ip}/putxml'
         headers = {'Authorization': 'basic YWRtaW46NzM2NjgzMjk='}
@@ -108,11 +121,11 @@ def upgrade(hw_version, sw_version, ip):
         else:
             awake = False
             restarted = True
-            print('System shut down')
+            print(f'{sys_name} shut down')
 
     if (restarted == False):
-        print('Codec upgrade failed. Please troubleshoot.')
-        raise UpgradeException({'text':'Codec failed to pull update properly'})
+        print(f'{sys_name} upgrade failed. Please troubleshoot.')
+        raise UpgradeException({'text':f'{sys_name} failed to pull update properly'})
         
     time.sleep(60)
 
@@ -123,7 +136,7 @@ def upgrade(hw_version, sw_version, ip):
         ping = os.system(f"ping -c 1 {ip}")
         if (ping == 0):
             awake = True
-            print('System is back up')
+            print(f'{sys_name} has powered up')
         else:
             awake = False
             new_time = math.floor(time.time())
@@ -131,11 +144,11 @@ def upgrade(hw_version, sw_version, ip):
             time.sleep(1)
 
     if (awake == False):
-        raise UpgradeException({'text': 'Codec failed to restart. Please investigate'})
+        raise UpgradeException({f'text': f'{sys_name} failed to restart. Please investigate'})
     
     time.sleep(60)
 
-    return 'Upgrade complete'
+    return f'Upgrade complete on {sys_name}'
 
 #Command used to populate XML string to be sent to codec by upgrade command
 def upgrade_command_xml(hw_version, sw_version):
@@ -153,8 +166,10 @@ def upgrade_command_xml(hw_version, sw_version):
 # check_software('172.16.131.163')
 def chain_update(ip):
 
+
     hw_version = check_hardware(ip) #Returns 'kit,' 'pro', or 'SX80', or False for errors
     sw_version = check_software(ip) #Returns list of numbers for codec versions/sub-versions, or False for errors
+    sys_name = check_system_name(ip)
 
     #Exit conditions to cancel function should there be an error
     if (sw_version == False):
@@ -167,71 +182,72 @@ def chain_update(ip):
 
     # Returns chain update function if code is on the latest version. Changes will need to be added later to allow for dynamic edits to code versions as newer ones come out.
     if (int(sw_version[0]) == 11 and int(sw_version[1]) == 14):
-        print('Codec is runnnig latest software. Exiting script')
-        return 'Codec is running latest software. Exiting script'
+        print(f'{sys_name} is runnnig latest software. Exiting script')
+        return f'{sys_name} running latest software. Exiting script'
     
     #Comparing code versions
     if (int(sw_version[0]) < 10):
         if (int(sw_version[1]) < 15):
             print('upgrade to version 9.15.3.22')
             try:
-                upgrade(hw_version, '9.15', ip)
+                upgrade(sys_name, hw_version, '9.15', ip)
             except UpgradeException as err:
                 print(err.text)
         else:
             print('Upgrade to version 10.15.4')
             try:
-                upgrade(hw_version, '10.15', ip)
+                upgrade(sys_name, hw_version, '10.15', ip)
             except UpgradeException as err:
                 print(err.text)
     elif (int(sw_version[0]) == 10):
         if (int(sw_version[1]) < 15):
             print('Upgrade to version 10.15.4')
             try:
-                upgrade(hw_version, '10.15', ip)
+                upgrade(sys_name, hw_version, '10.15', ip)
             except UpgradeException as err:
                 print(err.text)
         elif (int(sw_version[1]) >= 15 and int(sw_version[1]) < 19):
             print('Upgrade to version 10.19.4.2')
             try:
-                upgrade(hw_version, '10.19', ip)
+                upgrade(sys_name, hw_version, '10.19', ip)
             except UpgradeException as err:
                 print(err.text)
         elif (int(sw_version[1]) == 19):
             print('Upgrade to version 11.5')
             try:
-                upgrade(hw_version, '11.5', ip)
+                upgrade(sys_name, hw_version, '11.5', ip)
             except UpgradeException as err:
                 print(err.text)
     elif (int(sw_version[0]) == 11):
         if (int(sw_version[1]) < 9 and hw_version == 'kit'):
             print('Upgrade to version 11.9')
             try:
-                upgrade(hw_version, '11.9', ip)
+                upgrade(sys_name, hw_version, '11.9', ip)
             except UpgradeException as err:
                 print(err.text)
         elif (int(sw_version[1]) >= 9 and int(sw_version[1]) < 14):
             print('Upgrade to version 11.14')
             try:
-                upgrade(hw_version, '11.14', ip)
+                upgrade(sys_name, hw_version, '11.14', ip)
             except UpgradeException as err:
                 print(err.text)
     
     new_sw_version = check_software(ip)
 
     if (new_sw_version == sw_version):
-        raise UpgradeException({'text': 'Codec restarted, but failed to update properly. Please investigate'})
+        raise UpgradeException({'text': f'{sys_name} restarted, but failed to update properly. Please investigate'})
     
     confirmation = '.'.join(new_sw_version)
     
-    print(f'\r\n{confirmation} successfully installed\r\n')
+    print(f'\r\n{confirmation} successfully installed on {sys_name}\r\n')
 
     chain_update(ip)
 
-    print('Codec successfully upgraded')
+    print(f'{sys_name} successfully upgraded')
 
-    return 'Codec successfully upgraded'
+    return f'{sys_name} successfully upgraded'
 
-chain_update('172.16.131.163')
+# chain_update('172.16.131.163') Tech lab codec pro
+chain_update('172.16.131.191')
 
 

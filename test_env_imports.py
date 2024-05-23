@@ -53,7 +53,22 @@ def check_hardware(ip):
     except requests.exceptions.HTTPError as err:
         print(err.response)
         return False
-    
-check_hardware('172.17.64.174')
+
+def check_system_name(ip):
+    headers = {'Authorization': f'basic {PASSCODE}'}
+
+    try:
+        xml = requests.get(f'https://{ip}/getxml?location=/Status/SystemUnit/BroadcastName', headers=headers, verify=False)
+        xml_root = ET.fromstring(xml.text)
+        system_name = xml_root[0][0].text
+        print(f'Codec Name Found: {system_name}')
+        return system_name
+    except requests.exceptions.HTTPError as err:
+        print(err.response)
+        return False
+
+# check_hardware('172.17.64.174')
 
 # check_software('172.16.131.60')
+
+check_system_name('172.16.131.13')
