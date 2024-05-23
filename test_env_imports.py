@@ -58,8 +58,9 @@ def check_system_name(ip):
     headers = {'Authorization': f'basic {PASSCODE}'}
 
     try:
-        xml = requests.get(f'https://{ip}/getxml?location=/Status/SystemUnit/BroadcastName', headers=headers, verify=False)
+        xml = requests.get(f'https://{ip}/getxml?location=/Configuration/SystemUnit/Name', headers=headers, verify=False)
         xml_root = ET.fromstring(xml.text)
+        print(xml_root.text)
         system_name = xml_root[0][0].text
         print(f'Codec Name Found: {system_name}')
         return system_name
@@ -71,4 +72,4 @@ def check_system_name(ip):
 
 # check_software('172.16.131.60')
 
-check_system_name('172.16.131.13')
+check_system_name('172.16.131.191')

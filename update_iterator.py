@@ -30,3 +30,5 @@ def update_iterator():
                 print(future.result())
     except Exception as error:
         print(error)
+
+update_iterator()
