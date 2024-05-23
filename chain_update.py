@@ -2,6 +2,7 @@ import os
 from dotenv import load_dotenv
 import time
 import math
+import subprocess
 import requests
 import xml.etree.ElementTree as ET
 
@@ -12,6 +13,8 @@ load_dotenv()
 PASSCODE = os.environ.get('PASSCODE')
 PROPATH = os.environ.get('PROPATH')
 KITPATH = os.environ.get('KITPATH')
+
+requests.packages.urllib3.disable_warnings()
 
 class UpgradeException(Exception):
     pass
@@ -33,7 +36,7 @@ pro_versions = {
     '10.15': 'cmterm-s53300ce10_15_4_1.k3.cop.sgn', 
     '10.19': 'cmterm-s53300ce10_19_5_6.k3.cop.sgn',
     '11.5': 'cmterm-s53300ce11_5_4_6.k4.cop.sha512',
-    '11.9': 'cmterm-s53300ce11_5_4_6.k4.cop.sha512',
+    '11.9': 'cmterm-s53300ce11_9_3_1.k4.cop.sha512',
     '11.14': 'cmterm-s53300ce11_14_2_3.k4.cop.sha512',
 }
 
@@ -96,6 +99,7 @@ def check_system_name(ip):
 
 #Function called when upgrade is initiated. Hardware version determines filepath, software version determines file to be used
 def upgrade(sys_name, hw_version, sw_version, ip):
+
     try:
         url = f'http://{ip}/putxml'
         headers = {'Authorization': 'basic YWRtaW46NzM2NjgzMjk='}
@@ -111,8 +115,9 @@ def upgrade(sys_name, hw_version, sw_version, ip):
     start = math.floor(time.time())
     time_passed = 0
     restarted = False
+    print(f'Pinging {sys_name}...')
     while awake == True and time_passed < 60*10:
-        ping = os.system(f"ping -c 1 {ip}")
+        ping = subprocess.run(["ping", "-c", "1", {ip}], capture_output=True).returncode
         if (ping == 0):
             awake = True
             new_time = math.floor(time.time())
@@ -121,7 +126,7 @@ def upgrade(sys_name, hw_version, sw_version, ip):
         else:
             awake = False
             restarted = True
-            print(f'{sys_name} shut down')
+            print(f'{sys_name} has shut down. Resuming ping in 1 minute.')
 
     if (restarted == False):
         print(f'{sys_name} upgrade failed. Please troubleshoot.')
@@ -133,10 +138,10 @@ def upgrade(sys_name, hw_version, sw_version, ip):
     time_passed = 0
     start = math.floor(time.time())
     while awake == False and time_passed < 60*8:
-        ping = os.system(f"ping -c 1 {ip}")
+        ping = subprocess.run(["ping", "-c", "1", {ip}], capture_output=True).returncode
         if (ping == 0):
             awake = True
-            print(f'{sys_name} has powered up')
+            print(f'{sys_name} has powered up, giving it a minute of breathing room.')
         else:
             awake = False
             new_time = math.floor(time.time())
@@ -144,6 +149,7 @@ def upgrade(sys_name, hw_version, sw_version, ip):
             time.sleep(1)
 
     if (awake == False):
+        print(f'{sys_name} failed to restart. Please investigate')
         raise UpgradeException({f'text': f'{sys_name} failed to restart. Please investigate'})
     
     time.sleep(60)
@@ -164,8 +170,7 @@ def upgrade_command_xml(hw_version, sw_version):
 
 
 # check_software('172.16.131.163')
-def chain_update(ip):
-
+def step_update(ip):
 
     hw_version = check_hardware(ip) #Returns 'kit,' 'pro', or 'SX80', or False for errors
     sw_version = check_software(ip) #Returns list of numbers for codec versions/sub-versions, or False for errors
@@ -219,7 +224,7 @@ def chain_update(ip):
             except UpgradeException as err:
                 print(err.text)
     elif (int(sw_version[0]) == 11):
-        if (int(sw_version[1]) < 9 and hw_version == 'kit'):
+        if (int(sw_version[1]) < 9):
             print('Upgrade to version 11.9')
             try:
                 upgrade(sys_name, hw_version, '11.9', ip)
@@ -235,19 +240,22 @@ def chain_update(ip):
     new_sw_version = check_software(ip)
 
     if (new_sw_version == sw_version):
+        print(f'{sys_name} restarted, but failed to update properly. Please investigate')
         raise UpgradeException({'text': f'{sys_name} restarted, but failed to update properly. Please investigate'})
     
     confirmation = '.'.join(new_sw_version)
     
     print(f'\r\n{confirmation} successfully installed on {sys_name}\r\n')
 
-    chain_update(ip)
+    step_update(ip)
 
     print(f'{sys_name} successfully upgraded')
 
     return f'{sys_name} successfully upgraded'
 
-# chain_update('172.16.131.163') Tech lab codec pro
-chain_update('172.16.131.191')
+step_update('172.16.131.191') #Tech lab codec pro
+
+if __name__ == '__main__':
+    step_update('172.16.131.191')
 
 

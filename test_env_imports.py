@@ -3,6 +3,7 @@ from dotenv import load_dotenv
 import requests
 import urllib3
 import xml.etree.ElementTree as ET
+import subprocess
 
 load_dotenv()
 
@@ -72,4 +73,11 @@ def check_system_name(ip):
 
 # check_software('172.16.131.60')
 
-check_system_name('172.16.131.191')
+# check_system_name('172.16.131.191')
+
+ping = subprocess.run(["ping","-c","1","172.16.131.191"], capture_output=True)
+
+print(ping.returncode)
+
+if __name__ == '__main__':
+    print(ping.returncode)

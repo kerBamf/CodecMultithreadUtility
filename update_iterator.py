@@ -1,4 +1,5 @@
 import os
+import time
 from dotenv import load_dotenv
 import requests
 from urllib3.exceptions import InsecureRequestWarning
@@ -7,7 +8,7 @@ import openpyxl
 import concurrent.futures
 import smtplib
 import xml.etree.ElementTree as ET
-from chain_update import chain_update
+from chain_update import step_update
 
 
 #Loading excel sheet
@@ -22,12 +23,17 @@ codec_list = [
     '172.16.131.191'
 ]
 
+def dummy_func(ip):
+    time.sleep(10)
+    print("I'm a dummy")
+    print(ip)
+
 def update_iterator():
     try:
-        with concurrent.futures.ThreadPoolExecutor(max_workers=5) as executor:
+        with concurrent.futures.ThreadPoolExecutor() as executor:
             for ip in codec_list:
-                future = executor.submit(chain_update, ip)
-                print(future.result())
+                # executor.submit(print, f'{ip} {time.time()}')
+                executor.submit(step_update, ip)
     except Exception as error:
         print(error)
 
