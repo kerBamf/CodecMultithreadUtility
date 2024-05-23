@@ -33,6 +33,7 @@ pro_versions = {
     '10.15': 'cmterm-s53300ce10_15_4_1.k3.cop.sgn', 
     '10.19': 'cmterm-s53300ce10_19_5_6.k3.cop.sgn',
     '11.5': 'cmterm-s53300ce11_5_4_6.k4.cop.sha512',
+    '11.9': 'cmterm-s53300ce11_5_4_6.k4.cop.sha512',
     '11.14': 'cmterm-s53300ce11_14_2_3.k4.cop.sha512',
 }
 
@@ -209,7 +210,7 @@ def chain_update(ip):
                 upgrade(hw_version, '11.9', ip)
             except UpgradeException as err:
                 print(err.text)
-        elif (int(sw_version[1]) < 14):
+        elif (int(sw_version[1]) >= 9 and int(sw_version[1]) < 14):
             print('Upgrade to version 11.14')
             try:
                 upgrade(hw_version, '11.14', ip)
