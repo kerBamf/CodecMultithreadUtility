@@ -28,6 +28,7 @@ def dummy_func(ip):
     print("I'm a dummy")
     print(ip)
 
+
 def update_iterator():
     try:
         with concurrent.futures.ThreadPoolExecutor() as executor:
@@ -37,4 +38,7 @@ def update_iterator():
     except Exception as error:
         print(error)
 
-update_iterator()
+
+if  __name__ == '__main__':
+    update_iterator()
+    
