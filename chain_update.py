@@ -191,7 +191,7 @@ def step_update(ip):
 
     # Returns chain update function if code is on the latest version. Changes will need to be added later to allow for dynamic edits to code versions as newer ones come out.
     if (int(sw_version[0]) == 11 and int(sw_version[1]) == 14):
-        print(f'{sys_name} is runnnig latest software. Exiting script')
+        # print(f'{sys_name} is runnnig latest software. Exiting script')
         return f'{sys_name} running latest software. Exiting script'
     
     #Comparing code versions

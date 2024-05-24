@@ -18,9 +18,9 @@ codec_list = load_workbook(excel_file)
 ws = codec_list.active
 
 codec_list = [
-    '172.16.131.163',
-    '172.16.131.13',
-    '172.16.131.191'
+    '172.16.131.16',
+    '172.16.131.1',
+    '172.16.131.11'
 ]
 
 def dummy_func(ip):
@@ -29,12 +29,14 @@ def dummy_func(ip):
     print(ip)
 
 def update_iterator():
-    try:
-        with concurrent.futures.ThreadPoolExecutor() as executor:
-            for ip in codec_list:
-                # executor.submit(print, f'{ip} {time.time()}')
-                executor.submit(step_update, ip)
-    except Exception as error:
-        print(error)
+    with concurrent.futures.ThreadPoolExecutor() as executor:
+        futures = [executor.submit(step_update, ip) for ip in codec_list]
+    
+    for future in concurrent.futures.as_completed(futures):
+        if (future.exception()):
+            print(future.exception())
+        else:
+            print(future.result())
 
-update_iterator()
+if __name__ == '__main__':
+    update_iterator()
