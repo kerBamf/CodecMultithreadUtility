@@ -18,9 +18,9 @@ codec_list = load_workbook(excel_file)
 ws = codec_list.active
 
 codec_list = [
-    '172.16.131.16',
-    '172.16.131.1',
-    '172.16.131.11'
+    '172.16.131.163',
+    '172.16.131.13',
+    '172.16.131.191'
 ]
 
 def dummy_func(ip):

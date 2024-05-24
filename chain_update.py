@@ -105,8 +105,13 @@ def upgrade(sys_name, hw_version, sw_version, ip):
         headers = {'Authorization': 'basic YWRtaW46NzM2NjgzMjk='}
         payload = upgrade_command_xml(hw_version, sw_version)
         response = requests.request("POST", url, headers=headers, data=payload, verify=False)
-        print(response.text)
-        response.raise_for_status()
+        xml_root = ET.fromstring(response.text)
+        status = xml_root[0].attrib['status']
+        if (status == 'OK'):
+            print('Upgrade status OK. Proceeding.')
+        else:
+            print(f'Upgrade status: {status}. {xml_root[0].text}')
+            raise UpgradeException({'text': f'Upgrade status: Error. {xml_root[0].text}'})
     except requests.exceptions.HTTPError as err:
         print(err.response)
 
@@ -122,7 +127,7 @@ def upgrade(sys_name, hw_version, sw_version, ip):
             awake = True
             new_time = math.floor(time.time())
             time_passed = new_time - start
-            if (time_passed % 10 == 0):
+            if (time_passed % 10 == 0 and time_passed > 0):
                 print(f'Still pinging {sys_name}')
             time.sleep(1)
         else:
@@ -148,7 +153,7 @@ def upgrade(sys_name, hw_version, sw_version, ip):
             awake = False
             new_time = math.floor(time.time())
             time_passed = start - new_time
-            if (time_passed % 10 == 0):
+            if (time_passed % 10 == 0 and time_passed > 0):
                 print(f'Still pinging {sys_name}')
             time.sleep(1)
 
@@ -249,11 +254,9 @@ def step_update(ip):
     
     confirmation = '.'.join(new_sw_version)
     
-    print(f'\r\n{confirmation} successfully installed on {sys_name}\r\n')
+    print(f'********\r\n{confirmation} successfully installed on {sys_name}\r\n********')
 
     step_update(ip)
-
-    print(f'{sys_name} successfully upgraded')
 
     return f'{sys_name} successfully upgraded'
 
