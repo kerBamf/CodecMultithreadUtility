@@ -13,14 +13,15 @@ from chain_update import step_update
 
 #Loading excel sheet
 #excel_file = f'./codec_lists/{input('Enter codec list filename: ')}'
-excel_file = f'./codec_lists/633CodecList.xlsx'
-codec_list = load_workbook(excel_file)
-ws = codec_list.active
+# excel_file = f'./codec_lists/633CodecList.xlsx'
+# codec_list = load_workbook(excel_file)
+# ws = codec_list.active
 
 codec_list = [
-    '172.16.131.163',
-    '172.16.131.13',
-    '172.16.131.191'
+    '172.17.64.158'
+    # '172.16.131.163',
+    # '172.16.131.13',
+    # '172.16.131.191'
 ]
 
 def dummy_func(ip):
