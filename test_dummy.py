@@ -3,6 +3,7 @@ import time
 import math
 from datetime import datetime
 import xml.etree.ElementTree as ET
+
 from chain_update import check_codec
 
 xml_string = '<?xml version="1.0"?><Command><SystemUnitSoftwareUpgradeResult status="OK"/></Command>'
