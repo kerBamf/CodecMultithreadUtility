@@ -13,9 +13,9 @@ from chain_update import step_update
 
 #Loading excel sheet
 #excel_file = f'./codec_lists/{input('Enter codec list filename: ')}'
-excel_file = f'./codec_lists/633CodecList.xlsx'
-codec_list = load_workbook(excel_file)
-ws = codec_list.active
+# excel_file = f'./codec_lists/633CodecList.xlsx'
+# codec_list = load_workbook(excel_file)
+# ws = codec_list.active
 
 codec_list = [
     '172.16.131.163',
@@ -30,15 +30,14 @@ def dummy_func(ip):
 
 
 def update_iterator():
-    try:
-        with concurrent.futures.ThreadPoolExecutor() as executor:
-            for ip in codec_list:
-                # executor.submit(print, f'{ip} {time.time()}')
-                executor.submit(step_update, ip)
-    except Exception as error:
-        print(error)
-
-
-if  __name__ == '__main__':
-    update_iterator()
+    with concurrent.futures.ThreadPoolExecutor() as executor:
+        futures = {executor.submit(step_update, ip): ip for ip in codec_list}
     
+    for future in concurrent.futures.as_completed(futures):
+        if (future.exception()):
+            print(future.exception())
+        else:
+            print(future.result())
+
+if __name__ == '__main__':
+    update_iterator()
