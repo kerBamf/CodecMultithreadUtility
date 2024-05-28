@@ -35,8 +35,7 @@ all_sw_versions = {
         '10.15': 'cmterm-s53200ce10_15_4_1.k3.cop.sgn',
         '11.5': 'cmterm-s53200ce11_5_2_4.k4.cop.sha512',
         '11.9': 'cmterm-s53200ce11_9_3_1.k4.cop.sha512',
-        '11.14': 'cmterm-s53200ce11_14_2_3.k4.cop.sha512',
-        '20.20': 'bunk_stuff_lol'
+        '11.14': 'cmterm-s53200ce11_14_2_3.k4.cop.sha512'
     },
     'pro': {
         '10.15': 'cmterm-s53300ce10_15_4_1.k3.cop.sgn', 
