@@ -258,6 +258,6 @@ def step_update(ip):
     return f'{sys_name} successfully upgraded'
 
 if __name__ == '__main__':
-    step_update('172.16.131.191')
+    step_update('172.17.64.158')
 
 
