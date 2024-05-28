@@ -35,7 +35,8 @@ all_sw_versions = {
         '10.15': 'cmterm-s53200ce10_15_4_1.k3.cop.sgn',
         '11.5': 'cmterm-s53200ce11_5_2_4.k4.cop.sha512',
         '11.9': 'cmterm-s53200ce11_9_3_1.k4.cop.sha512',
-        '11.14': 'cmterm-s53200ce11_14_2_3.k4.cop.sha512'
+        '11.14': 'cmterm-s53200ce11_14_2_3.k4.cop.sha512',
+        '20.20': 'bunk_stuff_lol'
     },
     'pro': {
         '10.15': 'cmterm-s53300ce10_15_4_1.k3.cop.sgn', 
@@ -107,7 +108,7 @@ def check_codec(ip):
 
 #Function called when upgrade is initiated. Hardware version determines filepath, software version determines file to be used
 def upgrade(sys_name, current_sw, sw_path, sw_file, ip):
-
+    print(f'Attempting to install {sw_file} on {sys_name}...')
     try:
         url = f'http://{ip}/putxml'
         headers = {'Authorization': 'basic YWRtaW46NzM2NjgzMjk='}
@@ -204,7 +205,6 @@ def step_update(ip):
 
     # Returns chain update function if code is on the latest version. Changes will need to be added later to allow for dynamic edits to code versions as newer ones come out.
     if (int(codec_info['sw_version'][0]) == int(final_sw_version[0]) and int(codec_info['sw_version'][1]) == int(final_sw_version[1])):
-        print(f'{codec_info['sys_name']} is runnning latest software. Exiting script')
         return f'{codec_info['sys_name']} running latest software. Exiting script.'
     
     #Beginning upgrade iteration
@@ -215,15 +215,18 @@ def step_update(ip):
             try:
                 upgrade(codec_info['sys_name'], cur_sw_version, assigned_sw_path, assigned_sw_list[key], ip)
             except UpgradeException as error:
-                print(error.text)
+                (except_dictionary,) = error.args
+                print(except_dictionary["text"])
+                #print(error['text'])
                 raise error
         elif int(split_key[0]) > int(cur_sw_version[0]):
             try:
                 upgrade(codec_info['sys_name'], cur_sw_version, assigned_sw_path, assigned_sw_list[key], ip)
             except UpgradeException as error:
-                print(error.text)
+                (except_dictionary,) = error.args
+                print(except_dictionary["text"])
+                #print(error['text'])
                 raise error
-    
 
     return f'{codec_info['sys_name']} successfully upgraded'
 

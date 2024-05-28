@@ -18,10 +18,9 @@ from chain_update import step_update
 # ws = codec_list.active
 
 codec_list = [
-    '172.17.64.158'
-    # '172.16.131.163',
-    # '172.16.131.13',
-    # '172.16.131.191'
+    '172.16.131.163',
+    '172.16.131.13',
+    '172.16.131.191'
 ]
 
 def dummy_func(ip):
@@ -31,7 +30,7 @@ def dummy_func(ip):
 
 def update_iterator():
     with concurrent.futures.ThreadPoolExecutor() as executor:
-        futures = [executor.submit(step_update, ip) for ip in codec_list]
+        futures = {executor.submit(step_update, ip): ip for ip in codec_list}
     
     for future in concurrent.futures.as_completed(futures):
         if (future.exception()):
