@@ -14,6 +14,7 @@ load_dotenv()
 PASSCODE = os.environ.get('PASSCODE')
 PROPATH = os.environ.get('PROPATH')
 KITPATH = os.environ.get('KITPATH')
+TESTURL = os.environ.get('TESTURL')
 
 all_sw_paths = {
     'kit': KITPATH,
@@ -240,4 +241,4 @@ def step_update(ip):
     return {'Status': f'{codec_info['sys_name']} successfully upgraded', 'ip': ip}
 
 if __name__ == '__main__':
-    step_update('172.16.131.163')
+    step_update(TESTURL)
