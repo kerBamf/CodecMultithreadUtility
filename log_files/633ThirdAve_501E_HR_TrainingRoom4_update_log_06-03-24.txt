@@ -1,0 +1,3 @@
+06/03/24_11:24:08--> Codec Name Found: 633ThirdAve_501E_HR_TrainingRoom4
+06/03/24_11:24:09--> Software found: ce9.15.16.5.5d66bd5601f
+06/03/24_11:24:10--> Hardware found: MX800ST. Assigning hardware version: 

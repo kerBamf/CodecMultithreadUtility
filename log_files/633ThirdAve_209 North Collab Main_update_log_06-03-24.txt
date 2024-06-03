@@ -1,0 +1,4 @@
+06/03/24_11:12:13--> Codec Name Found: 633ThirdAve_209 North Collab Main
+06/03/24_11:12:14--> Software found: ce11.14.2.3.e98a3091ff6
+06/03/24_11:12:15--> Hardware found: Codec Plus. Assigning hardware version: kit
+06/03/24_11:12:15--> 633ThirdAve_209 North Collab Main running latest software. Exiting script.

@@ -1,0 +1,4 @@
+06/03/24_11:11:00--> Codec Name Found: 633ThirdAve_2828_Conf-Room
+06/03/24_11:11:01--> Software found: ce11.14.2.3.e98a3091ff6
+06/03/24_11:11:02--> Hardware found: Codec Plus. Assigning hardware version: kit
+06/03/24_11:11:02--> 633ThirdAve_2828_Conf-Room running latest software. Exiting script.

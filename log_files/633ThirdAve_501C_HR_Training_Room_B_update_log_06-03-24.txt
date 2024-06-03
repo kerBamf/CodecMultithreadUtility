@@ -1,0 +1,72 @@
+06/03/24_11:10:58--> Codec Name Found: 633ThirdAve_501C_HR_Training_Room_B
+06/03/24_11:10:59--> Software found: ce10.19.5.6.7cd166d6be0
+06/03/24_11:11:00--> Hardware found: Codec Pro. Assigning hardware version: pro
+06/03/24_11:11:00--> Attempting to install cmterm-s53300ce11_5_4_6.k4.cop.sha512 on 633ThirdAve_501C_HR_Training_Room_B...
+06/03/24_11:13:42--> Upgrade status OK. Proceeding.
+06/03/24_11:13:42--> Pinging 633ThirdAve_501C_HR_Training_Room_B...
+06/03/24_11:13:52--> Still pinging 633ThirdAve_501C_HR_Training_Room_B
+06/03/24_11:14:02--> Still pinging 633ThirdAve_501C_HR_Training_Room_B
+06/03/24_11:14:12--> Still pinging 633ThirdAve_501C_HR_Training_Room_B
+06/03/24_11:14:22--> Still pinging 633ThirdAve_501C_HR_Training_Room_B
+06/03/24_11:14:32--> Still pinging 633ThirdAve_501C_HR_Training_Room_B
+06/03/24_11:14:42--> Still pinging 633ThirdAve_501C_HR_Training_Room_B
+06/03/24_11:14:52--> Still pinging 633ThirdAve_501C_HR_Training_Room_B
+06/03/24_11:15:02--> Still pinging 633ThirdAve_501C_HR_Training_Room_B
+06/03/24_11:15:12--> Still pinging 633ThirdAve_501C_HR_Training_Room_B
+06/03/24_11:15:22--> Still pinging 633ThirdAve_501C_HR_Training_Room_B
+06/03/24_11:15:32--> Still pinging 633ThirdAve_501C_HR_Training_Room_B
+06/03/24_11:15:42--> Still pinging 633ThirdAve_501C_HR_Training_Room_B
+06/03/24_11:15:56--> 633ThirdAve_501C_HR_Training_Room_B has shut down. Resuming ping in 1 minute.
+06/03/24_11:17:09--> 633ThirdAve_501C_HR_Training_Room_B has powered up, giving it a minute of breathing room.
+06/03/24_11:18:10--> Codec Name Found: 633ThirdAve_501C_HR_Training_Room_B
+06/03/24_11:18:11--> Software found: ce11.5.4.6.08c783a4691
+06/03/24_11:18:12--> Hardware found: Codec Pro. Assigning hardware version: pro
+06/03/24_11:18:12--> ********
+11.5.4.6.08c783a4691 successfully installed on 633ThirdAve_501C_HR_Training_Room_B
+********
+06/03/24_11:18:12--> Attempting to install cmterm-s53300ce11_9_3_1.k4.cop.sha512 on 633ThirdAve_501C_HR_Training_Room_B...
+06/03/24_11:18:46--> Upgrade status OK. Proceeding.
+06/03/24_11:18:46--> Pinging 633ThirdAve_501C_HR_Training_Room_B...
+06/03/24_11:18:56--> Still pinging 633ThirdAve_501C_HR_Training_Room_B
+06/03/24_11:19:06--> Still pinging 633ThirdAve_501C_HR_Training_Room_B
+06/03/24_11:19:16--> Still pinging 633ThirdAve_501C_HR_Training_Room_B
+06/03/24_11:19:26--> Still pinging 633ThirdAve_501C_HR_Training_Room_B
+06/03/24_11:19:36--> Still pinging 633ThirdAve_501C_HR_Training_Room_B
+06/03/24_11:19:46--> Still pinging 633ThirdAve_501C_HR_Training_Room_B
+06/03/24_11:19:56--> Still pinging 633ThirdAve_501C_HR_Training_Room_B
+06/03/24_11:20:06--> Still pinging 633ThirdAve_501C_HR_Training_Room_B
+06/03/24_11:20:24--> 633ThirdAve_501C_HR_Training_Room_B has shut down. Resuming ping in 1 minute.
+06/03/24_11:21:49--> 633ThirdAve_501C_HR_Training_Room_B has powered up, giving it a minute of breathing room.
+06/03/24_11:22:50--> Codec Name Found: 633ThirdAve_501C_HR_Training_Room_B
+06/03/24_11:22:51--> Software found: ce11.9.3.1.88903f816c0
+06/03/24_11:22:52--> Hardware found: Codec Pro. Assigning hardware version: pro
+06/03/24_11:22:52--> ********
+11.9.3.1.88903f816c0 successfully installed on 633ThirdAve_501C_HR_Training_Room_B
+********
+06/03/24_11:22:52--> Attempting to install cmterm-s53300ce11_14_2_3.k4.cop.sha512 on 633ThirdAve_501C_HR_Training_Room_B...
+06/03/24_11:23:16--> Upgrade status OK. Proceeding.
+06/03/24_11:23:16--> Pinging 633ThirdAve_501C_HR_Training_Room_B...
+06/03/24_11:23:26--> Still pinging 633ThirdAve_501C_HR_Training_Room_B
+06/03/24_11:23:36--> Still pinging 633ThirdAve_501C_HR_Training_Room_B
+06/03/24_11:23:46--> Still pinging 633ThirdAve_501C_HR_Training_Room_B
+06/03/24_11:23:56--> Still pinging 633ThirdAve_501C_HR_Training_Room_B
+06/03/24_11:24:06--> Still pinging 633ThirdAve_501C_HR_Training_Room_B
+06/03/24_11:24:16--> Still pinging 633ThirdAve_501C_HR_Training_Room_B
+06/03/24_11:24:26--> Still pinging 633ThirdAve_501C_HR_Training_Room_B
+06/03/24_11:24:36--> Still pinging 633ThirdAve_501C_HR_Training_Room_B
+06/03/24_11:24:46--> Still pinging 633ThirdAve_501C_HR_Training_Room_B
+06/03/24_11:24:56--> Still pinging 633ThirdAve_501C_HR_Training_Room_B
+06/03/24_11:25:06--> Still pinging 633ThirdAve_501C_HR_Training_Room_B
+06/03/24_11:25:16--> Still pinging 633ThirdAve_501C_HR_Training_Room_B
+06/03/24_11:25:26--> Still pinging 633ThirdAve_501C_HR_Training_Room_B
+06/03/24_11:25:36--> Still pinging 633ThirdAve_501C_HR_Training_Room_B
+06/03/24_11:25:46--> Still pinging 633ThirdAve_501C_HR_Training_Room_B
+06/03/24_11:25:59--> 633ThirdAve_501C_HR_Training_Room_B has shut down. Resuming ping in 1 minute.
+06/03/24_11:27:24--> 633ThirdAve_501C_HR_Training_Room_B has powered up, giving it a minute of breathing room.
+06/03/24_11:28:26--> Codec Name Found: 633ThirdAve_501C_HR_Training_Room_B
+06/03/24_11:28:27--> Software found: ce11.14.2.3.e98a3091ff6
+06/03/24_11:28:28--> Hardware found: Codec Pro. Assigning hardware version: pro
+06/03/24_11:28:28--> ********
+11.14.2.3.e98a3091ff6 successfully installed on 633ThirdAve_501C_HR_Training_Room_B
+********
+06/03/24_11:28:28--> 633ThirdAve_501C_HR_Training_Room_B successfully upgraded

@@ -1,0 +1,29 @@
+06/03/24_11:11:00--> Codec Name Found: 633ThirdAve_223Main
+06/03/24_11:11:01--> Software found: ce11.9.2.4.c05310d8c51
+06/03/24_11:11:02--> Hardware found: Codec Plus. Assigning hardware version: kit
+06/03/24_11:11:02--> Attempting to install cmterm-s53200ce11_14_2_3.k4.cop.sha512 on 633ThirdAve_223Main...
+06/03/24_11:13:43--> Upgrade status OK. Proceeding.
+06/03/24_11:13:43--> Pinging 633ThirdAve_223Main...
+06/03/24_11:13:53--> Still pinging 633ThirdAve_223Main
+06/03/24_11:14:03--> Still pinging 633ThirdAve_223Main
+06/03/24_11:14:13--> Still pinging 633ThirdAve_223Main
+06/03/24_11:14:23--> Still pinging 633ThirdAve_223Main
+06/03/24_11:14:33--> Still pinging 633ThirdAve_223Main
+06/03/24_11:14:43--> Still pinging 633ThirdAve_223Main
+06/03/24_11:14:53--> Still pinging 633ThirdAve_223Main
+06/03/24_11:15:03--> Still pinging 633ThirdAve_223Main
+06/03/24_11:15:13--> Still pinging 633ThirdAve_223Main
+06/03/24_11:15:23--> Still pinging 633ThirdAve_223Main
+06/03/24_11:15:33--> Still pinging 633ThirdAve_223Main
+06/03/24_11:15:43--> Still pinging 633ThirdAve_223Main
+06/03/24_11:15:53--> Still pinging 633ThirdAve_223Main
+06/03/24_11:16:03--> Still pinging 633ThirdAve_223Main
+06/03/24_11:16:18--> 633ThirdAve_223Main has shut down. Resuming ping in 1 minute.
+06/03/24_11:17:19--> 633ThirdAve_223Main has powered up, giving it a minute of breathing room.
+06/03/24_11:18:20--> Codec Name Found: 633ThirdAve_223Main
+06/03/24_11:18:21--> Software found: ce11.14.2.3.e98a3091ff6
+06/03/24_11:18:22--> Hardware found: Codec Plus. Assigning hardware version: kit
+06/03/24_11:18:22--> ********
+11.14.2.3.e98a3091ff6 successfully installed on 633ThirdAve_223Main
+********
+06/03/24_11:18:22--> 633ThirdAve_223Main successfully upgraded

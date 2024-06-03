@@ -1,0 +1,86 @@
+06/03/24_11:10:58--> Codec Name Found: 633ThirdAve_571_Conf-Room
+06/03/24_11:10:59--> Software found: ce10.19.5.6.7cd166d6be0
+06/03/24_11:11:00--> Hardware found: Room Kit. Assigning hardware version: kit
+06/03/24_11:11:00--> Attempting to install cmterm-s53200ce11_5_2_4.k4.cop.sha512 on 633ThirdAve_571_Conf-Room...
+06/03/24_11:13:35--> Upgrade status OK. Proceeding.
+06/03/24_11:13:35--> Pinging 633ThirdAve_571_Conf-Room...
+06/03/24_11:13:45--> Still pinging 633ThirdAve_571_Conf-Room
+06/03/24_11:13:55--> Still pinging 633ThirdAve_571_Conf-Room
+06/03/24_11:14:05--> Still pinging 633ThirdAve_571_Conf-Room
+06/03/24_11:14:15--> Still pinging 633ThirdAve_571_Conf-Room
+06/03/24_11:14:25--> Still pinging 633ThirdAve_571_Conf-Room
+06/03/24_11:14:35--> Still pinging 633ThirdAve_571_Conf-Room
+06/03/24_11:14:45--> Still pinging 633ThirdAve_571_Conf-Room
+06/03/24_11:14:55--> Still pinging 633ThirdAve_571_Conf-Room
+06/03/24_11:15:05--> Still pinging 633ThirdAve_571_Conf-Room
+06/03/24_11:15:15--> Still pinging 633ThirdAve_571_Conf-Room
+06/03/24_11:15:25--> Still pinging 633ThirdAve_571_Conf-Room
+06/03/24_11:15:35--> Still pinging 633ThirdAve_571_Conf-Room
+06/03/24_11:15:45--> Still pinging 633ThirdAve_571_Conf-Room
+06/03/24_11:15:55--> Still pinging 633ThirdAve_571_Conf-Room
+06/03/24_11:16:05--> Still pinging 633ThirdAve_571_Conf-Room
+06/03/24_11:16:15--> Still pinging 633ThirdAve_571_Conf-Room
+06/03/24_11:16:25--> Still pinging 633ThirdAve_571_Conf-Room
+06/03/24_11:16:35--> Still pinging 633ThirdAve_571_Conf-Room
+06/03/24_11:16:45--> Still pinging 633ThirdAve_571_Conf-Room
+06/03/24_11:16:55--> Still pinging 633ThirdAve_571_Conf-Room
+06/03/24_11:17:10--> 633ThirdAve_571_Conf-Room has shut down. Resuming ping in 1 minute.
+06/03/24_11:18:23--> 633ThirdAve_571_Conf-Room has powered up, giving it a minute of breathing room.
+06/03/24_11:19:24--> Codec Name Found: 633ThirdAve_571_Conf-Room
+06/03/24_11:19:25--> Software found: ce11.5.2.4.eea5e67094e
+06/03/24_11:19:26--> Hardware found: Room Kit. Assigning hardware version: kit
+06/03/24_11:19:26--> ********
+11.5.2.4.eea5e67094e successfully installed on 633ThirdAve_571_Conf-Room
+********
+06/03/24_11:19:26--> Attempting to install cmterm-s53200ce11_9_3_1.k4.cop.sha512 on 633ThirdAve_571_Conf-Room...
+06/03/24_11:21:03--> Upgrade status OK. Proceeding.
+06/03/24_11:21:03--> Pinging 633ThirdAve_571_Conf-Room...
+06/03/24_11:21:13--> Still pinging 633ThirdAve_571_Conf-Room
+06/03/24_11:21:23--> Still pinging 633ThirdAve_571_Conf-Room
+06/03/24_11:21:33--> Still pinging 633ThirdAve_571_Conf-Room
+06/03/24_11:21:43--> Still pinging 633ThirdAve_571_Conf-Room
+06/03/24_11:21:53--> Still pinging 633ThirdAve_571_Conf-Room
+06/03/24_11:22:03--> Still pinging 633ThirdAve_571_Conf-Room
+06/03/24_11:22:13--> Still pinging 633ThirdAve_571_Conf-Room
+06/03/24_11:22:23--> Still pinging 633ThirdAve_571_Conf-Room
+06/03/24_11:22:33--> Still pinging 633ThirdAve_571_Conf-Room
+06/03/24_11:22:43--> Still pinging 633ThirdAve_571_Conf-Room
+06/03/24_11:22:53--> Still pinging 633ThirdAve_571_Conf-Room
+06/03/24_11:23:03--> Still pinging 633ThirdAve_571_Conf-Room
+06/03/24_11:23:13--> Still pinging 633ThirdAve_571_Conf-Room
+06/03/24_11:23:23--> Still pinging 633ThirdAve_571_Conf-Room
+06/03/24_11:23:38--> 633ThirdAve_571_Conf-Room has shut down. Resuming ping in 1 minute.
+06/03/24_11:24:39--> 633ThirdAve_571_Conf-Room has powered up, giving it a minute of breathing room.
+06/03/24_11:25:40--> Codec Name Found: 633ThirdAve_571_Conf-Room
+06/03/24_11:25:41--> Software found: ce11.9.3.1.88903f816c0
+06/03/24_11:25:42--> Hardware found: Room Kit. Assigning hardware version: kit
+06/03/24_11:25:42--> ********
+11.9.3.1.88903f816c0 successfully installed on 633ThirdAve_571_Conf-Room
+********
+06/03/24_11:25:42--> Attempting to install cmterm-s53200ce11_14_2_3.k4.cop.sha512 on 633ThirdAve_571_Conf-Room...
+06/03/24_11:26:16--> Upgrade status OK. Proceeding.
+06/03/24_11:26:16--> Pinging 633ThirdAve_571_Conf-Room...
+06/03/24_11:26:26--> Still pinging 633ThirdAve_571_Conf-Room
+06/03/24_11:26:36--> Still pinging 633ThirdAve_571_Conf-Room
+06/03/24_11:26:46--> Still pinging 633ThirdAve_571_Conf-Room
+06/03/24_11:26:56--> Still pinging 633ThirdAve_571_Conf-Room
+06/03/24_11:27:06--> Still pinging 633ThirdAve_571_Conf-Room
+06/03/24_11:27:16--> Still pinging 633ThirdAve_571_Conf-Room
+06/03/24_11:27:26--> Still pinging 633ThirdAve_571_Conf-Room
+06/03/24_11:27:36--> Still pinging 633ThirdAve_571_Conf-Room
+06/03/24_11:27:46--> Still pinging 633ThirdAve_571_Conf-Room
+06/03/24_11:27:56--> Still pinging 633ThirdAve_571_Conf-Room
+06/03/24_11:28:06--> Still pinging 633ThirdAve_571_Conf-Room
+06/03/24_11:28:16--> Still pinging 633ThirdAve_571_Conf-Room
+06/03/24_11:28:26--> Still pinging 633ThirdAve_571_Conf-Room
+06/03/24_11:28:36--> Still pinging 633ThirdAve_571_Conf-Room
+06/03/24_11:28:46--> Still pinging 633ThirdAve_571_Conf-Room
+06/03/24_11:29:02--> 633ThirdAve_571_Conf-Room has shut down. Resuming ping in 1 minute.
+06/03/24_11:30:03--> 633ThirdAve_571_Conf-Room has powered up, giving it a minute of breathing room.
+06/03/24_11:31:04--> Codec Name Found: 633ThirdAve_571_Conf-Room
+06/03/24_11:31:05--> Software found: ce11.14.2.3.e98a3091ff6
+06/03/24_11:31:06--> Hardware found: Room Kit. Assigning hardware version: kit
+06/03/24_11:31:06--> ********
+11.14.2.3.e98a3091ff6 successfully installed on 633ThirdAve_571_Conf-Room
+********
+06/03/24_11:31:06--> 633ThirdAve_571_Conf-Room successfully upgraded

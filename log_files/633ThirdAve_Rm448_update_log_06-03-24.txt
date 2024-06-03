@@ -1,0 +1,27 @@
+06/03/24_11:19:20--> Codec Name Found: 633ThirdAve_Rm448
+06/03/24_11:19:21--> Software found: ce11.9.3.1.88903f816c0
+06/03/24_11:19:22--> Hardware found: Codec Plus. Assigning hardware version: kit
+06/03/24_11:19:22--> Attempting to install cmterm-s53200ce11_14_2_3.k4.cop.sha512 on 633ThirdAve_Rm448...
+06/03/24_11:21:45--> Upgrade status OK. Proceeding.
+06/03/24_11:21:45--> Pinging 633ThirdAve_Rm448...
+06/03/24_11:21:55--> Still pinging 633ThirdAve_Rm448
+06/03/24_11:22:05--> Still pinging 633ThirdAve_Rm448
+06/03/24_11:22:15--> Still pinging 633ThirdAve_Rm448
+06/03/24_11:22:25--> Still pinging 633ThirdAve_Rm448
+06/03/24_11:22:35--> Still pinging 633ThirdAve_Rm448
+06/03/24_11:22:45--> Still pinging 633ThirdAve_Rm448
+06/03/24_11:22:55--> Still pinging 633ThirdAve_Rm448
+06/03/24_11:23:05--> Still pinging 633ThirdAve_Rm448
+06/03/24_11:23:15--> Still pinging 633ThirdAve_Rm448
+06/03/24_11:23:25--> Still pinging 633ThirdAve_Rm448
+06/03/24_11:23:35--> Still pinging 633ThirdAve_Rm448
+06/03/24_11:23:45--> Still pinging 633ThirdAve_Rm448
+06/03/24_11:24:06--> 633ThirdAve_Rm448 has shut down. Resuming ping in 1 minute.
+06/03/24_11:25:43--> 633ThirdAve_Rm448 has powered up, giving it a minute of breathing room.
+06/03/24_11:26:44--> Codec Name Found: 633ThirdAve_Rm448
+06/03/24_11:26:45--> Software found: ce11.14.2.3.e98a3091ff6
+06/03/24_11:26:46--> Hardware found: Codec Plus. Assigning hardware version: kit
+06/03/24_11:26:46--> ********
+11.14.2.3.e98a3091ff6 successfully installed on 633ThirdAve_Rm448
+********
+06/03/24_11:26:46--> 633ThirdAve_Rm448 successfully upgraded

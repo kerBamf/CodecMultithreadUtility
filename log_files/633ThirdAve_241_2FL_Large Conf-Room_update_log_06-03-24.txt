@@ -1,0 +1,3 @@
+06/03/24_11:23:59--> Codec Name Found: 633ThirdAve_241_2FL_Large Conf-Room
+06/03/24_11:24:00--> Software found: ce9.15.0.11.aec227943ed
+06/03/24_11:24:01--> Hardware found: SX80. Assigning hardware version: SX80

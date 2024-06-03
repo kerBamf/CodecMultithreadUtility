@@ -177,7 +177,7 @@ def upgrade(sys_name, current_sw, sw_path, sw_file, ip):
     new_sw_version = check_codec(ip)['sw_version']
 
     if (new_sw_version == current_sw):
-        print(f'{sys_name} restarted, but failed to update properly. Please investigate')
+        print(f'{sys_name} restarted, but failed to install new software. Please investigate')
         raise UpgradeException({'text': f'{sys_name} restarted, but failed to update properly. Please investigate'})
     
     confirmation = '.'.join(new_sw_version)

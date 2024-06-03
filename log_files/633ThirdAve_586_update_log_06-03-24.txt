@@ -1,0 +1,4 @@
+06/03/24_11:23:57--> Codec Name Found: 633ThirdAve_586
+06/03/24_11:23:57--> Software found: ce11.14.2.3.e98a3091ff6
+06/03/24_11:23:58--> Hardware found: Room Bar. Assigning hardware version: pro
+06/03/24_11:23:58--> 633ThirdAve_586 running latest software. Exiting script.

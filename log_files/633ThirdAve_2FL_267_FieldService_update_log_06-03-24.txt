@@ -1,0 +1,29 @@
+06/03/24_11:12:15--> Codec Name Found: 633ThirdAve_2FL_267_FieldService
+06/03/24_11:12:16--> Software found: ce11.9.2.4.c05310d8c51
+06/03/24_11:12:17--> Hardware found: Codec Plus. Assigning hardware version: kit
+06/03/24_11:12:17--> Attempting to install cmterm-s53200ce11_14_2_3.k4.cop.sha512 on 633ThirdAve_2FL_267_FieldService...
+06/03/24_11:14:26--> Upgrade status OK. Proceeding.
+06/03/24_11:14:26--> Pinging 633ThirdAve_2FL_267_FieldService...
+06/03/24_11:14:36--> Still pinging 633ThirdAve_2FL_267_FieldService
+06/03/24_11:14:46--> Still pinging 633ThirdAve_2FL_267_FieldService
+06/03/24_11:14:56--> Still pinging 633ThirdAve_2FL_267_FieldService
+06/03/24_11:15:06--> Still pinging 633ThirdAve_2FL_267_FieldService
+06/03/24_11:15:16--> Still pinging 633ThirdAve_2FL_267_FieldService
+06/03/24_11:15:26--> Still pinging 633ThirdAve_2FL_267_FieldService
+06/03/24_11:15:36--> Still pinging 633ThirdAve_2FL_267_FieldService
+06/03/24_11:15:46--> Still pinging 633ThirdAve_2FL_267_FieldService
+06/03/24_11:15:56--> Still pinging 633ThirdAve_2FL_267_FieldService
+06/03/24_11:16:06--> Still pinging 633ThirdAve_2FL_267_FieldService
+06/03/24_11:16:16--> Still pinging 633ThirdAve_2FL_267_FieldService
+06/03/24_11:16:26--> Still pinging 633ThirdAve_2FL_267_FieldService
+06/03/24_11:16:36--> Still pinging 633ThirdAve_2FL_267_FieldService
+06/03/24_11:16:46--> Still pinging 633ThirdAve_2FL_267_FieldService
+06/03/24_11:17:04--> 633ThirdAve_2FL_267_FieldService has shut down. Resuming ping in 1 minute.
+06/03/24_11:18:17--> 633ThirdAve_2FL_267_FieldService has powered up, giving it a minute of breathing room.
+06/03/24_11:19:18--> Codec Name Found: 633ThirdAve_2FL_267_FieldService
+06/03/24_11:19:19--> Software found: ce11.14.2.3.e98a3091ff6
+06/03/24_11:19:20--> Hardware found: Codec Plus. Assigning hardware version: kit
+06/03/24_11:19:20--> ********
+11.14.2.3.e98a3091ff6 successfully installed on 633ThirdAve_2FL_267_FieldService
+********
+06/03/24_11:19:20--> 633ThirdAve_2FL_267_FieldService successfully upgraded

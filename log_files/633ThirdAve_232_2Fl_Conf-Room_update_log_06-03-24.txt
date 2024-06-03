@@ -1,0 +1,6 @@
+06/03/24_11:10:58--> Codec Name Found: 633ThirdAve_232_2Fl_Conf-Room
+06/03/24_11:10:59--> Software found: ce10.19.5.6.7cd166d6be0
+06/03/24_11:11:00--> Hardware found: Room Kit Mini. Assigning hardware version: kit
+06/03/24_11:11:00--> Attempting to install cmterm-s53200ce11_5_2_4.k4.cop.sha512 on 633ThirdAve_232_2Fl_Conf-Room...
+06/03/24_11:11:50--> Upgrade status: Error. Got ([404] Failed fetching loads file) during download
+06/03/24_11:11:50--> Upgrade status: Error. Got ([404] Failed fetching loads file) during download
