@@ -1,3 +1,7 @@
 XML_files
 .env
 codec_lists
+log_files
+test_env_imports.py
+test_dummy.py
+test_iterator.py

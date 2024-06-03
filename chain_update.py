@@ -5,6 +5,7 @@ import math
 import subprocess
 import requests
 import xml.etree.ElementTree as ET
+from logger import log_info
 
 
 #Pulling Environment Variables
@@ -13,6 +14,7 @@ load_dotenv()
 PASSCODE = os.environ.get('PASSCODE')
 PROPATH = os.environ.get('PROPATH')
 KITPATH = os.environ.get('KITPATH')
+TESTURL = os.environ.get('TESTURL')
 
 all_sw_paths = {
     'kit': KITPATH,
@@ -23,6 +25,10 @@ requests.packages.urllib3.disable_warnings()
 
 class UpgradeException(Exception):
     pass
+
+def message(string, sys_name):
+    print(string)
+    log_info(string, sys_name)
 
 # disable ssl warning, not currently working
 # urllib3.disable_warnings(InsecureRequestWarning)
@@ -35,8 +41,7 @@ all_sw_versions = {
         '10.15': 'cmterm-s53200ce10_15_4_1.k3.cop.sgn',
         '11.5': 'cmterm-s53200ce11_5_2_4.k4.cop.sha512',
         '11.9': 'cmterm-s53200ce11_9_3_1.k4.cop.sha512',
-        '11.14': 'cmterm-s53200ce11_14_2_3.k4.cop.sha512',
-        '20.20': 'bunk_stuff_lol'
+        '11.14': 'cmterm-s53200ce11_14_2_3.k4.cop.sha512'
     },
     'pro': {
         '10.15': 'cmterm-s53300ce10_15_4_1.k3.cop.sgn', 
@@ -61,6 +66,16 @@ def check_codec(ip):
         'sys_name': '',
         'sys_type': ''
     }
+    #Retrieves name of codec
+    try:
+        xml = requests.get(f'https://{ip}/getxml?location=/Configuration/SystemUnit/Name', headers=headers, verify=False)
+        xml_root = ET.fromstring(xml.text)
+        sys_name = xml_root[0][0].text
+        codec_info['sys_name'] = sys_name
+        message(f'Codec Name Found: {sys_name}', sys_name)
+    except requests.exceptions.HTTPError as err:
+        print(err.response)
+        raise err
     
     #checks software version of the codec and splits the version info into a list for easier comparison in Upgrade function
     try:
@@ -68,9 +83,9 @@ def check_codec(ip):
         xml_root = ET.fromstring(soft_xml.text)
         soft_text = xml_root[0][0][0].text
         codec_info['sw_version'] = soft_text.replace('ce','').split('.')
-        print(f'Software found: {soft_text}')
+        message(f'Software found: {soft_text}', codec_info['sys_name'])
     except requests.exceptions.HTTPError as err:
-        print(err.response)
+        message(err.response, codec_info['sys_name'])
 
     #Checks hardware version of the codec. Used to determine which upgrade file path to use. Returns a string of 'kit,' 'pro,' or 'SX80'   
     try:
@@ -86,29 +101,19 @@ def check_codec(ip):
         for unit in hardware_list['kit']:
             if (sys_type == unit):
                 codec_info['hw_version'] = 'kit'
-        print(f'Hardware found: {sys_type}. Assigning hardware version: {codec_info['hw_version']}')
+        message(f'Hardware found: {sys_type}. Assigning hardware version: {codec_info['hw_version']}', codec_info['sys_name'])
 
     except requests.exceptions.HTTPError as err:
-        print(err.response)
+        message(err.response, codec_info['sys_name'])
         raise err
     
-    #Retrieves name of codec
-    try:
-        xml = requests.get(f'https://{ip}/getxml?location=/Configuration/SystemUnit/Name', headers=headers, verify=False)
-        xml_root = ET.fromstring(xml.text)
-        system_name = xml_root[0][0].text
-        codec_info['sys_name'] = system_name
-        print(f'Codec Name Found: {system_name}')
-    except requests.exceptions.HTTPError as err:
-        print(err.response)
-        raise err
 
     return codec_info
 
 
 #Function called when upgrade is initiated. Hardware version determines filepath, software version determines file to be used
 def upgrade(sys_name, current_sw, sw_path, sw_file, ip):
-    print(f'Attempting to install {sw_file} on {sys_name}...')
+    message(f'Attempting to install {sw_file} on {sys_name}...', sys_name)
     try:
         url = f'http://{ip}/putxml'
         headers = {'Authorization': 'basic YWRtaW46NzM2NjgzMjk='}
@@ -117,19 +122,19 @@ def upgrade(sys_name, current_sw, sw_path, sw_file, ip):
         xml_root = ET.fromstring(response.text)
         status = xml_root[0].attrib['status']
         if (status == 'OK'):
-            print('Upgrade status OK. Proceeding.')
+            message('Upgrade status OK. Proceeding.', sys_name)
         else:
-            print(f'Upgrade status: {status}. {xml_root[0][0].text}')
+            message(f'Upgrade status: {status}. {xml_root[0][0].text}', sys_name)
             raise UpgradeException({'text': f'Upgrade status: Error. {xml_root[0][0].text}'})
     except requests.exceptions.HTTPError as err:
-        print(err.response)
+        message(err.response, sys_name)
 
     #Pinging codec after sending update command
     awake = True
     start = math.floor(time.time())
     time_passed = 0
     restarted = False
-    print(f'Pinging {sys_name}...')
+    message(f'Pinging {sys_name}...', sys_name)
 
     def ping():
         return subprocess.run(["ping", "-c", "1", ip], capture_output=True).returncode
@@ -139,16 +144,16 @@ def upgrade(sys_name, current_sw, sw_path, sw_file, ip):
         if (ping_var):
             awake = False
             restarted = True
-            print(f'{sys_name} has shut down. Resuming ping in 1 minute.')
+            message(f'{sys_name} has shut down. Resuming ping in 1 minute.', sys_name)
 
         new_time = math.floor(time.time())
         time_passed = new_time - start
         if (time_passed % 10 == 0 and time_passed > 0):
-            print(f'Still pinging {sys_name}')
+            message(f'Still pinging {sys_name}', sys_name)
         time.sleep(1)
 
     if (restarted == False):
-        print(f'{sys_name} upgrade failed. Please troubleshoot.')
+        message(f'{sys_name} upgrade failed. Please troubleshoot.')
         raise UpgradeException({'text':f'{sys_name} failed to pull update properly'})
         
     time.sleep(60)
@@ -160,16 +165,16 @@ def upgrade(sys_name, current_sw, sw_path, sw_file, ip):
         ping_var = ping()
         if ping_var == 0:
             awake = True
-            print(f'{sys_name} has powered up, giving it a minute of breathing room.')
+            message(f'{sys_name} has powered up, giving it a minute of breathing room.', sys_name)
         
         new_time = math.floor(time.time())
         time_passed = start - new_time
         if (time_passed % 10 == 0 and time_passed > 0):
-            print(f'Still pinging {sys_name}')
+            message(f'Still pinging {sys_name}', sys_name)
         time.sleep(1)
 
     if (awake == False):
-        print(f'{sys_name} failed to restart. Please investigate')
+        message(f'{sys_name} failed to restart. Please investigate', sys_name)
         raise UpgradeException({f'text': f'{sys_name} failed to restart. Please investigate'})
     
     time.sleep(60)
@@ -177,10 +182,12 @@ def upgrade(sys_name, current_sw, sw_path, sw_file, ip):
     new_sw_version = check_codec(ip)['sw_version']
 
     if (new_sw_version == current_sw):
-        print(f'{sys_name} restarted, but failed to install new software. Please investigate')
+        message(f'{sys_name} restarted, but failed to update properly. Please investigate', sys_name)
         raise UpgradeException({'text': f'{sys_name} restarted, but failed to update properly. Please investigate'})
     
     confirmation = '.'.join(new_sw_version)
+
+    message(f'********\r\n{confirmation} successfully installed on {sys_name}\r\n********', sys_name)
 
     return f'********\r\n{confirmation} successfully installed on {sys_name}\r\n********'
 
@@ -199,12 +206,14 @@ def step_update(ip):
     assigned_sw_list = all_sw_versions[codec_info['hw_version']]
     assigned_sw_keys = list(assigned_sw_list.keys())
     final_sw_version = assigned_sw_keys[len(assigned_sw_keys)-1].split('.')
+    sys_name = codec_info['sys_name']
 
     #Assigns software file path to use
     assigned_sw_path = all_sw_paths[codec_info['hw_version']]
 
     # Returns chain update function if code is on the latest version. Changes will need to be added later to allow for dynamic edits to code versions as newer ones come out.
     if (int(codec_info['sw_version'][0]) == int(final_sw_version[0]) and int(codec_info['sw_version'][1]) == int(final_sw_version[1])):
+        message(f'{codec_info['sys_name']} running latest software. Exiting script.', sys_name)
         return f'{codec_info['sys_name']} running latest software. Exiting script.'
     
     #Beginning upgrade iteration
@@ -216,7 +225,7 @@ def step_update(ip):
                 upgrade(codec_info['sys_name'], cur_sw_version, assigned_sw_path, assigned_sw_list[key], ip)
             except UpgradeException as error:
                 (except_dictionary,) = error.args
-                print(except_dictionary["text"])
+                message(except_dictionary["text"], sys_name)
                 #print(error['text'])
                 raise error
         elif int(split_key[0]) > int(cur_sw_version[0]):
@@ -224,11 +233,12 @@ def step_update(ip):
                 upgrade(codec_info['sys_name'], cur_sw_version, assigned_sw_path, assigned_sw_list[key], ip)
             except UpgradeException as error:
                 (except_dictionary,) = error.args
-                print(except_dictionary["text"])
+                message(except_dictionary["text"], sys_name)
                 #print(error['text'])
                 raise error
-
-    return f'{codec_info['sys_name']} successfully upgraded'
+    
+    message(f'{codec_info['sys_name']} successfully upgraded', sys_name)
+    return {'Status': f'{codec_info['sys_name']} successfully upgraded', 'ip': ip}
 
 if __name__ == '__main__':
-    step_update('172.16.131.163')
+    step_update(TESTURL)
