@@ -28,6 +28,7 @@ def dummy_func(ip):
     print("I'm a dummy")
     print(ip)
 
+
 def update_iterator():
     with concurrent.futures.ThreadPoolExecutor() as executor:
         futures = {executor.submit(step_update, ip): ip for ip in codec_list}
