@@ -15,6 +15,7 @@ PASSCODE = os.environ.get('PASSCODE')
 PROPATH = os.environ.get('PROPATH')
 KITPATH = os.environ.get('KITPATH')
 TESTURL = os.environ.get('TESTURL')
+LOGPATH = os.environ.get('LOGPATH')
 
 all_sw_paths = {
     'kit': KITPATH,
@@ -28,7 +29,7 @@ class UpgradeException(Exception):
 
 def message(string, sys_name):
     print(string)
-    log_info(string, sys_name)
+    log_info(string, sys_name, LOGPATH)
 
 # disable ssl warning, not currently working
 # urllib3.disable_warnings(InsecureRequestWarning)

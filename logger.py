@@ -2,10 +2,6 @@ import datetime
 import os
 import subprocess
 
-# filepath = os.getcwd()
-filepath = os.environ.get('LOGFILEPATH')
-print(filepath)
-
 def check_dir(path='', date=''):
     if not os.path.isdir(path + f'/UpdateLog-{date}'):
         subprocess.run(['mkdir', f'{path}/UpdateLog-{date}'], capture_output=True)
@@ -18,9 +14,9 @@ def log_info(string='', sys_name='', log_path=''):
     now = datetime.datetime.now().strftime('%X')
     timestamp = f'{today}_{now}'
     filename = f'{sys_name}_update_log_{today}.txt'
-    directory = check_dir(filepath, today)
+    directory = check_dir(log_path, today)
 
-    with open(f"{filepath}{directory}/{filename}", "a", newline='') as log:
+    with open(f"{log_path}{directory}/{filename}", "a", newline='') as log:
         log.write(f'{timestamp}--> {string}\r\n')
      
     return timestamp
