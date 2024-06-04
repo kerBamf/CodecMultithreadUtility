@@ -10,13 +10,15 @@ import xml.etree.ElementTree as ET
 from chain_update import step_update
 from logger import log_info
 
+LOGPATH = os.environ.get('LOGPATH')
+
 xcel = load_workbook(f'./codec_lists/{input("Please input codec file: ")}')
 codec_list = xcel.active
 codec_list = codec_list.iter_rows(min_row=2, min_col=3, max_col=3, values_only=True)
 
 def message(string):
     print(string)
-    log_info(string, 'Master')
+    log_info(string, 'Master', )
 
 def update_iterator():
     with concurrent.futures.ThreadPoolExecutor() as executor:
