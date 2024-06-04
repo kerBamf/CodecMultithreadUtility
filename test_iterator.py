@@ -10,7 +10,7 @@ import xml.etree.ElementTree as ET
 from chain_update import step_update
 from logger import log_info
 
-codec_list = ['172.17.77.154']
+codec_list = ['172.16.131.191','172.16.131.163','172.16.131.13']
 
 def message(string):
     print(string)

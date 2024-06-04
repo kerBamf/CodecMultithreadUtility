@@ -1,4 +1,0 @@
-06/03/24_11:24:10--> Codec Name Found: 633ThirdAve_1502
-06/03/24_11:24:11--> Software found: ce11.14.2.3.e98a3091ff6
-06/03/24_11:24:12--> Hardware found: Codec Plus. Assigning hardware version: kit
-06/03/24_11:24:12--> 633ThirdAve_1502 running latest software. Exiting script.

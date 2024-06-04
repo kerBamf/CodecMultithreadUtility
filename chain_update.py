@@ -37,11 +37,11 @@ def message(string, sys_name):
 all_sw_versions = {
     'kit': {
         '9.15': 'cmterm-s53200ce9_15_3_22.k3.cop.sgn',
-        '10.19': 'cmterm-s53200ce10_19_5_6.k3.cop.sgn',
         '10.15': 'cmterm-s53200ce10_15_4_1.k3.cop.sgn',
+        '10.19': 'cmterm-s53200ce10_19_5_6.k3.cop.sgn',
         '11.5': 'cmterm-s53200ce11_5_2_4.k4.cop.sha512',
         '11.9': 'cmterm-s53200ce11_9_3_1.k4.cop.sha512',
-        '11.14': 'cmterm-s53200ce11_14_2_3.k4.cop.sha512'
+        '11.14': 'cmterm-s53200ce11_14_3_0.k4.cop.sha512'
     },
     'pro': {
         '10.15': 'cmterm-s53300ce10_15_4_1.k3.cop.sgn', 
