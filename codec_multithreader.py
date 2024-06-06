@@ -1,13 +1,8 @@
 import os
-import time
 from dotenv import load_dotenv
 import concurrent.futures
-import requests
 from importlib import import_module
 from urllib3.exceptions import InsecureRequestWarning
-from openpyxl import load_workbook
-import smtplib
-import xml.etree.ElementTree as ET
 from excel_parser import excel_parser
 from function_selector import function_selector
 from logger import log_info
