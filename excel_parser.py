@@ -29,7 +29,7 @@ def user_choice():
     choice = int(input(f'Select which excel file to use:\r\n{found_files['options']}\r\nFile number selection: '))
     for key in list(found_files['files'].keys()):
         if choice == key:
-            if 'y' == input(f'\n\rYou have selected {found_files['files'][key]}. Proceed? (y/n): '):
+            if 'y' == input(f'\n\rYou have selected {found_files['files'][key]} Proceed? (y/n): '):
                 return choice
             else:
                 print('Selection Cancelled')
