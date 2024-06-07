@@ -2,7 +2,6 @@ import os
 from dotenv import load_dotenv
 import concurrent.futures
 from importlib import import_module
-from urllib3.exceptions import InsecureRequestWarning
 from excel_parser import excel_parser
 from function_selector import function_selector
 from logger import log_info
