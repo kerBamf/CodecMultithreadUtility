@@ -1,6 +1,7 @@
 from os import environ
 import requests
 import xml.etree.ElementTree as ET
+from time import sleep
 
 #Removing insecure http warnings
 requests.packages.urllib3.disable_warnings()
@@ -71,59 +72,71 @@ remove_closeInstructions_xml = '''<Body>
 set_ui_xml = '''<Body>
     <Configuration>
         <UserInterface>
-            <CustomWallpaperOverlay>
-                Off
-            </CustomWallpaperOverlay>
+            <CustomWallpaperOverlay>Off</CustomWallpaperOverlay>
             <HomeScreen>
-                <Dashboard>
-                    Off
-                </Dashboard>
+                <Dashboard>Off</Dashboard>
             </HomeScreen>
             <OSD>
-                <Mode>
-                    Auto
-                </Mode>
+                <Mode>Auto</Mode>
             </OSD>
         </UserInterface>
     </Configuration>
 </Body>'''
 
+set_bg_xml = '''<Body>
+<Command>
+    <UserInterface>
+        <Branding>
+            <Fetch>
+                <Checksum>523a916b90ba8286ade4eeafe0c5461155111f8cba3a1401a4ece5ec0b79db61e74f1f996cf134c399fa1abf7bd00df21c11f9a80f2a6080a4ec572d968e1413</Checksum>
+                <Type>Background</Type>
+                <URL>http://mmis0177:9000/Wallpapers/NewSplashPageQR4k.png</URL>
+            </Fetch>
+        </Branding>
+    </UserInterface>
+</Command>
+</Body>'''
+
 def retrieve_extensions(ip):
     try:
-        response = requests.post(f'http://{ip}/putxml', headers=headers, verify=False, data=retrieve_xml)
+        response = requests.post(f'http://{ip}/putxml', headers=headers, verify=False, data=retrieve_xml, timeout=10)
     except requests.exceptions.HTTPError as err:
         print(err)
     xml_root = ET.fromstring(response.text)
     panel_ids = [panel[4].text for panel in xml_root.iter('Panel')]
-    print(panel_ids)
     return panel_ids
 
 def remove_instructions(ip):
-    panels = retrieve_extensions(ip)
-    for panel in panels:
-        if panel == 'instructions':
-            try:
-                response = requests.post(f'http://{ip}/putxml', headers=headers, verify=False, data=remove_macro_xml)
-                print(response)
-            except requests.exceptions.HTTPError as err:
-                print(err)
-            
-            try:
-                response = requests.post(f'http://{ip}/putxml', headers=headers, verify=False, data=remove_instructions_xml)
-                print(response)
-            except requests.exceptions.HTTPError as err:
-                print(err)
-            try:
-                response = requests.post(f'http://{ip}/putxml', headers=headers, verify=False, data=remove_closeInstructions_xml)
-                print(response)
-            except requests.exceptions.HTTPError as err:
-                print(err)
-            try:
-                response = requests.post(f'http://{ip}/putxml', headers=headers, verify=False, data=set_ui_xml)
-                print(response)
-            except requests.exceptions.HTTPError as err:
-                print(err)
-            break
+    
+    try:
+        response = requests.post(f'http://{ip}/putxml', headers=headers, verify=False, data=remove_macro_xml, timeout=10)
+        print(response)
+    except requests.exceptions.HTTPError as err:
+        print(err)
+    
+    try:
+        response = requests.post(f'http://{ip}/putxml', headers=headers, verify=False, data=remove_instructions_xml, timeout=10)
+        print(response)
+    except requests.exceptions.HTTPError as err:
+        print(err)
+    try:
+        response = requests.post(f'http://{ip}/putxml', headers=headers, verify=False, data=remove_closeInstructions_xml, timeout=10)
+        print(response)
+    except requests.exceptions.HTTPError as err:
+        print(err)
+    try:
+        response = requests.post(f'http://{ip}/putxml', headers=headers, verify=False, data=set_bg_xml, timeout=10)
+        print(response)
+    except requests.exceptions.HTTPError as err:
+        print(err)
+
+    sleep(5)
+
+    try:
+        response = requests.post(f'http://{ip}/putxml', headers=headers, verify=False, data=set_ui_xml, timeout=10)
+        print(response)
+    except requests.exceptions.HTTPError as err:
+        print(err)
     return 'Changes made successfully'
 
 if __name__ == '__main__':
