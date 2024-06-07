@@ -17,7 +17,7 @@ imported_func = getattr(import_module(selected_function), selected_function)
 
 def message(string):
     print(string)
-    log_info(string, 'Master', LOGPATH)
+    log_info(string, selected_function, LOGPATH)
 
 def update_iterator():
     with concurrent.futures.ThreadPoolExecutor() as executor:
