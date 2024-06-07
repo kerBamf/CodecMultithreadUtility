@@ -13,7 +13,7 @@ def log_info(string='', sys_name='', log_path=''):
     today = datetime.datetime.now().strftime('%x').replace('/', '-')
     now = datetime.datetime.now().strftime('%X')
     timestamp = f'{today}_{now}'
-    filename = f'{sys_name}_update_log_{today}.txt'
+    filename = f'{sys_name}_log_{today}.txt'
     directory = check_dir(log_path, today)
 
     with open(f"{log_path}{directory}/{filename}", "a", newline='') as log:

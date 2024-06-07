@@ -80,6 +80,15 @@ set_ui_xml = '''<Body>
                 <Mode>Auto</Mode>
             </OSD>
         </UserInterface>
+        <Standby>
+            <Signage>
+                <Mode>On</Mode>
+                <Url>http://vdvtpwebpban1/mskcontent/channels/30.html</Url>
+                <InteractionMode>NonInteractive</InteractionMode>
+                <RefreshInterval>720</RefreshInterval>
+                <Audio>Off</Audio>
+            </Signage>
+        </Standby>
     </Configuration>
 </Body>'''
 
