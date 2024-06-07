@@ -146,7 +146,7 @@ def remove_instructions(ip):
         print(response)
     except requests.exceptions.HTTPError as err:
         print(err)
-    return 'Changes made successfully'
+    return f'{ip} - Changes made successfully'
 
 if __name__ == '__main__':
     remove_instructions('172.16.131.60')
