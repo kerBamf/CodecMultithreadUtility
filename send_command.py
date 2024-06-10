@@ -15,20 +15,34 @@ headers = {
     'Content-Type': 'text/xml'
 }
 
-command_XML = '''<Command>
-        <Standby><Halfwake></Halfwake></Standby>
-    </Command>'''
+wake_XML = '''<Body>
+    <Command>
+        <Standby>
+            <Deactivate></Deactivate>
+        </Standby>
+    </Command>
+</Body>'''
+
+halfwake_XML = '''<Body>
+    <Command>
+        <Standby>
+            <Halfwake></Halfwake>
+        </Standby>
+    </Command>
+</Body>'''
 
 def http_request(ip, string):
     try:
-        response = requests.post(f'http://{ip}/putxml', headers=headers, verify=False, data=string, timeout=180)
+        response = requests.post(f'http://{ip}/putxml', headers=headers, verify=False, data=string, timeout=60)
         log_info(f'Halfwake command: {response.text}', ip, LOGPATH)
     except requests.exceptions.HTTPError as err:
         log_info(f'{ip} -> {err}', ip, LOGPATH)
 
 def send_command(ip):
-    http_request(ip, command_XML)
+    http_request(ip, wake_XML)
+    sleep(3)
+    http_request(ip, halfwake_XML)
     return 'Command Sent Successfully'
 
 if __name__ == '__main__':
-    send_command('172.16.131.60')
+    send_command(input('Enter Codec IP: '))
