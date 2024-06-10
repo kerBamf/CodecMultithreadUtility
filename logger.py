@@ -3,11 +3,11 @@ import os
 import subprocess
 
 def check_dir(path='', date=''):
-    if not os.path.isdir(path + f'/UpdateLog-{date}'):
-        subprocess.run(['mkdir', f'{path}/UpdateLog-{date}'], capture_output=True)
-        return f'/UpdateLog-{date}'
+    if not os.path.isdir(path + f'/RunLog-{date}'):
+        subprocess.run(['mkdir', f'{path}/RunLog-{date}'], capture_output=True)
+        return f'/RunLog-{date}'
     else:
-        return f'/UpdateLog-{date}'
+        return f'/RunLog-{date}'
 
 def log_info(string='', sys_name='', log_path=''):
     today = datetime.datetime.now().strftime('%x').replace('/', '-')
@@ -23,4 +23,5 @@ def log_info(string='', sys_name='', log_path=''):
 
 
 if __name__ == '__main__':
-    print(log_info('Beef', "Zach"))
+    path = '/Users/pedigoz/Documents/MSK_Coding_Projects/CodecMultithreadUtility/RunLogs'
+    print(log_info('Beef', "Zach", path))

@@ -115,37 +115,24 @@ def retrieve_extensions(ip):
     panel_ids = [panel[4].text for panel in xml_root.iter('Panel')]
     return panel_ids
 
+def request(ip, string):
+    try:
+        response = requests.post(f'http://{ip}/putxml', headers=headers, verify=False, data=string, timeout=10)
+        print(response)
+    except requests.exceptions.HTTPError as err:
+        print(err)
+
 def remove_instructions(ip):
     
-    try:
-        response = requests.post(f'http://{ip}/putxml', headers=headers, verify=False, data=remove_macro_xml, timeout=10)
-        print(response)
-    except requests.exceptions.HTTPError as err:
-        print(err)
-    
-    try:
-        response = requests.post(f'http://{ip}/putxml', headers=headers, verify=False, data=remove_instructions_xml, timeout=10)
-        print(response)
-    except requests.exceptions.HTTPError as err:
-        print(err)
-    try:
-        response = requests.post(f'http://{ip}/putxml', headers=headers, verify=False, data=remove_closeInstructions_xml, timeout=10)
-        print(response)
-    except requests.exceptions.HTTPError as err:
-        print(err)
-    try:
-        response = requests.post(f'http://{ip}/putxml', headers=headers, verify=False, data=set_bg_xml, timeout=10)
-        print(response)
-    except requests.exceptions.HTTPError as err:
-        print(err)
+    request(ip, remove_macro_xml)
+    request(ip, remove_instructions_xml)
+    request(ip, remove_closeInstructions_xml)
+    request(ip, set_bg_xml)
 
     sleep(5)
 
-    try:
-        response = requests.post(f'http://{ip}/putxml', headers=headers, verify=False, data=set_ui_xml, timeout=10)
-        print(response)
-    except requests.exceptions.HTTPError as err:
-        print(err)
+    request(ip, set_ui_xml)
+    
     return f'{ip} - Changes made successfully'
 
 if __name__ == '__main__':
