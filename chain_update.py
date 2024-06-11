@@ -69,7 +69,7 @@ def check_codec(ip):
     }
     #Retrieves name of codec
     try:
-        xml = requests.get(f'https://{ip}/getxml?location=/Configuration/SystemUnit/Name', headers=headers, verify=False)
+        xml = requests.get(f'https://{ip}/getxml?location=/Configuration/SystemUnit/Name', headers=headers, verify=False, timeout=(10, 30))
         xml_root = ET.fromstring(xml.text)
         sys_name = xml_root[0][0].text
         codec_info['sys_name'] = sys_name
@@ -80,17 +80,17 @@ def check_codec(ip):
     
     #checks software version of the codec and splits the version info into a list for easier comparison in Upgrade function
     try:
-        soft_xml = requests.get(f'https://{ip}/getxml?location=/Status/SystemUnit/Software/Version', headers=headers, verify=False)
+        soft_xml = requests.get(f'https://{ip}/getxml?location=/Status/SystemUnit/Software/Version', headers=headers, verify=False, timeout=(10, 30))
         xml_root = ET.fromstring(soft_xml.text)
         soft_text = xml_root[0][0][0].text
         codec_info['sw_version'] = soft_text.replace('ce','').split('.')
         message(f'Software found: {soft_text}', codec_info['sys_name'])
     except requests.exceptions.HTTPError as err:
-        message(err.response, codec_info['sys_name'])
+        message(err.response)
 
     #Checks hardware version of the codec. Used to determine which upgrade file path to use. Returns a string of 'kit,' 'pro,' or 'SX80'   
     try:
-        soft_xml = requests.get(f'http://{ip}/getxml?location=/Status/SystemUnit/ProductPlatform', headers=headers, verify=False)
+        soft_xml = requests.get(f'http://{ip}/getxml?location=/Status/SystemUnit/ProductPlatform', headers=headers, verify=False, timeout=(10, 30))
         xml_root = ET.fromstring(soft_xml.text)
         sys_type = xml_root[0][0].text
         codec_info['sys_type'] = sys_type
@@ -105,7 +105,7 @@ def check_codec(ip):
         message(f'Hardware found: {sys_type}. Assigning hardware version: {codec_info['hw_version']}', codec_info['sys_name'])
 
     except requests.exceptions.HTTPError as err:
-        message(err.response, codec_info['sys_name'])
+        message(err.response)
         raise err
     
 
@@ -200,7 +200,7 @@ def upgrade_command_xml(file_path, file_string):
 
 
 #Main command, iterates through available software versions and calls upgrade command as needed.
-def step_update(ip):
+def chain_update(ip):
 
     codec_info = check_codec(ip)
     #Assigns software version upgrade list to use
