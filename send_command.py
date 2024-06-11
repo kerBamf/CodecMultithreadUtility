@@ -15,20 +15,14 @@ headers = {
     'Content-Type': 'text/xml'
 }
 
-wake_XML = '''<Body>
-    <Command>
+refresh_XML = '''<Body>
+    <Configuration>
         <Standby>
-            <Deactivate></Deactivate>
+            <Signage>
+                <RefreshInterval>120</RefreshInterval>
+            </Signage>
         </Standby>
-    </Command>
-</Body>'''
-
-halfwake_XML = '''<Body>
-    <Command>
-        <Standby>
-            <Halfwake></Halfwake>
-        </Standby>
-    </Command>
+    </Configuration>
 </Body>'''
 
 def http_request(ip, string):
@@ -39,9 +33,7 @@ def http_request(ip, string):
         log_info(f'{ip} -> {err}', ip, LOGPATH)
 
 def send_command(ip):
-    http_request(ip, wake_XML)
-    sleep(3)
-    http_request(ip, halfwake_XML)
+    http_request(ip, refresh_XML)
     return 'Command Sent Successfully'
 
 if __name__ == '__main__':
