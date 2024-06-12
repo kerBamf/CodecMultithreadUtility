@@ -121,4 +121,4 @@ def config_consolidation(ip):
     return f'{ip} - Changes made successfully'
 
 if __name__ == '__main__':
-    config_consolidation('172.28.38.216')
+    config_consolidation(input('Enter Codec Ip: '))
