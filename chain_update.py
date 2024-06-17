@@ -130,6 +130,10 @@ def upgrade(sys_name, current_sw, sw_path, sw_file, ip):
     except requests.exceptions.HTTPError as err:
         message(err.response, sys_name)
 
+
+    def ping():
+        return subprocess.run(["ping", "-c", "1", ip], capture_output=True).returncode
+    
     #Pinging codec after sending update command
     awake = True
     start = math.floor(time.time())
@@ -137,9 +141,6 @@ def upgrade(sys_name, current_sw, sw_path, sw_file, ip):
     restarted = False
     message(f'Pinging {sys_name}...', sys_name)
 
-    def ping():
-        return subprocess.run(["ping", "-c", "1", ip], capture_output=True).returncode
-    
     while awake and time_passed < 60*10:
         ping_var = ping()
         if (ping_var):
@@ -159,7 +160,7 @@ def upgrade(sys_name, current_sw, sw_path, sw_file, ip):
         
     time.sleep(60)
 
-    #Lost ping should mean codec restarted
+    #Lost resuming ping after restart
     time_passed = 0
     start = math.floor(time.time())
     while awake == False and time_passed < 60*8:

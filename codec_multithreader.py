@@ -19,9 +19,9 @@ def message(string):
     print(string)
     log_info(string, selected_function, LOGPATH)
 
-def update_iterator():
+def iterator(function, ip_list):
     with concurrent.futures.ThreadPoolExecutor() as executor:
-        futures = {executor.submit(imported_func, ip): ip for ip in ip_list}
+        futures = {executor.submit(function, ip): ip for ip in ip_list}
     
     for future in concurrent.futures.as_completed(futures):
         if (future.exception()):
@@ -30,4 +30,4 @@ def update_iterator():
             message(future.result())
 
 if __name__ == '__main__':
-    update_iterator()
+    iterator(selected_function, ip_list)
