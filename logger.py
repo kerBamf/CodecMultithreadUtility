@@ -2,6 +2,7 @@ import datetime
 import os
 import subprocess
 
+#Checks defined logging directory for a folder with the current date. if one does not exist, it creates a new directory for scripts ran that day
 def check_dir(path='', date=''):
     if not os.path.isdir(path + f'/RunLog-{date}'):
         subprocess.run(['mkdir', f'{path}/RunLog-{date}'], capture_output=True)
@@ -9,6 +10,7 @@ def check_dir(path='', date=''):
     else:
         return f'/RunLog-{date}'
 
+#Appends logs to log file (or creates one if one does not exist)
 def log_info(string='', sys_name='', log_path=''):
     today = datetime.datetime.now().strftime('%x').replace('/', '-')
     now = datetime.datetime.now().strftime('%X')
@@ -23,5 +25,5 @@ def log_info(string='', sys_name='', log_path=''):
 
 
 if __name__ == '__main__':
-    path = '/Users/pedigoz/Documents/MSK_Coding_Projects/CodecMultithreadUtility/RunLogs'
+    path = '/Users/pedigoz/Documents/MSK_Coding_Projects/CodecMultithreadUtility/RebootLogs'
     print(log_info('Beef', "Zach", path))

@@ -65,7 +65,7 @@ fetch_backup_XML = f'''<Command>
     <Provisioning>
         <Service>
             <Fetch>
-                <Checksum item="1" valueSpaceRef="/Valuespace/Vs_string_0_128">33f121a99d4944bf783bb94c3d2cc7e0e9ba58b3c897583e37595e2be26781da68c7beb45b955c1ee77f43450bb11e62048084b10aa9a5e6964bfc3a99839803</Checksum>
+                <Checksum item="1" valueSpaceRef="/Valuespace/Vs_string_0_128">053efb937474069987f0f79ae25bc9c5e3a55331ae6fc4c36cbabc1602b7af831c59607f6d9059db9e303e12e2c90aa368f729f0ba448c69d05ed607842c165f</Checksum>
                 <URL item="1" valueSpaceRef="/Valuespace/Vs_string_0_2048">http://MMIS0177.mskcc.org:9000/Backup_Files/Macro_Consolidation_Template.zip</URL>
             </Fetch>
         </Service>
@@ -98,7 +98,7 @@ fetch_backup_XML = f'''<Command>
 def http_request(ip, string):
     try:
         response = requests.post(f'http://{ip}/putxml', headers=headers, verify=False, data=string, timeout=180)
-        log_info(response, ip, LOGPATH)
+        log_info(response.text, ip, LOGPATH)
     except requests.exceptions.HTTPError as err:
         log_info(f'{ip} -> {err}', ip, LOGPATH)
 
