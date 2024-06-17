@@ -5,3 +5,4 @@ log_files
 test_env_imports.py
 test_dummy.py
 test_iterator.py
+xml_parser_demo.py
