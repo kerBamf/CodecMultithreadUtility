@@ -1,5 +1,4 @@
 import os
-from dotenv import load_dotenv
 import concurrent.futures
 from importlib import import_module
 from excel_parser import excel_parser
@@ -30,4 +29,4 @@ def iterator(function, ip_list):
             message(future.result())
 
 if __name__ == '__main__':
-    iterator(selected_function, ip_list)
+    iterator(imported_func, ip_list)

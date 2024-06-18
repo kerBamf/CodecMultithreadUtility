@@ -6,12 +6,6 @@ import requests
 import json
 from logger import log_info
 
-
-#TO DO: make sure code can be run by multithreader with correct logging
-#Add request function to retrieve XML from remote codec
-#Add zipping functionality to make backup ready for
-
-
 #Disable ssl warning
 requests.packages.urllib3.disable_warnings()
 
@@ -141,8 +135,8 @@ def generate_manifest(sys_name=''):
 def compress_zip(directory='', sys_name=''):
     filename = f'{sys_name}_{today}.zip'
     if os.path.isfile(f'{directory}/{filename}'):
-        subprocess.run(['rm', f'{directory}/{sys_name}_{today}.zip'], capture_output=True)
-    subprocess.run(['zip', f'{directory}/{sys_name}_{today}.zip', f'{directory}/configuration.txt', f'{directory}/manifest.json'], capture_output=True)
+        subprocess.run(['rm', f'{directory}/{sys_name}_{today}_backup.zip'], capture_output=True)
+    subprocess.run(['zip', f'{directory}/{sys_name}_{today}_backup.zip', f'{directory}/configuration.txt', f'{directory}/manifest.json'], capture_output=True)
 
 
 #Main function
@@ -161,6 +155,11 @@ def backup_utility(ip):
     message('Compressing files...', sys_name)
     compress_zip(directory, sys_name)
     message('Backup completed', sys_name)
+    resolution = {
+        'Status': 'Backup Completed',
+        'System_name': sys_name
+    }
+    return resolution
 
 if __name__ == '__main__':
     backup_utility('172.16.131.163')
