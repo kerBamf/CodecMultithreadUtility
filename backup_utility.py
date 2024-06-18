@@ -133,7 +133,16 @@ def generate_manifest(sys_name=''):
     if os.path.isfile(f'{directory}/manifest.json'):
         subprocess.run(['rm', f'{directory}/manifest.json'])
     with open(f"{directory}/manifest.json", "a", newline='') as file:
-        json.dump(manifest, file, indent=1)
+        json.dump(manifest, file, indent=2)
+
+
+#Function compressing generated manifest and configuration file into a .zip folder
+
+def compress_zip(directory='', sys_name=''):
+    filename = f'{sys_name}_{today}.zip'
+    if os.path.isfile(f'{directory}/{filename}'):
+        subprocess.run(['rm', f'{directory}/{sys_name}_{today}.zip'], capture_output=True)
+    subprocess.run(['zip', f'{directory}/{sys_name}_{today}.zip', f'{directory}/configuration.txt', f'{directory}/manifest.json'], capture_output=True)
 
 
 #Main function
@@ -147,9 +156,11 @@ def backup_utility(ip):
     check_backup_file(sys_name, SAVE_PATH)
     message('Parsing XML...', sys_name)
     parse_xml(config_xml, '', sys_name)
+    message('Generating manifest', sys_name)
     generate_manifest(sys_name)
+    message('Compressing files...', sys_name)
+    compress_zip(directory, sys_name)
     message('Backup completed', sys_name)
-
 
 if __name__ == '__main__':
     backup_utility('172.16.131.163')
