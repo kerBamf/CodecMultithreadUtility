@@ -3,6 +3,7 @@ import datetime
 import os
 import subprocess
 import requests
+import json
 from logger import log_info
 
 
@@ -54,30 +55,33 @@ def get_sys_config(ip=''):
 #     else:
 #         return f'/BackupDate_{date}'
 
+#Getting Date for use by multiple functions
+today = datetime.datetime.now().strftime('%x').replace('/', '-')
+
+
 #Checks to see if directory and backup file already exists, and deletes it if it does. This ensures that redundant configurations won't be saved to the same file.
 def check_backup_file(sys_name='', save_path=''):
-    today = datetime.datetime.now().strftime('%x').replace('/', '-')
-    directory = f'{save_path}/BackupDate_{today}'
-    if not os.path.isdir(directory):
-        subprocess.run(['mkdir', f'{directory}'], capture_output=True)
-    filename = f'{sys_name}_backup_{today}.txt'
-    if os.path.isfile(f'{directory}/{filename}'):
-        subprocess.run(['rm', f'{directory}/{filename}'])
+    day_directory = f'{save_path}/Backup_Date_{today}'
+    sys_directory = f'{save_path}/Backup_Date_{today}/{sys_name}_{today}'
+    if not os.path.isdir(day_directory):
+        subprocess.run(['mkdir', f'{day_directory}'], capture_output=True)
+    if not os.path.isdir(sys_directory):
+        subprocess.run(['mkdir', f'{sys_directory}'], capture_output=True)
+    filename = f'configuration.txt'
+    if os.path.isfile(f'{sys_directory}/{filename}'):
+        subprocess.run(['rm', f'{sys_directory}/{filename}'])
         message('Old backup deleted.', sys_name)
 
 
 #Appends configuration lines to new backup file
 def append_file(string='', sys_name='', save_path=''):
-    today = datetime.datetime.now().strftime('%x').replace('/', '-')
-    now = datetime.datetime.now().strftime('%X')
-    timestamp = f'{today}_{now}'
-    filename = f'{sys_name}_backup_{today}.txt'
-    directory = f'{save_path}/BackupDate_{today}'
+    filename = 'configuration.txt'
+    directory = f'{save_path}/Backup_Date_{today}/{sys_name}_{today}'
 
     with open(f"{directory}/{filename}", "a", newline='') as file:
         file.write(f'{string}\n')
      
-    return timestamp
+    return filename
 
 #Recursive XML parsing algorithm printing to .txt file.
 def parse_xml(root, string='', sys_name=''):
@@ -105,17 +109,47 @@ def parse_xml(root, string='', sys_name=''):
             string = string.replace(f' {root.attrib['item']}', '')
         return
 
+#Generates manifest, deleting old one if it already exists.
+def generate_manifest(sys_name=''):
+    now = datetime.datetime.now().strftime('%X')
+    manifest = {
+        "version": "1",
+        "profile": {
+            "configuration": {
+            "items": [
+                {
+                "payload": 'configuration.txt',
+                "type": "zip",
+                "id": "_singleton"
+                }
+            ]
+            }
+        },
+        "profileName": f"{sys_name}-{now}",
+        "generatedAt": f"{now}"
+    }
+    # manifest = json.dump(manifest, dict, indent=1)
+    directory = f'{SAVE_PATH}/Backup_Date_{today}/{sys_name}_{today}'
+    if os.path.isfile(f'{directory}/manifest.json'):
+        subprocess.run(['rm', f'{directory}/manifest.json'])
+    with open(f"{directory}/manifest.json", "a", newline='') as file:
+        json.dump(manifest, file, indent=1)
+
+
 #Main function
 def backup_utility(ip):
     sys_name = get_sys_name(ip)
-    message('System name retrieved', sys_name)
+    directory = f'{SAVE_PATH}/Backup_Date_{today}/{sys_name}_{today}'
+    message(f'System name retrieved: {sys_name}\r\nPulling system backup...', sys_name)
     config_xml = get_sys_config(ip)
     message('Configuration file retrieved', sys_name)
     message('Checking directory and filename...', sys_name)
     check_backup_file(sys_name, SAVE_PATH)
     message('Parsing XML...', sys_name)
     parse_xml(config_xml, '', sys_name)
+    generate_manifest(sys_name)
     message('Backup completed', sys_name)
+
 
 if __name__ == '__main__':
     backup_utility('172.16.131.163')
