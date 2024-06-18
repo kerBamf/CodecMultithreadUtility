@@ -5,7 +5,6 @@ import math
 import subprocess
 import requests
 from openpyxl import load_workbook
-import concurrent.futures
 import smtplib
 import xml.etree.ElementTree as ET
 from email.message import EmailMessage
