@@ -39,16 +39,17 @@ def user_choice():
 
 selected_file = found_files['files'][int(user_choice())]
 
-
-
-def excel_parser():
+def excel_parser(path='', selected_file=''):
     wb = load_workbook(f'{path}/{selected_file}')
     ws = wb.active
     values = [value[0] for value in ws.iter_rows(min_row=2, min_col=3, max_col=3, values_only=True)]
 
     return values
 
+def run_parser():
+    return excel_parser(path, selected_file)
+
 # excel = load_workbook(f'./')
 
 if __name__ == '__main__':
-    print(excel_iterator())
+    run_parser()

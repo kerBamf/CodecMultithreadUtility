@@ -2,12 +2,9 @@ import os
 from dotenv import load_dotenv
 import time
 import math
-import datetime
 import subprocess
-import sched
 import requests
 from openpyxl import load_workbook
-import openpyxl
 import concurrent.futures
 import smtplib
 import xml.etree.ElementTree as ET
