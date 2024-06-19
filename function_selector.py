@@ -17,7 +17,7 @@ def select_function():
         'options': option_string
     }
 
-    selection = user_choice(output)
+    selection = output['files'][user_choice(output)]
 
     return selection
 
