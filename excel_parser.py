@@ -5,11 +5,12 @@ from openpyxl import load_workbook
 class Custom_Exception(Exception):
     pass
 
-#Finding relative path
-path = f'{getcwd()}/../excel_files'
+def find_path():
+    path = f'{getcwd()}/../excel_files'
+    return path
 
 # Finding files
-def find_files():
+def select_file(path):
     file_list = [file for file in listdir(path) if isfile(join(path, file))]
     list_dict = {}
     option_string = ''
@@ -22,14 +23,15 @@ def find_files():
         'options': option_string
     }
 
-    return output
+    selected_file = user_choice(output)
 
-found_files = find_files()
-def user_choice():
-    choice = int(input(f'Select which excel file to use:\r\n{found_files['options']}\r\nFile number selection: '))
-    for key in list(found_files['files'].keys()):
+    return selected_file
+
+def user_choice(files):
+    choice = int(input(f'Select which excel file to use:\r\n{files['options']}\r\nFile number selection: '))
+    for key in list(files['files'].keys()):
         if choice == key:
-            if 'y' == input(f'\n\rYou have selected {found_files['files'][key]} Proceed? (y/n): '):
+            if 'y' == input(f'\n\rYou have selected {files['files'][key]} Proceed? (y/n): '):
                 return choice
             else:
                 print('Selection Cancelled')
@@ -37,11 +39,9 @@ def user_choice():
     print('Your selection is invalid.')
     return user_choice()
 
-selected_file = found_files['files'][int(user_choice())]
 
-
-def excel_parser():
-    wb = load_workbook(f'{path}/{selected_file}')
+def excel_parser(path, file):
+    wb = load_workbook(f'{path}/{file}')
     ws = wb.active
     values = [value[0] for value in ws.iter_rows(min_row=2, min_col=3, max_col=3, values_only=True)]
 
@@ -50,4 +50,5 @@ def excel_parser():
 # excel = load_workbook(f'./')
 
 if __name__ == '__main__':
-    print(excel_iterator())
+    #Finding relative path
+    excel_parser(find_path(), select_file(find_path()))

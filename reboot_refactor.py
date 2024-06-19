@@ -10,11 +10,13 @@ import xml.etree.ElementTree as ET
 from email.message import EmailMessage
 from logger import log_info
 from codec_multithreader import iterator
+from excel_parser import excel_parser
 
 #Loading Environment Variables
 load_dotenv()
 PASSCODE = os.environ.get("PASSCODE")
-FILENAME = os.environ.get("FILENAME")
+FILENAME = os.environ.get("REBOOT_EXCEL_FILE")
+FILEPATH = os.environ.get('REBOOT_EXCEL_PATH')
 LOGPATH = os.environ.get("REBOOT_LOGPATH")
 
 #Disable ssl warning
@@ -75,7 +77,6 @@ def initiate_reboot(ip='', sys_name=''):
 def reboot_process(ip=''):
     sys_name = get_sys_name(ip)
     message(f'Systname name retrived: {sys_name}', sys_name)
-    
     message('Initiating reboot...', sys_name)
     initiate_reboot(ip, sys_name)
     
@@ -138,6 +139,6 @@ def reboot_process(ip=''):
     
 # Using iterator to multithread over all IPs in a given list
 
-
 if __name__ == '__main__':
-    reboot_process('172.16.131.163')
+    ip_list = excel_parser(FILEPATH, FILENAME)
+    iterator(reboot_process, ip_list)
