@@ -102,7 +102,20 @@ def http_request(ip, string):
     except requests.exceptions.HTTPError as err:
         log_info(f'{ip} -> {err}', ip, LOGPATH)
 
+def get_sys_name(ip=''):
+    try:
+        xml = requests.get(f'http://{ip}/getxml?location=/Configuration/SystemUnit/Name', headers=headers, verify=False, timeout=(10, 30))
+        print(xml.text)
+        xml_root = ET.fromstring(xml.text)
+        sys_name = xml_root[0][0].text
+        return sys_name
+    except requests.exceptions.HTTPError as err:
+        print(err, ip)
+
 def config_consolidation(ip):
+    #Getting device information
+    sys_name = get_sys_name(ip)
+
     #Removing macros
     for macro in macros_to_remove:
         http_request(ip, get_rm_macro_string(macro))
@@ -118,7 +131,7 @@ def config_consolidation(ip):
     log_info('Backup fetched', ip, LOGPATH)
     
     log_info('Update Successful', ip, LOGPATH)
-    return f'{ip} - Changes made successfully'
+    return f'{sys_name} - Changes made successfully'
 
 if __name__ == '__main__':
     config_consolidation(input('Enter Codec Ip: '))
