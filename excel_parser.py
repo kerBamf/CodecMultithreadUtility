@@ -23,7 +23,7 @@ def select_file(path):
         'options': option_string
     }
 
-    selected_file = user_choice(output)
+    selected_file = output['files'][user_choice(output)]
 
     return selected_file
 
@@ -40,7 +40,11 @@ def user_choice(files):
     return user_choice()
 
 
-def excel_parser(path, file):
+def excel_parser(path='', file=''):
+    if path == '':
+        path = find_path()
+    if file == '':
+        file = select_file(find_path())
     wb = load_workbook(f'{path}/{file}')
     ws = wb.active
     values = [value[0] for value in ws.iter_rows(min_row=2, min_col=3, max_col=3, values_only=True)]
@@ -51,4 +55,4 @@ def excel_parser(path, file):
 
 if __name__ == '__main__':
     #Finding relative path
-    excel_parser(find_path(), select_file(find_path()))
+    print(excel_parser())
