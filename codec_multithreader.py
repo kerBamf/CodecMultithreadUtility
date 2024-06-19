@@ -1,5 +1,4 @@
 import os
-from dotenv import load_dotenv
 import concurrent.futures
 from importlib import import_module
 from excel_parser import excel_parser
@@ -9,25 +8,24 @@ from logger import log_info
 #Loading environment variables
 LOGPATH = os.environ.get('LOGPATH')
 
-ip_list = excel_parser()
-selected_function = function_selector()
-imported_func = getattr(import_module(selected_function), selected_function)
-
-#function = function_selector()
-
-def message(string):
+#Logger
+def message(string, function):
     print(string)
-    log_info(string, selected_function, LOGPATH)
+    log_info(string, function.__name__, LOGPATH)
 
+#Multithreading function
 def iterator(function, ip_list):
     with concurrent.futures.ThreadPoolExecutor() as executor:
         futures = {executor.submit(function, ip): ip for ip in ip_list}
     
     for future in concurrent.futures.as_completed(futures):
         if (future.exception()):
-            message(future.exception())
+            message(future.exception(), function)
         else:
-            message(future.result())
+            message(future.result(), function)
 
 if __name__ == '__main__':
-    iterator(selected_function, ip_list)
+    ip_list = excel_parser()
+    selected_function = function_selector()
+    imported_func = getattr(import_module(selected_function), selected_function)
+    iterator(imported_func, ip_list)

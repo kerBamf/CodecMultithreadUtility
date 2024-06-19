@@ -4,7 +4,7 @@ from os.path import isfile, join
 #Loading find relative path
 path = getcwd()
 
-def find_functions():
+def select_function():
     file_list = [file for file in listdir(path) if isfile(join(path, file)) and file.endswith('.py') and file != 'codec_multithreader.py' and file != 'excel_parser.py' and file != 'logger.py' and file != 'function_selector.py']
     list_dict = {}
     option_string = ''
@@ -17,15 +17,15 @@ def find_functions():
         'options': option_string
     }
 
-    return output
+    selection = output['files'][user_choice(output)]
 
-found_functions = find_functions()
+    return selection
 
-def user_choice():
-    choice = int(input(f'Select which function to run:\r\n{found_functions['options']}\r\nFunction number selection: '))
-    for key in list(found_functions['files'].keys()):
+def user_choice(files):
+    choice = int(input(f'Select which function to run:\r\n{files['options']}\r\nFunction number selection: '))
+    for key in list(files['files'].keys()):
         if choice == key:
-            if 'y' == input(f'\n\rYou have selected to run {found_functions['files'][key]} Proceed? (y/n): '):
+            if 'y' == input(f'\n\rYou have selected to run {files['files'][key]} Proceed? (y/n): '):
                 return choice
             else:
                 print('Selection Cancelled')
@@ -34,7 +34,7 @@ def user_choice():
     return user_choice()
 
 def function_selector():
-    selected_function = found_functions['files'][int(user_choice())]
+    selected_function = select_function()
     selected_function = selected_function.replace('.py', '')
     return selected_function
 

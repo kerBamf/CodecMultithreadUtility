@@ -4,11 +4,11 @@ import subprocess
 
 #Checks defined logging directory for a folder with the current date. if one does not exist, it creates a new directory for scripts ran that day
 def check_dir(path='', date=''):
-    if not os.path.isdir(path + f'/RunLog-{date}'):
-        subprocess.run(['mkdir', f'{path}/RunLog-{date}'], capture_output=True)
-        return f'/RunLog-{date}'
+    if not os.path.isdir(path + f'/RunLog_{date}'):
+        subprocess.run(['mkdir', f'{path}/RunLog_{date}'], capture_output=True)
+        return f'/RunLog_{date}'
     else:
-        return f'/RunLog-{date}'
+        return f'/RunLog_{date}'
 
 #Appends logs to log file (or creates one if one does not exist)
 def log_info(string='', sys_name='', log_path=''):
