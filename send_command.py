@@ -15,15 +15,15 @@ headers = {
     'Content-Type': 'text/xml'
 }
 
-refresh_XML = '''<Body>
-    <Configuration>
-        <Standby>
-            <Signage>
-                <RefreshInterval>120</RefreshInterval>
-            </Signage>
-        </Standby>
-    </Configuration>
-</Body>'''
+refresh_XML = '''<Configuration>
+    <UserInterface>
+        <Features>
+            <Call>
+                <Webcam>Hidden</Webcam>
+            </Call>
+        </Features>
+    </UserInterface>
+</Configuration>'''
 
 def http_request(ip, string):
     try:
@@ -33,8 +33,8 @@ def http_request(ip, string):
         log_info(f'{ip} -> {err}', ip, LOGPATH)
 
 def send_command(ip):
-    http_request(ip, refresh_XML)
-    return 'Command Sent Successfully'
+    response = http_request(ip, refresh_XML)
+    return response.text
 
 if __name__ == '__main__':
     send_command(input('Enter Codec IP: '))
