@@ -243,8 +243,4 @@ def chain_update(ip):
     return {'Status': f'{codec_info['sys_name']} successfully upgraded', 'ip': ip}
 
 if __name__ == '__main__':
-<<<<<<< HEAD
     chain_update(input('Enter Codec IP: '))
-=======
-    chain_update(TESTURL)
->>>>>>> 854df111ac6e46c5aaa4ba964ec2ce8bff7821e6
