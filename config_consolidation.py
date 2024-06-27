@@ -66,7 +66,7 @@ fetch_backup_XML = f'''<Command>
         <Service>
             <Fetch>
                 <Checksum item="1" valueSpaceRef="/Valuespace/Vs_string_0_128">053efb937474069987f0f79ae25bc9c5e3a55331ae6fc4c36cbabc1602b7af831c59607f6d9059db9e303e12e2c90aa368f729f0ba448c69d05ed607842c165f</Checksum>
-                <URL item="1" valueSpaceRef="/Valuespace/Vs_string_0_2048">http://MMIS0177.mskcc.org:9000/Backup_Files/Macro_Consolidation_Template.zip</URL>
+                <URL item="1" valueSpaceRef="/Valuespace/Vs_string_0_2048">http://localhost:9000/Backup_Files/Macro_Consolidation_Template.zip</URL>
             </Fetch>
         </Service>
     </Provisioning>
