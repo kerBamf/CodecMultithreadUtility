@@ -13,6 +13,11 @@ requests.packages.urllib3.disable_warnings()
 SAVE_PATH = os.environ.get('BACKUP_PATH')
 PASSCODE = os.environ.get('PASSCODE')
 
+#Setting up custom exception
+
+class custom_exception(Exception):
+    pass
+
 #Setting up logger
 def message(string='', sys_name=''):
     print(string)
@@ -68,9 +73,8 @@ def check_backup_file(sys_name='', save_path=''):
 
 
 #Appends configuration lines to new backup file
-def append_file(string='', sys_name='', save_path=''):
+def append_file(string='', sys_name='', directory=''):
     filename = 'configuration.txt'
-    directory = f'{save_path}/Backup_Date_{today}/{sys_name}_{today}'
 
     with open(f"{directory}/{filename}", "a", newline='') as file:
         file.write(f'{string}\n')
@@ -78,7 +82,7 @@ def append_file(string='', sys_name='', save_path=''):
     return filename
 
 #Recursive XML parsing algorithm printing to .txt file.
-def parse_xml(root, string='', sys_name=''):
+def parse_xml(root, string='', sys_name='', directory=''):
     if string == '':
         string = root.tag
     elif root.attrib and len(root.attrib) > 1:
@@ -96,7 +100,7 @@ def parse_xml(root, string='', sys_name=''):
         string = string.replace('Configuration', '').replace('None', '""').replace('""""', '""')
         if root.tag == 'Parity':
             string = string.replace('""', 'None')
-        append_file(string, f'{sys_name}', SAVE_PATH)
+        append_file(string, sys_name, directory)
         string = string.replace(f': {root.text}', '')
         string = string.replace(f' {root.tag}', '')
         if root.attrib and len(root.attrib) > 1:
@@ -104,7 +108,7 @@ def parse_xml(root, string='', sys_name=''):
         return
 
 #Generates manifest, deleting old one if it already exists.
-def generate_manifest(sys_name=''):
+def generate_manifest(directory='', sys_name=''):
     now = datetime.datetime.now().strftime('%X')
     manifest = {
         "version": "1",
@@ -123,7 +127,6 @@ def generate_manifest(sys_name=''):
         "generatedAt": f"{now}"
     }
     # manifest = json.dump(manifest, dict, indent=1)
-    directory = f'{SAVE_PATH}/Backup_Date_{today}/{sys_name}_{today}'
     if os.path.isfile(f'{directory}/manifest.json'):
         subprocess.run(['rm', f'{directory}/manifest.json'])
     with open(f"{directory}/manifest.json", "a", newline='') as file:
@@ -139,6 +142,21 @@ def compress_zip(directory='', sys_name=''):
     subprocess.run(['zip', f'{directory}/{sys_name}_{today}_backup.zip', f'{directory}/configuration.txt', f'{directory}/manifest.json'], capture_output=True)
 
 
+def generate_checksum(directory='', sys_name=''):
+    backup_file = f'{directory}/{sys_name}_{today}_backup.zip'
+    filename = 'sha512_checksum.txt'
+    if os.path.isfile(f'{directory}/{filename}'):
+        subprocess.run(['rm', f'{directory}/{filename}'], capture_output=True)
+    raw_checksum = subprocess.run(['shasum', '-a', '512', f'{backup_file}'], capture_output=True, text=True)
+    if raw_checksum.stderr == '':
+        string = raw_checksum.stdout.split(' ')[0]
+    else:
+        raise custom_exception(raw_checksum.stderr)
+    
+    print(string)
+    with open(f'{directory}/{filename}', 'a', newline='') as file:
+        file.write(f'{string}')
+
 #Main function
 def backup_utility(ip):
     sys_name = get_sys_name(ip)
@@ -149,11 +167,12 @@ def backup_utility(ip):
     message('Checking directory and filename...', sys_name)
     check_backup_file(sys_name, SAVE_PATH)
     message('Parsing XML...', sys_name)
-    parse_xml(config_xml, '', sys_name)
+    parse_xml(config_xml, '', sys_name, directory)
     message('Generating manifest', sys_name)
     generate_manifest(sys_name)
     message('Compressing files...', sys_name)
     compress_zip(directory, sys_name)
+    generate_checksum(directory, sys_name)
     message('Backup completed', sys_name)
     resolution = {
         'Status': 'Backup Completed',
