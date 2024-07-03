@@ -46,14 +46,6 @@ def get_sys_config(ip=''):
     except requests.exceptions.HTTPError as err:
         message(err, ip)
 
-#Checks defined backup directory for a folder with the current date. if one does not exist, it creates a new directory for backups pulled that day
-# def check_backup_dir(path='', date=''):
-#     if not os.path.isdir(f'{path}/BackupDate_{date}'):
-#         subprocess.run(['mkdir', f'{path}/BackupDate_{date}'], capture_output=True)
-#         return f'/BackupDate_{date}'
-#     else:
-#         return f'/BackupDate_{date}'
-
 #Getting Date for use by multiple functions
 today = datetime.datetime.now().strftime('%x').replace('/', '-')
 
@@ -91,7 +83,7 @@ def parse_xml(root, string='', sys_name='', directory=''):
         string = f'{string} {root.tag}'
     if len(root) >= 1:
         for child in root:
-            parse_xml(child, string, sys_name)
+            parse_xml(child, string, sys_name, directory)
     else:
         if 'Name' in root.tag: 
             string = f'{string}: "{root.text}"'
@@ -108,7 +100,7 @@ def parse_xml(root, string='', sys_name='', directory=''):
         return
 
 #Generates manifest, deleting old one if it already exists.
-def generate_manifest(directory='', sys_name=''):
+def generate_manifest(sys_name='', directory=''):
     now = datetime.datetime.now().strftime('%X')
     manifest = {
         "version": "1",
@@ -169,7 +161,7 @@ def backup_utility(ip):
     message('Parsing XML...', sys_name)
     parse_xml(config_xml, '', sys_name, directory)
     message('Generating manifest', sys_name)
-    generate_manifest(sys_name)
+    generate_manifest(sys_name, directory)
     message('Compressing files...', sys_name)
     compress_zip(directory, sys_name)
     generate_checksum(directory, sys_name)
