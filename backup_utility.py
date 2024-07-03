@@ -173,4 +173,4 @@ def backup_utility(ip):
     return resolution
 
 if __name__ == '__main__':
-    backup_utility('172.16.131.163')
+    backup_utility(input('Enter codec IP: '))
