@@ -138,7 +138,7 @@ def compress_zip(directory='', sys_name=''):
         subprocess.run(['rm', f'{directory}/{sys_name}_{today}_backup.zip'], capture_output=True)
     subprocess.run(['zip', f'{directory}/{sys_name}_{today}_backup.zip', f'{directory}/configuration.txt', f'{directory}/manifest.json'], capture_output=True)
 
-
+#Function generating a sha512 checksum for use by remote backup restoration commands
 def generate_checksum(directory='', sys_name=''):
     backup_file = f'{directory}/{sys_name}_{today}_backup.zip'
     filename = 'sha512_checksum.txt'
