@@ -13,6 +13,11 @@ requests.packages.urllib3.disable_warnings()
 SAVE_PATH = os.environ.get('BACKUP_PATH')
 PASSCODE = os.environ.get('PASSCODE')
 
+#Setting up custom exception
+
+class custom_exception(Exception):
+    pass
+
 #Setting up logger
 def message(string='', sys_name=''):
     print(string)
@@ -41,14 +46,6 @@ def get_sys_config(ip=''):
     except requests.exceptions.HTTPError as err:
         message(err, ip)
 
-#Checks defined backup directory for a folder with the current date. if one does not exist, it creates a new directory for backups pulled that day
-# def check_backup_dir(path='', date=''):
-#     if not os.path.isdir(f'{path}/BackupDate_{date}'):
-#         subprocess.run(['mkdir', f'{path}/BackupDate_{date}'], capture_output=True)
-#         return f'/BackupDate_{date}'
-#     else:
-#         return f'/BackupDate_{date}'
-
 #Getting Date for use by multiple functions
 today = datetime.datetime.now().strftime('%x').replace('/', '-')
 
@@ -61,34 +58,37 @@ def check_backup_file(sys_name='', save_path=''):
         subprocess.run(['mkdir', f'{day_directory}'], capture_output=True)
     if not os.path.isdir(sys_directory):
         subprocess.run(['mkdir', f'{sys_directory}'], capture_output=True)
-    filename = f'configuration.txt'
+    filename = 'configuration.txt'
     if os.path.isfile(f'{sys_directory}/{filename}'):
         subprocess.run(['rm', f'{sys_directory}/{filename}'])
         message('Old backup deleted.', sys_name)
 
 
-#Appends configuration lines to new backup file
-def append_file(string='', sys_name='', save_path=''):
+#Appends strings to new backup file as a line of text
+def append_file(string='', sys_name='', directory=''):
     filename = 'configuration.txt'
-    directory = f'{save_path}/Backup_Date_{today}/{sys_name}_{today}'
 
     with open(f"{directory}/{filename}", "a", newline='') as file:
         file.write(f'{string}\n')
      
     return filename
 
-#Recursive XML parsing algorithm printing to .txt file.
-def parse_xml(root, string='', sys_name=''):
+#Recursive XML parsing algorithm converting XML config to .txt file. As each node is visited, the string to be added to the .txt file is built node by node
+def parse_xml(root, string='', sys_name='', directory=''):
     if string == '':
         string = root.tag
     elif root.attrib and len(root.attrib) > 1:
         string = f'{string} {root.tag} {root.attrib['item']}'
     else:
         string = f'{string} {root.tag}'
-    if len(root) >= 1:
+    
+    #Checks for child nodes, recursively calling function if they exist, passing the partially built string with it
+    if len(root) >= 1: 
         for child in root:
-            parse_xml(child, string, sys_name)
-    else:
+            parse_xml(child, string, sys_name, directory)
+
+    #Once the full path of an attribute is reached (the end of a branch in the XML tree), the string is completed and the line appended to the .txt file. Necessary string modifiers for edge cases are in place here to ensure proper syntax in the .txt file.
+    else: 
         if 'Name' in root.tag: 
             string = f'{string}: "{root.text}"'
         else:
@@ -96,15 +96,17 @@ def parse_xml(root, string='', sys_name=''):
         string = string.replace('Configuration', '').replace('None', '""').replace('""""', '""')
         if root.tag == 'Parity':
             string = string.replace('""', 'None')
-        append_file(string, f'{sys_name}', SAVE_PATH)
-        string = string.replace(f': {root.text}', '')
+        append_file(string, sys_name, directory)
+
+        #Once the line has been appended to the .txt file, the attributes and values of the current node are removed, allowing the string to be reused by the previously called function
+        string = string.replace(f': {root.text}', '') 
         string = string.replace(f' {root.tag}', '')
         if root.attrib and len(root.attrib) > 1:
             string = string.replace(f' {root.attrib['item']}', '')
         return
 
 #Generates manifest, deleting old one if it already exists.
-def generate_manifest(sys_name=''):
+def generate_manifest(sys_name='', directory=''):
     now = datetime.datetime.now().strftime('%X')
     manifest = {
         "version": "1",
@@ -122,8 +124,6 @@ def generate_manifest(sys_name=''):
         "profileName": f"{sys_name}-{now}",
         "generatedAt": f"{now}"
     }
-    # manifest = json.dump(manifest, dict, indent=1)
-    directory = f'{SAVE_PATH}/Backup_Date_{today}/{sys_name}_{today}'
     if os.path.isfile(f'{directory}/manifest.json'):
         subprocess.run(['rm', f'{directory}/manifest.json'])
     with open(f"{directory}/manifest.json", "a", newline='') as file:
@@ -139,6 +139,21 @@ def compress_zip(directory='', sys_name=''):
     subprocess.run(['zip', f'{directory}/{sys_name}_{today}_backup.zip', f'{directory}/configuration.txt', f'{directory}/manifest.json'], capture_output=True)
 
 
+def generate_checksum(directory='', sys_name=''):
+    backup_file = f'{directory}/{sys_name}_{today}_backup.zip'
+    filename = 'sha512_checksum.txt'
+    if os.path.isfile(f'{directory}/{filename}'):
+        subprocess.run(['rm', f'{directory}/{filename}'], capture_output=True)
+    raw_checksum = subprocess.run(['shasum', '-a', '512', f'{backup_file}'], capture_output=True, text=True)
+    if raw_checksum.stderr == '':
+        string = raw_checksum.stdout.split(' ')[0]
+    else:
+        raise custom_exception(raw_checksum.stderr)
+    
+    print(string)
+    with open(f'{directory}/{filename}', 'a', newline='') as file:
+        file.write(f'{string}')
+
 #Main function
 def backup_utility(ip):
     sys_name = get_sys_name(ip)
@@ -149,11 +164,12 @@ def backup_utility(ip):
     message('Checking directory and filename...', sys_name)
     check_backup_file(sys_name, SAVE_PATH)
     message('Parsing XML...', sys_name)
-    parse_xml(config_xml, '', sys_name)
+    parse_xml(config_xml, '', sys_name, directory)
     message('Generating manifest', sys_name)
-    generate_manifest(sys_name)
+    generate_manifest(sys_name, directory)
     message('Compressing files...', sys_name)
     compress_zip(directory, sys_name)
+    generate_checksum(directory, sys_name)
     message('Backup completed', sys_name)
     resolution = {
         'Status': 'Backup Completed',
@@ -162,4 +178,4 @@ def backup_utility(ip):
     return resolution
 
 if __name__ == '__main__':
-    backup_utility('172.16.131.163')
+    backup_utility(input('Enter codec IP: '))

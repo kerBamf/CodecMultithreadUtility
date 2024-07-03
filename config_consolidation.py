@@ -14,6 +14,7 @@ headers = {
     'Authorization': f'basic {PASSCODE}',
     'Content-Type': 'text/xml'
 }
+BACKUP_FILE = environ.get('BACKUP_FILE')
 
 # Listing all macros to remove for loop iteration
 macros_to_remove = [
@@ -65,8 +66,8 @@ fetch_backup_XML = f'''<Command>
     <Provisioning>
         <Service>
             <Fetch>
-                <Checksum item="1" valueSpaceRef="/Valuespace/Vs_string_0_128">053efb937474069987f0f79ae25bc9c5e3a55331ae6fc4c36cbabc1602b7af831c59607f6d9059db9e303e12e2c90aa368f729f0ba448c69d05ed607842c165f</Checksum>
-                <URL item="1" valueSpaceRef="/Valuespace/Vs_string_0_2048">http://MMIS0177.mskcc.org:9000/Backup_Files/Macro_Consolidation_Template.zip</URL>
+                <Checksum item="1" valueSpaceRef="/Valuespace/Vs_string_0_128">0b896e27fd693989ef9c6b32aa97db29cb8bd9d18b182083042324e64daa514f7380e1de24775cb2f3b8e24746c435f6f67b8b1f195258579d17e5b197d7a155</Checksum>
+                <URL item="1" valueSpaceRef="/Valuespace/Vs_string_0_2048">{BACKUP_FILE}</URL>
             </Fetch>
         </Service>
     </Provisioning>
@@ -99,6 +100,7 @@ def http_request(ip, string):
     try:
         response = requests.post(f'http://{ip}/putxml', headers=headers, verify=False, data=string, timeout=180)
         log_info(response.text, ip, LOGPATH)
+        return response.text
     except requests.exceptions.HTTPError as err:
         log_info(f'{ip} -> {err}', ip, LOGPATH)
 
@@ -119,18 +121,18 @@ def config_consolidation(ip):
     #Removing macros
     for macro in macros_to_remove:
         http_request(ip, get_rm_macro_string(macro))
-        log_info(macro, ip, LOGPATH)
+        log_info(macro, sys_name, LOGPATH)
     
     #removing UI elements
     for ui in UIs_to_remove:
         http_request(ip, get_rm_UI_string(ui))
-        log_info(ui, ip, LOGPATH)
+        log_info(ui, sys_name, LOGPATH)
     
     #Fetching and loading backup
-    http_request(ip, fetch_backup_XML)
-    log_info('Backup fetched', ip, LOGPATH)
+    backup_fetch_status = http_request(ip, fetch_backup_XML)
+    log_info(f'{backup_fetch_status}', sys_name, LOGPATH)
     
-    log_info('Update Successful', ip, LOGPATH)
+    log_info('Update Successful', sys_name, LOGPATH)
     return f'{sys_name} - Changes made successfully'
 
 if __name__ == '__main__':
