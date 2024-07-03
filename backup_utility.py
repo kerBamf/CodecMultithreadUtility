@@ -58,13 +58,13 @@ def check_backup_file(sys_name='', save_path=''):
         subprocess.run(['mkdir', f'{day_directory}'], capture_output=True)
     if not os.path.isdir(sys_directory):
         subprocess.run(['mkdir', f'{sys_directory}'], capture_output=True)
-    filename = f'configuration.txt'
+    filename = 'configuration.txt'
     if os.path.isfile(f'{sys_directory}/{filename}'):
         subprocess.run(['rm', f'{sys_directory}/{filename}'])
         message('Old backup deleted.', sys_name)
 
 
-#Appends configuration lines to new backup file
+#Appends strings to new backup file as a line of text
 def append_file(string='', sys_name='', directory=''):
     filename = 'configuration.txt'
 
@@ -73,7 +73,7 @@ def append_file(string='', sys_name='', directory=''):
      
     return filename
 
-#Recursive XML parsing algorithm printing to .txt file.
+#Recursive XML parsing algorithm converting XML config to .txt file. As each node is visited, the string to be added to the .txt file is built node by node
 def parse_xml(root, string='', sys_name='', directory=''):
     if string == '':
         string = root.tag
@@ -81,10 +81,14 @@ def parse_xml(root, string='', sys_name='', directory=''):
         string = f'{string} {root.tag} {root.attrib['item']}'
     else:
         string = f'{string} {root.tag}'
-    if len(root) >= 1:
+    
+    #Checks for child nodes, recursively calling function if they exist, passing the partially built string with it
+    if len(root) >= 1: 
         for child in root:
             parse_xml(child, string, sys_name, directory)
-    else:
+
+    #Once the full path of an attribute is reached (the end of a branch in the XML tree), the string is completed and the line appended to the .txt file. Necessary string modifiers for edge cases are in place here to ensure proper syntax in the .txt file.
+    else: 
         if 'Name' in root.tag: 
             string = f'{string}: "{root.text}"'
         else:
@@ -93,7 +97,9 @@ def parse_xml(root, string='', sys_name='', directory=''):
         if root.tag == 'Parity':
             string = string.replace('""', 'None')
         append_file(string, sys_name, directory)
-        string = string.replace(f': {root.text}', '')
+
+        #Once the line has been appended to the .txt file, the attributes and values of the current node are removed, allowing the string to be reused by the previously called function
+        string = string.replace(f': {root.text}', '') 
         string = string.replace(f' {root.tag}', '')
         if root.attrib and len(root.attrib) > 1:
             string = string.replace(f' {root.attrib['item']}', '')
@@ -118,7 +124,6 @@ def generate_manifest(sys_name='', directory=''):
         "profileName": f"{sys_name}-{now}",
         "generatedAt": f"{now}"
     }
-    # manifest = json.dump(manifest, dict, indent=1)
     if os.path.isfile(f'{directory}/manifest.json'):
         subprocess.run(['rm', f'{directory}/manifest.json'])
     with open(f"{directory}/manifest.json", "a", newline='') as file:
