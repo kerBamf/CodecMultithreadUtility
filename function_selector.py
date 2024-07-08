@@ -22,10 +22,10 @@ def select_function():
     return selection
 
 def user_choice(files):
-    choice = int(input(f'Select which function to run:\r\n{files['options']}\r\nFunction number selection: '))
+    choice = int(input(f'Select which function to run:\r\n{files["options"]}\r\nFunction number selection: '))
     for key in list(files['files'].keys()):
         if choice == key:
-            if 'y' == input(f'\n\rYou have selected to run {files['files'][key]} Proceed? (y/n): '):
+            if 'y' == input(f'\n\rYou have selected to run {files["files"][key]} Proceed? (y/n): '):
                 return choice
             else:
                 print('Selection Cancelled')
