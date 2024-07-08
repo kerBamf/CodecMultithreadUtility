@@ -215,8 +215,8 @@ def chain_update(ip):
 
     # Returns chain update function if code is on the latest version. Changes will need to be added later to allow for dynamic edits to code versions as newer ones come out.
     if (int(codec_info['sw_version'][0]) == int(final_sw_version[0]) and int(codec_info['sw_version'][1]) == int(final_sw_version[1])):
-        message(f'{codec_info['sys_name']} running latest software. Exiting script.', sys_name)
-        return f'{codec_info['sys_name']} running latest software. Exiting script.'
+        message(f'{codec_info["sys_name"]} running latest software. Exiting script.', sys_name)
+        return f'{codec_info["sys_name"]} running latest software. Exiting script.'
     
     #Beginning upgrade iteration
     for key in assigned_sw_keys:
@@ -239,8 +239,8 @@ def chain_update(ip):
                 #print(error['text'])
                 raise error
     
-    message(f'{codec_info['sys_name']} successfully upgraded', sys_name)
-    return {'Status': f'{codec_info['sys_name']} successfully upgraded', 'ip': ip}
+    message(f'{codec_info["sys_name"]} successfully upgraded', sys_name)
+    return {'Status': f'{codec_info["sys_name"]} successfully upgraded', 'ip': ip}
 
 if __name__ == '__main__':
     chain_update(input('Enter Codec IP: '))
