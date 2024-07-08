@@ -78,7 +78,7 @@ def parse_xml(root, string='', sys_name='', directory=''):
     if string == '':
         string = root.tag
     elif root.attrib and len(root.attrib) > 1:
-        string = f'{string} {root.tag} {root.attrib['item']}'
+        string = f'{string} {root.tag} {root.attrib["item"]}'
     else:
         string = f'{string} {root.tag}'
     
@@ -102,7 +102,7 @@ def parse_xml(root, string='', sys_name='', directory=''):
         string = string.replace(f': {root.text}', '') 
         string = string.replace(f' {root.tag}', '')
         if root.attrib and len(root.attrib) > 1:
-            string = string.replace(f' {root.attrib['item']}', '')
+            string = string.replace(f' {root.attrib["item"]}', '')
         return
 
 #Generates manifest, deleting old one if it already exists.

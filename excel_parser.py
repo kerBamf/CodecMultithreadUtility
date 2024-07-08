@@ -28,10 +28,10 @@ def select_file(path):
     return selected_file
 
 def user_choice(files):
-    choice = int(input(f'Select which excel file to use:\r\n{files['options']}\r\nFile number selection: '))
+    choice = int(input(f'Select which excel file to use:\r\n{files["options"]}\r\nFile number selection: '))
     for key in list(files['files'].keys()):
         if choice == key:
-            if 'y' == input(f'\n\rYou have selected {files['files'][key]} Proceed? (y/n): '):
+            if 'y' == input(f'\n\rYou have selected {files["files"][key]} Proceed? (y/n): '):
                 return choice
             else:
                 print('Selection Cancelled')

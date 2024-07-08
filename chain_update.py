@@ -102,7 +102,7 @@ def check_codec(ip):
         for unit in hardware_list['kit']:
             if (sys_type == unit):
                 codec_info['hw_version'] = 'kit'
-        message(f'Hardware found: {sys_type}. Assigning hardware version: {codec_info['hw_version']}', codec_info['sys_name'])
+        message(f'Hardware found: {sys_type}. Assigning hardware version: {codec_info["hw_version"]}', codec_info['sys_name'])
 
     except requests.exceptions.HTTPError as err:
         message(err.response)
@@ -177,7 +177,7 @@ def upgrade(sys_name, current_sw, sw_path, sw_file, ip):
 
     if (awake == False):
         message(f'{sys_name} failed to restart. Please investigate', sys_name)
-        raise UpgradeException({f'text': f'{sys_name} failed to restart. Please investigate'})
+        raise UpgradeException({'text': f'{sys_name} failed to restart. Please investigate'})
     
     time.sleep(60)
 

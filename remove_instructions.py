@@ -136,4 +136,4 @@ def remove_instructions(ip):
     return f'{ip} - Changes made successfully'
 
 if __name__ == '__main__':
-    remove_instructions('172.16.131.60')
+    remove_instructions(input('Enter codec IP: '))
