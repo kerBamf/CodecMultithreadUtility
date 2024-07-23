@@ -57,7 +57,7 @@ def check_codec(ip):
     headers = {'Authorization': f'basic {PASSCODE}'}
     hardware_list = {
         'pro': ['Codec Pro', 'Room Bar'],
-        'kit': ['Room Kit', 'Room Kit Mini', 'Codec Plus'],
+        'kit': ['Room Kit', 'Room Kit Mini', 'Codec Plus', 'Room 55'],
         'SX80': 'SX80'
     }
 
