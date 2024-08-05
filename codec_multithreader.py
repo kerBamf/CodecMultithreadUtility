@@ -20,9 +20,9 @@ def iterator(function, ip_list):
     
     for future in concurrent.futures.as_completed(futures):
         if (future.exception()):
-            message(future.exception(), function)
+            message(future.exception(), function.__name__)
         else:
-            message(future.result(), function)
+            message(future.result(), function.__name__)
 
 if __name__ == '__main__':
     ip_list = excel_parser()
