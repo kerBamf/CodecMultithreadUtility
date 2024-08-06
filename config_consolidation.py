@@ -84,7 +84,7 @@ fetch_backup_XML = f'''<Command>
     <Provisioning>
         <Service>
             <Fetch>
-                <Checksum item="1" valueSpaceRef="/Valuespace/Vs_string_0_128">c6e961074391591d8684346c84f7d9aee001ae8d5f758318e0c42b2de3c8ad8f428ae335ac6d8ceb0d76b81867c7731ac5103c5f7c877ee914474c9799905712</Checksum>
+                <Checksum item="1" valueSpaceRef="/Valuespace/Vs_string_0_128">763067ed9c0300660e03f0d60f23eb6997efc9949b959f458e291b29c7855790d613bf71d23b661962b695d5d5e2f439a9db5e09a6abb59bb56ddec3338f7029</Checksum>
                 <URL item="1" valueSpaceRef="/Valuespace/Vs_string_0_2048">{BACKUP_FILE}</URL>
             </Fetch>
         </Service>
