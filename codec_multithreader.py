@@ -11,7 +11,7 @@ LOGPATH = os.environ.get('LOGPATH')
 #Logger
 def message(string, function):
     print(string)
-    log_info(string, function.__name__, LOGPATH)
+    log_info(string, function, LOGPATH)
 
 #Multithreading function
 def iterator(function, ip_list):
