@@ -78,6 +78,5 @@ def load_backup(ip, file, checksum):
         message(f'Could not complete consolidation for {sys_name}. Please investigate', sys_name)
         raise custom_exception(f'Could not complete consolidation for {sys_name}. Please investigate.')
 
-
 if __name__ == '__main__':
     load_backup(input('Enter Codec Ip: '), BACKUP_FILE, BACKUP_FILE_CHECKSUM)
