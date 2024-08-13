@@ -4,6 +4,9 @@ import requests
 import xml.etree.ElementTree as ET
 from time import sleep
 from logger import log_info
+from dotenv import load_dotenv
+
+load_dotenv()
 
 environ = os.environ
 
@@ -12,6 +15,12 @@ class custom_exception(Exception):
 
 #Removing insecure http warnings
 requests.packages.urllib3.disable_warnings()
+
+#Building Logger
+
+def message(text, origin):
+    print(f"{origin}: {text}")
+    log_info(text, origin, LOGPATH)
 
 #Loading environment variable
 PASSCODE = environ.get('PASSCODE')
@@ -23,24 +32,26 @@ headers = {
 BACKUP_FILE = environ.get('BACKUP_FILE')
 BACKUP_FILE_CHECKSUM = environ.get('BACKUP_FILE_CHECKSUM')
 
-fetch_backup_XML = f'''<Command>
-    <Provisioning>
-        <Service>
-            <Fetch>
-                <Checksum item="1" valueSpaceRef="/Valuespace/Vs_string_0_128">{BACKUP_FILE_CHECKSUM}</Checksum>
-                <URL item="1" valueSpaceRef="/Valuespace/Vs_string_0_2048">{BACKUP_FILE}</URL>
-            </Fetch>
-        </Service>
-    </Provisioning>
-</Command>'''
+def fetch_backup_XML(file, checksum):
+    string =f'''<Command>
+            <Provisioning>
+                <Service>
+                    <Fetch>
+                        <Checksum item="1" valueSpaceRef="/Valuespace/Vs_string_0_128">{file}</Checksum>
+                        <URL item="1" valueSpaceRef="/Valuespace/Vs_string_0_2048">{checksum}</URL>
+                    </Fetch>
+                </Service>
+            </Provisioning>
+        </Command>'''
+    return string
 
 def http_request(ip, string):
     try:
         response = requests.post(f'http://{ip}/putxml', headers=headers, verify=False, data=string, timeout=180)
-        log_info(response.text, ip, LOGPATH)
+        message(response.text, ip)
         return response.text
     except requests.exceptions.HTTPError as err:
-        log_info(f'{ip} -> {err}', ip, LOGPATH)
+        message(f'{ip} -> {err}', ip)
 
 def get_sys_name(ip=''):
     try:
@@ -52,21 +63,21 @@ def get_sys_name(ip=''):
     except requests.exceptions.HTTPError as err:
         print(err, ip)
 
-def load_backup(ip):
+def load_backup(ip, file, checksum):
     #Getting device information
     sys_name = get_sys_name(ip)
     
     #Fetching and loading backup
-    backup_fetch_status = http_request(ip, fetch_backup_XML)
-    log_info(f'{backup_fetch_status}', sys_name, LOGPATH)
+    backup_fetch_status = http_request(ip, fetch_backup_XML(file, checksum))
+    message(f'{backup_fetch_status}', sys_name)
     
     if backup_fetch_status.find('<ServiceFetchResult status="OK">') != -1:
-        log_info('Update Successful', sys_name, LOGPATH)
+        message('Update Successful', sys_name)
         return f'{sys_name} - Changes made successfully'
     else:
-        log_info(f'Could not complete consolidation for {sys_name}. Please investigate', sys_name, LOGPATH)
+        message(f'Could not complete consolidation for {sys_name}. Please investigate', sys_name)
         raise custom_exception(f'Could not complete consolidation for {sys_name}. Please investigate.')
 
 
 if __name__ == '__main__':
-    load_backup(input('Enter Codec Ip: '))
+    load_backup(input('Enter Codec Ip: '), BACKUP_FILE, BACKUP_FILE_CHECKSUM)
