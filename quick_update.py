@@ -202,7 +202,7 @@ def upgrade_command_xml(file_path, file_string):
 
 
 #Main command, iterates through available software versions and calls upgrade command as needed.
-def chain_update(ip):
+def quick_update(ip):
 
     codec_info = check_codec(ip)
     #Assigns software version upgrade list to use
