@@ -20,7 +20,7 @@ headers = {
     'Authorization': f'basic {PASSCODE}',
     'Content-Type': 'text/xml'
 }
-BACKUP_FILE = environ.get('BACKUP_FILE')
+BACKUP_FILE = environ.get('CONSOLIDATION_FILE')
 
 # Listing all macros to remove for loop iteration
 macros_to_remove = [
@@ -84,7 +84,7 @@ fetch_backup_XML = f'''<Command>
     <Provisioning>
         <Service>
             <Fetch>
-                <Checksum item="1" valueSpaceRef="/Valuespace/Vs_string_0_128">763067ed9c0300660e03f0d60f23eb6997efc9949b959f458e291b29c7855790d613bf71d23b661962b695d5d5e2f439a9db5e09a6abb59bb56ddec3338f7029</Checksum>
+                <Checksum item="1" valueSpaceRef="/Valuespace/Vs_string_0_128">e354344d53bbf111916373d91e19d566c77488583d5d14480ffa6bf10c9d0ee4aee91cced187dc134f14e5440ff8daae84106fbe117eb1245c607c904222db42</Checksum>
                 <URL item="1" valueSpaceRef="/Valuespace/Vs_string_0_2048">{BACKUP_FILE}</URL>
             </Fetch>
         </Service>
