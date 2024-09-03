@@ -244,4 +244,4 @@ def quick_update(ip):
     return {'Status': f'{codec_info["sys_name"]} successfully upgraded', 'ip': ip}
 
 if __name__ == '__main__':
-    chain_update(input('Enter Codec IP: '))
+    quick_update(input('Enter Codec IP: '))
