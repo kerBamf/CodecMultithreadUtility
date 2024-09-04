@@ -91,6 +91,12 @@ fetch_backup_XML = f'''<Command>
     </Provisioning>
 </Command>'''
 
+set_transpile_XML = f'''<Configuration>
+        <Macros>
+            <EvaluateTranspiled>False</EvaluateTranspiled>
+        </Macros>
+    </Configuration>'''
+
 # set_bg_xml = '''<Body>
 # <Command>
 #     <UserInterface>
@@ -146,6 +152,10 @@ def config_consolidation(ip):
         http_request(ip, get_rm_UI_string(ui))
         log_info(ui, sys_name, LOGPATH)
     
+    #setting EvaluateTranspiled to False
+    set_transpile_status = http_request(ip, set_transpile_XML)
+    log_info(f'{set_transpile_status}', sys_name, LOGPATH)
+
     #Fetching and loading backup
     backup_fetch_status = http_request(ip, fetch_backup_XML)
     log_info(f'{backup_fetch_status}', sys_name, LOGPATH)
