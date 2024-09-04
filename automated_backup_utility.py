@@ -7,11 +7,14 @@ import json
 from logger import log_info
 from codec_multithreader import iterator
 from excel_parser import excel_parser
+from dotenv import load_dotenv
+
 
 #Disable ssl warning
 requests.packages.urllib3.disable_warnings()
 
 #Loading environment variables
+load_dotenv()
 FILEPATH = os.environ.get('REBOOT_EXCEL_PATH')
 FILENAME = os.environ.get('BACKUP_EXCEL_FILE')
 SAVE_PATH = os.environ.get('BACKUP_PATH')
