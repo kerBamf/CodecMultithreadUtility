@@ -50,35 +50,23 @@ def http_request(ip, string):
     except requests.exceptions.HTTPError as err:
         log_info(f'{ip} -> {err}', ip, LOGPATH)
 
-def get_sys_name(ip=''):
-    try:
-        xml = requests.get(f'http://{ip}/getxml?location=/Configuration/SystemUnit/Name', headers=headers, verify=False, timeout=(10, 30))
-        print(xml.text)
-        xml_root = ET.fromstring(xml.text)
-        sys_name = xml_root[0][0].text
-        return sys_name
-    except requests.exceptions.HTTPError as err:
-        print(err, ip)
-
 def new_codec_setup(ip):
-    #Getting device information
-    sys_name = get_sys_name(ip)
 
     #Setting transpile to false
     set_transpile_status = http_request(ip, set_transpile_XML)
-    log_info(f'{set_transpile_status}', sys_name, LOGPATH)
+    log_info(f'{set_transpile_status}', ip, LOGPATH)
     
     
     #Fetching and loading backup
     backup_fetch_status = http_request(ip, fetch_backup_XML)
-    log_info(f'{backup_fetch_status}', sys_name, LOGPATH)
+    log_info(f'{backup_fetch_status}', ip, LOGPATH)
     
-    if backup_fetch_status.find('<ServiceFetchResult status="OK">') != -1:
-        log_info('Update Successful', sys_name, LOGPATH)
-        return f'{sys_name} - Changes made successfully'
+    if backup_fetch_status.find('<p>The request could not be served due to a proxy error.</p>') != -1 or backup_fetch_status.find('<ServiceFetchResult status="OK">') != -1:
+        log_info('Update Successful', ip, LOGPATH)
+        return f'{ip} - Changes made successfully'
     else:
-        log_info(f'Could not complete setup for {sys_name}. Please investigate', sys_name, LOGPATH)
-        raise custom_exception(f'Could not complete setup for {sys_name}. Please investigate.')
+        log_info(f'Could not complete setup for {ip}. Please investigate', ip, LOGPATH)
+        raise custom_exception(f'Could not complete setup for {ip}. Please investigate.')
 
 
 if __name__ == '__main__':
