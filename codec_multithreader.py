@@ -4,8 +4,10 @@ from importlib import import_module
 from excel_parser import excel_parser
 from function_selector import function_selector
 from logger import log_info
+from dotenv import load_dotenv
 
 #Loading environment variables
+load_dotenv()
 LOGPATH = os.environ.get('LOGPATH')
 
 #Logger
