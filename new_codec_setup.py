@@ -20,7 +20,8 @@ headers = {
     'Authorization': f'basic {PASSCODE}',
     'Content-Type': 'text/xml'
 }
-BACKUP_FILE = environ.get('SETUP_FILE')
+FILE = environ.get('SETUP_FILE')
+CHECKSUM = environ.get('SETUP_FILE_CHECKSUM')
 
 # File XML to send via HTTP
 
@@ -28,8 +29,8 @@ fetch_backup_XML = f'''<Command>
     <Provisioning>
         <Service>
             <Fetch>
-                <Checksum item="1" valueSpaceRef="/Valuespace/Vs_string_0_128">e354344d53bbf111916373d91e19d566c77488583d5d14480ffa6bf10c9d0ee4aee91cced187dc134f14e5440ff8daae84106fbe117eb1245c607c904222db42</Checksum>
-                <URL item="1" valueSpaceRef="/Valuespace/Vs_string_0_2048">{BACKUP_FILE}</URL>
+                <Checksum item="1" valueSpaceRef="/Valuespace/Vs_string_0_128">{CHECKSUM}</Checksum>
+                <URL item="1" valueSpaceRef="/Valuespace/Vs_string_0_2048">{FILE}</URL>
             </Fetch>
         </Service>
     </Provisioning>
@@ -65,8 +66,8 @@ def new_codec_setup(ip):
         log_info('Update Successful', sys_name, LOGPATH)
         return f'{sys_name} - Changes made successfully'
     else:
-        log_info(f'Could not complete consolidation for {sys_name}. Please investigate', sys_name, LOGPATH)
-        raise custom_exception(f'Could not complete consolidation for {sys_name}. Please investigate.')
+        log_info(f'Could not complete setup for {sys_name}. Please investigate', sys_name, LOGPATH)
+        raise custom_exception(f'Could not complete setup for {sys_name}. Please investigate.')
 
 
 if __name__ == '__main__':
