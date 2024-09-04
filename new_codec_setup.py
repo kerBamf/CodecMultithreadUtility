@@ -25,6 +25,12 @@ CHECKSUM = environ.get('SETUP_FILE_CHECKSUM')
 
 # File XML to send via HTTP
 
+set_transpile_XML = f'''<Configuration>
+        <Macros>
+            <EvaluateTranspiled>False</EvaluateTranspiled>
+        </Macros>
+    </Configuration>'''
+
 fetch_backup_XML = f'''<Command>
     <Provisioning>
         <Service>
@@ -57,6 +63,11 @@ def get_sys_name(ip=''):
 def new_codec_setup(ip):
     #Getting device information
     sys_name = get_sys_name(ip)
+
+    #Setting transpile to false
+    set_transpile_status = http_request(ip, set_transpile_XML)
+    log_info(f'{set_transpile_status}', sys_name, LOGPATH)
+    
     
     #Fetching and loading backup
     backup_fetch_status = http_request(ip, fetch_backup_XML)
