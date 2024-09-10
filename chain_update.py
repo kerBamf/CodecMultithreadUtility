@@ -229,7 +229,7 @@ def chain_update(ip):
             try:
                 upgrade(codec_info['sys_name'], cur_sw_version, assigned_sw_path, assigned_sw_list[key], ip)
             except UpgradeException as error:
-                (except_dictionary) = error.args
+                except_dictionary = error.args
                 message(except_dictionary["text"], sys_name)
                 #print(error['text'])
                 raise error
@@ -237,7 +237,7 @@ def chain_update(ip):
             try:
                 upgrade(codec_info['sys_name'], cur_sw_version, assigned_sw_path, assigned_sw_list[key], ip)
             except UpgradeException as error:
-                (except_dictionary) = error.args
+                except_dictionary = error.args
                 message(except_dictionary["text"], sys_name)
                 #print(error['text'])
                 raise error
