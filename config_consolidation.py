@@ -3,7 +3,7 @@ import subprocess
 import requests
 import xml.etree.ElementTree as ET
 from time import sleep
-from logger import log_info
+from Utils.logger import log_info
 
 environ = os.environ
 
@@ -22,6 +22,11 @@ headers = {
 }
 BACKUP_FILE = environ.get('CONSOLIDATION_FILE')
 CHECKSUM = environ.get('CONSOLIDATION_FILE_CHECKSUM')
+
+#Logger
+def message(string, device):
+    print(string)
+    log_info(string, device, LOGPATH)
 
 # Listing all macros to remove for loop iteration
 macros_to_remove = [
@@ -124,20 +129,20 @@ set_transpile_XML = f'''<Configuration>
 def http_request(ip, string):
     try:
         response = requests.post(f'http://{ip}/putxml', headers=headers, verify=False, data=string, timeout=180)
-        log_info(response.text, ip, LOGPATH)
+        message(response.text, ip)
         return response.text
     except requests.exceptions.HTTPError as err:
-        log_info(f'{ip} -> {err}', ip, LOGPATH)
+        message(f'{ip} -> {err}', ip)
 
 def get_sys_name(ip=''):
     try:
         xml = requests.get(f'http://{ip}/getxml?location=/Configuration/SystemUnit/Name', headers=headers, verify=False, timeout=(10, 30))
-        print(xml.text)
+        message(xml.text, ip)
         xml_root = ET.fromstring(xml.text)
         sys_name = xml_root[0][0].text
         return sys_name
     except requests.exceptions.HTTPError as err:
-        print(err, ip)
+        message(err, ip)
 
 def config_consolidation(ip):
     #Getting device information
@@ -146,26 +151,26 @@ def config_consolidation(ip):
     #Removing macros
     for macro in macros_to_remove:
         http_request(ip, get_rm_macro_string(macro))
-        log_info(macro, sys_name, LOGPATH)
+        message(macro, sys_name)
     
     #removing UI elements
     for ui in UIs_to_remove:
         http_request(ip, get_rm_UI_string(ui))
-        log_info(ui, sys_name, LOGPATH)
+        message(ui, sys_name)
     
     #setting EvaluateTranspiled to False
     set_transpile_status = http_request(ip, set_transpile_XML)
-    log_info(f'{set_transpile_status}', sys_name, LOGPATH)
+    message(f'{set_transpile_status}', sys_name)
 
     #Fetching and loading backup
     backup_fetch_status = http_request(ip, fetch_backup_XML)
-    log_info(f'{backup_fetch_status}', sys_name, LOGPATH)
+    message(f'{backup_fetch_status}', sys_name)
     
     if backup_fetch_status.find('<ServiceFetchResult status="OK">') != -1:
-        log_info('Update Successful', sys_name, LOGPATH)
+        message('Update Successful', sys_name)
         return f'{sys_name} - Changes made successfully'
     else:
-        log_info(f'Could not complete consolidation for {sys_name}. Please investigate', sys_name, LOGPATH)
+        message(f'Could not complete consolidation for {sys_name}. Please investigate', sys_name)
         raise custom_exception(f'Could not complete consolidation for {sys_name}. Please investigate.')
 
 

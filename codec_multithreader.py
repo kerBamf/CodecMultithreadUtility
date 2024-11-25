@@ -1,9 +1,9 @@
 import os
 import concurrent.futures
 from importlib import import_module
-from excel_parser import excel_parser
-from function_selector import function_selector
-from logger import log_info
+from Utils.excel_parser import excel_parser
+from Utils.function_selector import function_selector
+from Utils.logger import log_info
 from dotenv import load_dotenv
 
 #Loading environment variables
