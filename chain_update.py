@@ -43,7 +43,8 @@ all_sw_versions = {
         '11.5': 'cmterm-s53200ce11_5_2_4.k4.cop.sha512',
         '11.9': 'cmterm-s53200ce11_9_3_1.k4.cop.sha512',
         '11.14': 'cmterm-s53200ce11_14_3_0.k4.cop.sha512',
-        '11.17': 'cmterm-s53200ce11_17_3_0.k4.cop.sha512'
+        '11.17': 'cmterm-s53200ce11_17_3_0.k4.cop.sha512',
+        '11.20': 'cmterm-s53200ce11_20_2_3.k4.cop.sha512'
     },
     'pro': {
         '10.15': 'cmterm-s53300ce10_15_4_1.k3.cop.sgn',
@@ -51,7 +52,8 @@ all_sw_versions = {
         '11.5': 'cmterm-s53300ce11_5_4_6.k4.cop.sha512',
         '11.9': 'cmterm-s53300ce11_9_3_1.k4.cop.sha512',
         '11.14': 'cmterm-s53300ce11_14_2_3.k4.cop.sha512',
-        '11.17': 'cmterm-s53300ce11_17_3_0.k4.cop.sha512'
+        '11.17': 'cmterm-s53300ce11_17_3_0.k4.cop.sha512',
+        '11.20': 'cmterm-s53300ce11_20_2_3.k4.cop.sha512'
     }
 }
 #Checks codec information and assigns hw_version tag for use by the upgrade function
@@ -89,6 +91,7 @@ def check_codec(ip):
         message(f'Software found: {soft_text}', codec_info['sys_name'])
     except requests.exceptions.HTTPError as err:
         message(err.response)
+        raise err
 
     #Checks hardware version of the codec. Used to determine which upgrade file path to use. Returns a string of 'kit,' 'pro,' or 'SX80'   
     try:
@@ -137,7 +140,7 @@ def upgrade(sys_name, current_sw, sw_path, sw_file, ip):
     def ping():
         return subprocess.run(["ping", "-c", "1", ip], capture_output=True).returncode
     
-    #Pinging codec after sending update command
+    #Ping loop initiated after successful upgrade command sent to endpoint. Used to confirm reboot of codec.
     awake = True
     start = math.floor(time.time())
     time_passed = 0
@@ -163,7 +166,7 @@ def upgrade(sys_name, current_sw, sw_path, sw_file, ip):
         
     time.sleep(60)
 
-    #Lost resuming ping after restart
+    #Ping restarted to confirm codec successfully reboots.
     time_passed = 0
     start = math.floor(time.time())
     while awake == False and time_passed < 60*8:
@@ -184,6 +187,7 @@ def upgrade(sys_name, current_sw, sw_path, sw_file, ip):
     
     time.sleep(60)
 
+    #This section confirms software version is the correct version after reboot. If the software present on the codec matches the software from the install command, the script proceeds.
     new_sw_version = check_codec(ip)['sw_version']
 
     if (new_sw_version == current_sw):
