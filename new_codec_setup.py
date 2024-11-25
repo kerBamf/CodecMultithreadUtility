@@ -3,7 +3,7 @@ import subprocess
 import requests
 import xml.etree.ElementTree as ET
 from time import sleep
-from logger import log_info
+from Utils.logger import log_info
 
 environ = os.environ
 

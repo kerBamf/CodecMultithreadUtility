@@ -4,7 +4,7 @@ import os
 import subprocess
 import requests
 import json
-from logger import log_info
+from Utils.logger import log_info
 
 #Disable ssl warning
 requests.packages.urllib3.disable_warnings()

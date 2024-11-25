@@ -2,7 +2,7 @@ from os import environ
 import requests
 import xml.etree.ElementTree as ET
 from time import sleep
-from logger import log_info
+from Utils.logger import log_info
 
 #Removing insecure http warnings
 requests.packages.urllib3.disable_warnings()

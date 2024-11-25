@@ -8,9 +8,9 @@ from openpyxl import load_workbook
 import smtplib
 import xml.etree.ElementTree as ET
 from email.message import EmailMessage
-from logger import log_info
+from Utils.logger import log_info
 from codec_multithreader import iterator
-from excel_parser import excel_parser
+from Utils.excel_parser import excel_parser
 
 #Loading Environment Variables
 load_dotenv()
