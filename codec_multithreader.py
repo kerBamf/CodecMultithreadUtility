@@ -4,6 +4,7 @@ from importlib import import_module
 from Utils.excel_parser import excel_parser
 from Utils.function_selector import function_selector
 from Utils.logger import log_info
+from Utils.select_backup import select_backup
 from dotenv import load_dotenv
 
 #Loading environment variables
@@ -16,9 +17,9 @@ def message(string, function):
     log_info(string, function, LOGPATH)
 
 #Multithreading function
-def iterator(function, ip_list):
+def iterator(function, ip_list, backup):
     with concurrent.futures.ThreadPoolExecutor() as executor:
-        futures = {executor.submit(function, ip): ip for ip in ip_list}
+        futures = {executor.submit(function, ip, backup): ip for ip in ip_list}
     
     for future in concurrent.futures.as_completed(futures):
         if (future.exception()):
@@ -29,5 +30,9 @@ def iterator(function, ip_list):
 if __name__ == '__main__':
     ip_list = excel_parser()
     selected_function = function_selector()
+    if selected_function == "config_consolidation":
+        selected_backup = select_backup()
+    else:
+        selected_backup = None
     imported_func = getattr(import_module(selected_function), selected_function)
-    iterator(imported_func, ip_list)
+    iterator(imported_func, ip_list, selected_backup)

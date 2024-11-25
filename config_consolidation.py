@@ -4,6 +4,7 @@ import requests
 import xml.etree.ElementTree as ET
 from time import sleep
 from Utils.logger import log_info
+from Utils.select_backup import select_backup
 
 environ = os.environ
 
@@ -20,8 +21,9 @@ headers = {
     'Authorization': f'basic {PASSCODE}',
     'Content-Type': 'text/xml'
 }
-BACKUP_FILE = environ.get('CONSOLIDATION_FILE')
-CHECKSUM = environ.get('CONSOLIDATION_FILE_CHECKSUM')
+# BACKUP_FILE = environ.get('CONSOLIDATION_FILE')
+# CHECKSUM = environ.get('CONSOLIDATION_FILE_CHECKSUM')
+BACKUP_SERVER_PATH = environ.get('BACKUP_SERVER_PATH')
 
 #Logger
 def message(string, device):
@@ -74,28 +76,19 @@ def get_rm_UI_string(name):
     </Body>'''
     return string
 
-# Generating checksum based on existing file.
-def generate_checksum():
-    backup_file = BACKUP_FILE
-    raw_checksum = subprocess.run(['shasum', '-a', '512', f'{backup_file}'], capture_output=True, text=True)
-    if raw_checksum.stderr == '':
-        string = raw_checksum.stdout.split(' ')[0]
-    else:
-        raise custom_exception(raw_checksum.stderr)
-    
-    print(string)
-    return string
 
-fetch_backup_XML = f'''<Command>
-    <Provisioning>
-        <Service>
-            <Fetch>
-                <Checksum item="1" valueSpaceRef="/Valuespace/Vs_string_0_128">{CHECKSUM}</Checksum>
-                <URL item="1" valueSpaceRef="/Valuespace/Vs_string_0_2048">{BACKUP_FILE}</URL>
-            </Fetch>
-        </Service>
-    </Provisioning>
-</Command>'''
+def fetch_backup_xml(backup_dict):
+    XML = f'''<Command>
+        <Provisioning>
+            <Service>
+                <Fetch>
+                    <Checksum item="1" valueSpaceRef="/Valuespace/Vs_string_0_128">{backup_dict['checksum']}</Checksum>
+                    <URL item="1" valueSpaceRef="/Valuespace/Vs_string_0_2048">{BACKUP_SERVER_PATH+backup_dict['filename']}</URL>
+                </Fetch>
+            </Service>
+        </Provisioning>
+    </Command>'''
+    return XML
 
 set_transpile_XML = f'''<Configuration>
         <Macros>
@@ -144,7 +137,7 @@ def get_sys_name(ip=''):
     except requests.exceptions.HTTPError as err:
         message(err, ip)
 
-def config_consolidation(ip):
+def config_consolidation(ip, backup_dict):
     #Getting device information
     sys_name = get_sys_name(ip)
 
@@ -163,7 +156,7 @@ def config_consolidation(ip):
     message(f'{set_transpile_status}', sys_name)
 
     #Fetching and loading backup
-    backup_fetch_status = http_request(ip, fetch_backup_XML)
+    backup_fetch_status = http_request(ip, fetch_backup_xml(backup_dict))
     message(f'{backup_fetch_status}', sys_name)
     
     if backup_fetch_status.find('<ServiceFetchResult status="OK">') != -1:
@@ -175,4 +168,5 @@ def config_consolidation(ip):
 
 
 if __name__ == '__main__':
+    backup = select_backup()
     config_consolidation(input('Enter Codec Ip: '))
