@@ -5,10 +5,13 @@ import xml.etree.ElementTree as ET
 from time import sleep
 from Utils.logger import log_info
 from dotenv import load_dotenv
+from Utils.select_backup import backup_selector
 
 load_dotenv()
 
 environ = os.environ
+
+BACKUP_SERVER_PATH = environ.get('BACKUP_SERVER_PATH')
 
 class custom_exception(Exception):
     pass
@@ -29,16 +32,16 @@ headers = {
     'Authorization': f'basic {PASSCODE}',
     'Content-Type': 'text/xml'
 }
-BACKUP_FILE = environ.get('BACKUP_FILE')
-BACKUP_FILE_CHECKSUM = environ.get('BACKUP_FILE_CHECKSUM')
+# BACKUP_FILE = environ.get('BACKUP_FILE')
+# BACKUP_FILE_CHECKSUM = environ.get('BACKUP_FILE_CHECKSUM')
 
 def fetch_backup_XML(file, checksum):
     string =f'''<Command>
             <Provisioning>
                 <Service>
                     <Fetch>
-                        <Checksum item="1" valueSpaceRef="/Valuespace/Vs_string_0_128">{file}</Checksum>
-                        <URL item="1" valueSpaceRef="/Valuespace/Vs_string_0_2048">{checksum}</URL>
+                        <Checksum item="1" valueSpaceRef="/Valuespace/Vs_string_0_128">{checksum}</Checksum>
+                        <URL item="1" valueSpaceRef="/Valuespace/Vs_string_0_2048">{file}</URL>
                     </Fetch>
                 </Service>
             </Provisioning>
@@ -75,8 +78,9 @@ def load_backup(ip, file, checksum):
         message('Update Successful', sys_name)
         return f'{sys_name} - Changes made successfully'
     else:
-        message(f'Could not complete consolidation for {sys_name}. Please investigate', sys_name)
-        raise custom_exception(f'Could not complete consolidation for {sys_name}. Please investigate.')
+        message(f'Could load backup for {sys_name}. Please investigate', sys_name)
+        raise custom_exception(f'Could not load backup for {sys_name}. Please investigate.')
 
 if __name__ == '__main__':
-    load_backup(input('Enter Codec Ip: '), BACKUP_FILE, BACKUP_FILE_CHECKSUM)
+    backup_dict = backup_selector()
+    load_backup(input('Enter Codec Ip: '), BACKUP_SERVER_PATH+backup_dict['filename'], backup_dict['checksum'])

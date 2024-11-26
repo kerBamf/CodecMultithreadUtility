@@ -18,8 +18,12 @@ def message(string, function):
 
 #Multithreading function
 def iterator(function, ip_list, backup):
-    with concurrent.futures.ThreadPoolExecutor() as executor:
-        futures = {executor.submit(function, ip, backup): ip for ip in ip_list}
+    if backup:
+        with concurrent.futures.ThreadPoolExecutor() as executor:
+            futures = {executor.submit(function, ip, backup): ip for ip in ip_list}
+    else:
+        with concurrent.futures.ThreadPoolExecutor() as executor:
+            futures = {executor.submit(function, ip): ip for ip in ip_list}
     
     for future in concurrent.futures.as_completed(futures):
         if (future.exception()):
