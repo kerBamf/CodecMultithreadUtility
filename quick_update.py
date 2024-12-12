@@ -43,7 +43,7 @@ all_sw_versions = {
         # '11.5': 'cmterm-s53200ce11_5_2_4.k4.cop.sha512',
         # '11.9': 'cmterm-s53200ce11_9_3_1.k4.cop.sha512',
         # '11.14': 'cmterm-s53200ce11_14_3_0.k4.cop.sha512',
-        '11.17': 'cmterm-s53200ce11_17_3_0.k4.cop.sha512'
+        '11.17': 'cmterm-s53200ce11_17_4_0.k4.cop.sha512'
     },
     'pro': {
         '10.15': 'cmterm-s53300ce10_15_4_1.k3.cop.sgn',
@@ -51,7 +51,7 @@ all_sw_versions = {
         # '11.5': 'cmterm-s53300ce11_5_4_6.k4.cop.sha512',
         # '11.9': 'cmterm-s53300ce11_9_3_1.k4.cop.sha512',
         # '11.14': 'cmterm-s53300ce11_14_2_3.k4.cop.sha512',
-        '11.17': 'cmterm-s53300ce11_17_3_0.k4.cop.sha512'
+        '11.17': 'cmterm-s53300ce11_17_4_0.k4.cop.sha512'
     }
 }
 #Checks codec information and assigns hw_version tag for use by the upgrade function
