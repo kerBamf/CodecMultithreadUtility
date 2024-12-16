@@ -5,11 +5,13 @@ import subprocess
 import requests
 import json
 from logger import log_info
+from dotenv import load_dotenv
 
 #Disable ssl warning
 requests.packages.urllib3.disable_warnings()
 
 #Loading environment variables
+load_dotenv()
 SAVE_PATH = os.environ.get('BACKUP_SAVE_PATH')
 PASSCODE = os.environ.get('PASSCODE')
 
