@@ -10,7 +10,7 @@ from logger import log_info
 requests.packages.urllib3.disable_warnings()
 
 #Loading environment variables
-SAVE_PATH = os.environ.get('BACKUP_PATH')
+SAVE_PATH = os.environ.get('BACKUP_SAVE_PATH')
 PASSCODE = os.environ.get('PASSCODE')
 
 #Setting up custom exception
