@@ -35,9 +35,9 @@ def iterator(function, ip_list, backup):
 if __name__ == '__main__':
     ip_list = excel_parser()
     selected_function = function_selector()
-    if selected_function == "config_consolidation":
-        sup_file = select_backup()
-    elif selected_function == "send_command":
+    # if selected_function == "config_consolidation":
+    #     sup_file = select_backup()
+    if selected_function == "send_command":
         sup_file = xml_selector()
     else:
         sup_file = None
