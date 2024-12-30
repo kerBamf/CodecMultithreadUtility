@@ -16,8 +16,6 @@ headers = {
     'Content-Type': 'text/xml'
 }
 
-new_XML = xml_selector()
-
 #Setting up logger
 def message(string, ip, path=LOGPATH):
     log_info(string, ip, path)
@@ -36,4 +34,5 @@ def send_command(ip, xml):
     return response.text
 
 if __name__ == '__main__':
+    new_XML = xml_selector()
     send_command(input('Enter Codec IP: '), new_XML)
