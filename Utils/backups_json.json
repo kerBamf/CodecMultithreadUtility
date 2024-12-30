@@ -1,0 +1,18 @@
+{
+    "Macro_Consolidation": {
+        "filename": "Macro_Consolidation_Template.zip",
+        "checksum": "2e34df599076bd44d62b9a2b80adcde6ba3b649a4b0010fbea074ef974a406e63b80929d9c9f1d311a5be942f6cf164ad8d2f1f91de08cee09fb1e0c11047bb8"
+    },
+    "OS11-20_Config_Update": {
+        "filename": "OS1120_Update_Template.zip",
+        "checksum": "1b2ef130e14a4fd6d02f16cfbdcf42841968c9eb61b017b4ed3b762ea389c76600bf8309ed9682c21e661129eb0ebbd9f631882608f716b17c7a9ab006192278"
+    },
+    "Zoom_Controls": {
+        "filename": "Zoom_Controls.zip",
+        "checksum": "c7a33300495326b488cdd553b2cacf1f00302aa46fb14ad7529ea00ce71bce8285b7129b1ba4e798bca1fbc9f344f3243d8eaa51786d4d9bac3d10b79841b29a"
+    },
+    "Setup_Template": {
+        "filename": "Setup_Template.zip",
+        "checksum": "1b353434f4aebf2e75d0d5b71618bdc3121768c53a1e0bac93658a09a7336f5ca712cc006a4ca9ecce931bd44062ac1712bfea00e8b8fc2ccb904ad4f2df3a20"
+    }
+}

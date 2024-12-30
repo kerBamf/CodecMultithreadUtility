@@ -7,4 +7,3 @@ test_dummy.py
 test_iterator.py
 .venv
 __pycache__
-Utils/backups_json.json
