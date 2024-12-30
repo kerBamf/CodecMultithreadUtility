@@ -5,6 +5,7 @@ from Utils.excel_parser import excel_parser
 from Utils.function_selector import function_selector
 from Utils.logger import log_info
 from Utils.select_backup import select_backup
+from Utils.xml_selector import xml_selector
 from dotenv import load_dotenv
 
 #Loading environment variables
@@ -35,8 +36,10 @@ if __name__ == '__main__':
     ip_list = excel_parser()
     selected_function = function_selector()
     if selected_function == "config_consolidation":
-        selected_backup = select_backup()
+        sup_file = select_backup()
+    elif selected_function == "send_command":
+        sup_file = xml_selector()
     else:
-        selected_backup = None
-    imported_func = getattr(import_module(selected_function), selected_function)
-    iterator(imported_func, ip_list, selected_backup)
+        sup_file = None
+    imported_func = getattr(import_module(selected_function), sup_file)
+    iterator(imported_func, ip_list, sup_file)
