@@ -5,7 +5,7 @@ import xml.etree.ElementTree as ET
 from time import sleep
 from Utils.logger import log_info
 from dotenv import load_dotenv
-from Utils.select_backup import backup_selector
+from Utils.select_backup import select_backup
 
 load_dotenv()
 
@@ -41,7 +41,7 @@ def fetch_backup_XML(file, checksum):
                 <Service>
                     <Fetch>
                         <Checksum item="1" valueSpaceRef="/Valuespace/Vs_string_0_128">{checksum}</Checksum>
-                        <URL item="1" valueSpaceRef="/Valuespace/Vs_string_0_2048">{file}</URL>
+                        <URL item="1" valueSpaceRef="/Valuespace/Vs_string_0_2048">{BACKUP_SERVER_PATH}/{file}</URL>
                     </Fetch>
                 </Service>
             </Provisioning>
@@ -66,12 +66,12 @@ def get_sys_name(ip=''):
     except requests.exceptions.HTTPError as err:
         print(err, ip)
 
-def load_backup(ip, file, checksum):
+def load_backup(ip, sup_file):
     #Getting device information
     sys_name = get_sys_name(ip)
     
     #Fetching and loading backup
-    backup_fetch_status = http_request(ip, fetch_backup_XML(file, checksum))
+    backup_fetch_status = http_request(ip, fetch_backup_XML(sup_file['filename'], sup_file['checksum']))
     message(f'{backup_fetch_status}', sys_name)
     
     if backup_fetch_status.find('<ServiceFetchResult status="OK">') != -1:
@@ -82,5 +82,5 @@ def load_backup(ip, file, checksum):
         raise custom_exception(f'Could not load backup for {sys_name}. Please investigate.')
 
 if __name__ == '__main__':
-    backup_dict = backup_selector()
-    load_backup(input('Enter Codec Ip: '), BACKUP_SERVER_PATH+backup_dict['filename'], backup_dict['checksum'])
+    backup_dict = select_backup()
+    load_backup(input('Enter Codec Ip: '), backup_dict)

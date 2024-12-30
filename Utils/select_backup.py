@@ -10,7 +10,7 @@ server_path = environ.get('BACKUP_SERVER_PATH')
 raw_json = open('./Utils/backups_json.json', 'r', encoding="utf-8")
 backups_dict = json.load(raw_json)
 
-# Main function. Generates string to be used in command line while also generating a dictionary to be referenced after user selection is acquired.
+# Main function. Generates string to be used in command line while also generating a dictionary to be referenced after user selection is acquired. Returns filename string.
 def backup_selector():
     list_dict = {}
     option_string = ''
