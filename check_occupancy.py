@@ -1,6 +1,6 @@
 from dotenv import load_dotenv
 from os import environ
-from cod_get import cod_get
+from Utils.cod_get import cod_get
 import xml.etree.ElementTree as ET
 
 #Loading environment variables
