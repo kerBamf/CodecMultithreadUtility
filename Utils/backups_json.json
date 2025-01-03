@@ -14,5 +14,9 @@
     "Setup_Template": {
         "filename": "Setup_Template.zip",
         "checksum": "1b353434f4aebf2e75d0d5b71618bdc3121768c53a1e0bac93658a09a7336f5ca712cc006a4ca9ecce931bd44062ac1712bfea00e8b8fc2ccb904ad4f2df3a20"
+    },
+    "CommandCenterShortcut": {
+        "filename": "CommandCenterShortcut.zip",
+        "checksum": "61a19947c234d8d656ccc3f92b6e07a051104310ab61420e7ea95f4782a9ef2dc7c9d796fb16ca7a804f9e75b5c48b690334328fd62be314808de6961483773f"
     }
 }
