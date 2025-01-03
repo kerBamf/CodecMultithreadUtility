@@ -3,7 +3,8 @@ import subprocess
 import requests
 import xml.etree.ElementTree as ET
 from time import sleep
-from logger import log_info
+from Utils.logger import log_info
+from Utils.select_backup import select_backup
 
 environ = os.environ
 
@@ -20,8 +21,7 @@ headers = {
     'Authorization': f'basic {PASSCODE}',
     'Content-Type': 'text/xml'
 }
-FILE = environ.get('SETUP_FILE')
-CHECKSUM = environ.get('SETUP_FILE_CHECKSUM')
+BACKUP_SERVER_PASS = environ.get('BACKUP_SERVER_PATH')
 
 # File XML to send via HTTP
 
@@ -31,16 +31,19 @@ set_transpile_XML = f'''<Configuration>
         </Macros>
     </Configuration>'''
 
-fetch_backup_XML = f'''<Command>
-    <Provisioning>
-        <Service>
-            <Fetch>
-                <Checksum item="1" valueSpaceRef="/Valuespace/Vs_string_0_128">{CHECKSUM}</Checksum>
-                <URL item="1" valueSpaceRef="/Valuespace/Vs_string_0_2048">{FILE}</URL>
-            </Fetch>
-        </Service>
-    </Provisioning>
-</Command>'''
+def fetch_backup_XML(backup_dict):
+    XML = f'''<Command>
+        <Provisioning>
+            <Service>
+                <Fetch>
+                    <Checksum item="1" valueSpaceRef="/Valuespace/Vs_string_0_128">{backup_dict['checksum']}</Checksum>
+                    <URL item="1" valueSpaceRef="/Valuespace/Vs_string_0_2048">{BACKUP_SERVER_PASS+backup_dict['filename']}</URL>
+                </Fetch>
+            </Service>
+        </Provisioning>
+    </Command>'''
+
+    return XML
 
 def http_request(ip, string):
     try:
@@ -50,7 +53,7 @@ def http_request(ip, string):
     except requests.exceptions.HTTPError as err:
         log_info(f'{ip} -> {err}', ip, LOGPATH)
 
-def new_codec_setup(ip):
+def new_codec_setup(ip, backup_dict):
 
     #Setting transpile to false
     set_transpile_status = http_request(ip, set_transpile_XML)
@@ -58,7 +61,7 @@ def new_codec_setup(ip):
     
     
     #Fetching and loading backup
-    backup_fetch_status = http_request(ip, fetch_backup_XML)
+    backup_fetch_status = http_request(ip, fetch_backup_XML(backup_dict))
     log_info(f'{backup_fetch_status}', ip, LOGPATH)
     
     if backup_fetch_status.find('<p>The request could not be served due to a proxy error.</p>') != -1 or backup_fetch_status.find('<ServiceFetchResult status="OK">') != -1:
@@ -70,4 +73,5 @@ def new_codec_setup(ip):
 
 
 if __name__ == '__main__':
-    new_codec_setup(input('Enter Codec Ip: '))
+    backup_dict = select_backup()
+    new_codec_setup(input('Enter Codec Ip: '), backup_dict)

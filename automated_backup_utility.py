@@ -4,9 +4,9 @@ import os
 import subprocess
 import requests
 import json
-from logger import log_info
+from Utils.logger import log_info
 from codec_multithreader import iterator
-from excel_parser import excel_parser
+from Utils.excel_parser import excel_parser
 from dotenv import load_dotenv
 
 
