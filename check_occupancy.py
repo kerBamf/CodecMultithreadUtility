@@ -7,9 +7,14 @@ import xml.etree.ElementTree as ET
 load_dotenv()
 LOGPATH = environ.get('LOGPATH')
 
-request_string = 'status/RoomAnalytics/RoomInUse'
+# request_string = 'status/RoomAnalytics/RoomInUse'
 
 def check_occupancy(ip):
+    #Retrieving room name
+    codec_name = cod_get(ip, "Configuration/SystemUnit/Name")
+    name_tree = ET.fromstring(codec_name)
+    name = name_tree.find(".//Name").text
+
     #checking room count
     count_XML = cod_get(ip, "Status/RoomAnalytics/PeopleCount/Current")
     count_tree = ET.fromstring(count_XML)
@@ -21,6 +26,7 @@ def check_occupancy(ip):
     presence = pres_tree.find('.//PeoplePresence').text
     
     pres_dict = {
+        'Room_Name': name,
         'Occupied': presence,
         'Count': count
     }

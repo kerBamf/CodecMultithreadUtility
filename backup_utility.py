@@ -14,6 +14,7 @@ requests.packages.urllib3.disable_warnings()
 load_dotenv()
 SAVE_PATH = os.environ.get('BACKUP_SAVE_PATH')
 PASSCODE = os.environ.get('PASSCODE')
+LOGPATH = os.environ.get('LOGPATH')
 
 #Setting up custom exception
 
@@ -23,7 +24,7 @@ class custom_exception(Exception):
 #Setting up logger
 def message(string='', sys_name=''):
     print(string)
-    log_info(string, sys_name, SAVE_PATH)
+    log_info(string, sys_name, LOGPATH)
 
 #Setting up headers for HTTP requests:
 headers = {'Content-Type': 'text/xml', 'Authorization': f'basic {PASSCODE}'}
