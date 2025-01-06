@@ -7,7 +7,7 @@ import requests
 load_dotenv()
 
 PASSCODE = environ.get('PASSCODE')
-headers = {
+default_headers = {
     'Authorization': f'basic {PASSCODE}'
 }
 
@@ -15,7 +15,11 @@ headers = {
 requests.packages.urllib3.disable_warnings()
 
 #Pre-defining request in order to reduce clutter in other files. Returns text XML unless there's an error.
-def cod_get(ip, path):
+def cod_get(ip, path, cookie=None):
+    if cookie:
+        headers = {'Cookie': f'SessionId={cookie}'}
+    else:
+        headers = default_headers
     try:
         response = requests.get(f'http://{ip}/getxml?location=/{path}', headers=headers, verify=False, timeout=(10, 30))
         return response.text
