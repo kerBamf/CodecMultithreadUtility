@@ -68,7 +68,7 @@ def modify_contact(ip, cookie, contact_id, contact_method_id):
                     <Modify>
                         <ContactId>{contact_id}</ContactId>
                         <ContactMethodId>{contact_method_id}</ContactMethodId>
-                        <Number>NewPlaceholder.mskcc@m.webex.com</Number>
+                        <Number>placeholder.mskcc@m.webex.com</Number>
                     </Modify>
                 </ContactMethod>
             </Phonebook>
@@ -128,7 +128,7 @@ def update_nexusCC_contact(ip):
 
 if __name__ == '__main__':
     ip = '172.16.131.163'
-    update_nexusCC_contact(ip)
+    update_nexusCC_contact(input('Codec IP: '))
     # sesh_cookie = cod_session_start(ip)
     # name = get_system_name(ip, sesh_cookie)
     # print(name)
