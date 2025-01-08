@@ -44,15 +44,18 @@ def check_contact(ip, cookie):
     res_dict = {
         'contact_found': False,
         'contact_id': '',
-        'contact_method_id': ''
+        'contact_method_id': '',
+        'number': ''
     }
     #If contact exists, return contact ID
     if rows == '1':
         contact_id = res_root.find(".//*Contact/ContactId").text
         contact_method_id = res_root.find(".//*ContactMethodId").text
+        number = res_root.find(".//*ContactMethod/Number").text
         res_dict['contact_found'] = True
         res_dict['contact_id'] = contact_id
         res_dict['contact_method_id'] = contact_method_id
+        res_dict['number'] = number
         return res_dict
     else:
         return res_dict
@@ -94,17 +97,23 @@ def create_contact(ip, cookie):
 #Main Function Name
 def update_nexusCC_contact(ip):
     sesh_cookie = cod_session_start(ip)
+    new_number = 'NewPlaceholder.mskcc@m.webex.com'
     try:
         sys_name = get_system_name(ip, sesh_cookie)
         message(f'Got system name: {sys_name}', ip)
         message(f'Checking for Command Center contact on {sys_name}', sys_name)
         contact_dict = check_contact(ip, sesh_cookie)
         if contact_dict['contact_found'] == True:
-            message(f'Contact found on {sys_name}. Updating...', sys_name)
-            modify_contact(ip, sesh_cookie, contact_dict['contact_id'], contact_dict['contact_method_id'])
-            message(f'Contact successfully updated on {sys_name}. Exiting', sys_name)
-            cod_session_end(ip, sesh_cookie)
-            return (f'Contact successfully updated on {sys_name}')
+            message(f'Contact found on {sys_name}.', sys_name)
+            if contact_dict['number'] != new_number:
+                modify_contact(ip, sesh_cookie, contact_dict['contact_id'], contact_dict['contact_method_id'])
+                message(f'Contact successfully updated on {sys_name}. Exiting', sys_name)
+                cod_session_end(ip, sesh_cookie)
+                return (f'Contact successfully updated on {sys_name}')
+            else:
+                message(f'Contact dial number is current on {sys_name}. Exiting', sys_name)
+                cod_session_end(ip, sesh_cookie)
+                return f'Contact dial number is current on {sys_name}. Exiting'
         else:
             message(f'Contact not found on {sys_name}. Creating contact', sys_name)
             create_contact(ip, sesh_cookie)
