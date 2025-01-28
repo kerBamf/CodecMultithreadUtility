@@ -61,14 +61,14 @@ def check_contact(ip, cookie):
         return res_dict
 
 #If contact exists, modify contact using contact ID
-def modify_contact(ip, cookie, contact_id, contact_method_id):
+def modify_contact(ip, cookie, contact_id, contact_method_id, number):
     modify_XML = f'''<Command>
             <Phonebook>
                 <ContactMethod>
                     <Modify>
                         <ContactId>{contact_id}</ContactId>
                         <ContactMethodId>{contact_method_id}</ContactMethodId>
-                        <Number>placeholder.mskcc@m.webex.com</Number>
+                        <Number>{number}</Number>
                     </Modify>
                 </ContactMethod>
             </Phonebook>
@@ -78,13 +78,13 @@ def modify_contact(ip, cookie, contact_id, contact_method_id):
     return response
 
 #If contact does not exist, create contact
-def create_contact(ip, cookie):
+def create_contact(ip, cookie, number):
     create_XML = f'''<Command>
             <Phonebook>
                 <Contact>
                     <Add>
                         <Name>Nexus CC</Name>
-                        <Number>placeholder.mskcc@m.webex.com</Number>
+                        <Number>{number}</Number>
                         <Tag>Favorite</Tag>
                     </Add>
                 </Contact>
@@ -97,7 +97,7 @@ def create_contact(ip, cookie):
 #Main Function Name
 def update_nexusCC_contact(ip):
     sesh_cookie = cod_session_start(ip)
-    new_number = 'NewPlaceholder.mskcc@m.webex.com'
+    new_number = '1180786428.mskcc@m.webex.com'
     try:
         sys_name = get_system_name(ip, sesh_cookie)
         message(f'Got system name: {sys_name}', ip)
@@ -106,7 +106,7 @@ def update_nexusCC_contact(ip):
         if contact_dict['contact_found'] == True:
             message(f'Contact found on {sys_name}.', sys_name)
             if contact_dict['number'] != new_number:
-                modify_contact(ip, sesh_cookie, contact_dict['contact_id'], contact_dict['contact_method_id'])
+                modify_contact(ip, sesh_cookie, contact_dict['contact_id'], contact_dict['contact_method_id'], new_number)
                 message(f'Contact successfully updated on {sys_name}. Exiting', sys_name)
                 cod_session_end(ip, sesh_cookie)
                 return (f'Contact successfully updated on {sys_name}')
@@ -116,7 +116,7 @@ def update_nexusCC_contact(ip):
                 return f'Contact dial number is current on {sys_name}. Exiting'
         else:
             message(f'Contact not found on {sys_name}. Creating contact', sys_name)
-            create_contact(ip, sesh_cookie)
+            create_contact(ip, sesh_cookie, new_number)
             message(f'Contact successfully created on {sys_name}. Exiting.', sys_name)
             cod_session_end(ip, sesh_cookie)
             return(f'Contact successfully created on {sys_name}')

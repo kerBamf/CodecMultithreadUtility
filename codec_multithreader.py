@@ -39,6 +39,8 @@ if __name__ == '__main__':
         sup_file = select_backup()
     elif selected_function == "send_command":
         sup_file = xml_selector()
+    elif selected_function == "get_info":
+        sup_file = input("Enter path: ")
     else:
         sup_file = None
     imported_func = getattr(import_module(selected_function), selected_function)
