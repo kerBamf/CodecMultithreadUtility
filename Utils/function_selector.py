@@ -5,7 +5,7 @@ from os.path import isfile, join
 path = getcwd()
 
 def select_function():
-    file_list = [file for file in listdir(path) if isfile(join(path, file)) and file.endswith('.py') and file != 'codec_multithreader.py' and file != 'excel_parser.py' and file != 'logger.py' and file != 'function_selector.py']
+    file_list = [file for file in listdir(path) if isfile(join(path, file)) and file.endswith('.py') and file != 'codec_multithreader.py']
     list_dict = {}
     option_string = ''
     for idx, file in enumerate(file_list):

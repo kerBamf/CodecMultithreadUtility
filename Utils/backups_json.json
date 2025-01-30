@@ -14,5 +14,17 @@
     "Setup_Template": {
         "filename": "Setup_Template.zip",
         "checksum": "1b353434f4aebf2e75d0d5b71618bdc3121768c53a1e0bac93658a09a7336f5ca712cc006a4ca9ecce931bd44062ac1712bfea00e8b8fc2ccb904ad4f2df3a20"
+    },
+    "CommandCenterMacro": {
+        "filename": "CommandCenterMacro.zip",
+        "checksum": "ca58aea3b2cab75fb3c67dbddd5e566e3dc49254d44116f07e32c12e076ee58b4c3301a230f3dca54c18d42d83a609529d9aafb055a46185db846e82553d7365"
+    },
+    "CommandCenterMacroV2": {
+        "filename": "CommandCenterMacroV2.zip",
+        "checksum": "edd664166eba01940551d3abeac0836de0df1311ceb95c3c1d6881b42cd6c30fb47050ea9633c2b2a2fad64c3920e01b981802a039b641d0496108647a847bab"
+    },
+    "CommandCenterSplashV3": {
+        "filename": "CommandCenterSplashV3.zip",
+        "checksum": "df44ba6fe49cf12cbf95b5e02d6f8fa5194af69e73e19452fa30eb33a2ed8b663c31f41e195f6fb031c3d6cc542cd7fbf8ae041117f565cdb59992713a176a36"
     }
 }
