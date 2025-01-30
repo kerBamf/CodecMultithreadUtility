@@ -95,9 +95,9 @@ def create_contact(ip, cookie, number):
     return response
 
 #Main Function Name
-def update_nexusCC_contact(ip):
+def update_nexusCC_contact(ip, meeting_ID):
     sesh_cookie = cod_session_start(ip)
-    new_number = '1180786428.mskcc@m.webex.com'
+    new_number = f'{meeting_ID}.mskcc@m.webex.com'
     try:
         sys_name = get_system_name(ip, sesh_cookie)
         message(f'Got system name: {sys_name}', ip)
@@ -128,7 +128,7 @@ def update_nexusCC_contact(ip):
 
 if __name__ == '__main__':
     ip = '172.16.131.163'
-    update_nexusCC_contact(input('Codec IP: '))
+    update_nexusCC_contact(input('Codec IP: '), input('Enter New Video ID (no spaces): '))
     # sesh_cookie = cod_session_start(ip)
     # name = get_system_name(ip, sesh_cookie)
     # print(name)

@@ -41,6 +41,8 @@ if __name__ == '__main__':
         sup_file = xml_selector()
     elif selected_function == "get_info":
         sup_file = input("Enter path: ")
+    elif selected_function == "update_nexusCC_contact":
+        sup_file = input("Enter New Video ID (no spaces): ")
     else:
         sup_file = None
     imported_func = getattr(import_module(selected_function), selected_function)
