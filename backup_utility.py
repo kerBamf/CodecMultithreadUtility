@@ -30,24 +30,24 @@ def message(string='', sys_name=''):
 headers = {'Content-Type': 'text/xml', 'Authorization': f'basic {PASSCODE}'}
 
 #Function retrieving codec system name for logging purposes
-def get_sys_name(ip=''):
+def get_sys_name(codec):
     try:
-        xml = requests.get(f'http://{ip}/getxml?location=/Configuration/SystemUnit/Name', headers=headers, verify=False, timeout=(10, 30))
+        xml = requests.get(f'http://{codec.ip}/getxml?location=/Configuration/SystemUnit/Name', headers=headers, verify=False, timeout=(10, 30))
         print(xml.text)
         xml_root = ET.fromstring(xml.text)
         sys_name = xml_root[0][0].text
         return sys_name
     except requests.exceptions.HTTPError as err:
-        message(err, ip)
+        message(err, codec.name)
 
 #Function retrieving codec configration to be parsed
-def get_sys_config(ip=''):
+def get_sys_config(codec):
     try:
-        xml = requests.get(f'http://{ip}/getxml?location=/Configuration', headers=headers, verify=False, timeout=(10, 30))
+        xml = requests.get(f'http://{codec.ip}/getxml?location=/Configuration', headers=headers, verify=False, timeout=(10, 30))
         xml_root = ET.fromstring(xml.text)
         return xml_root
     except requests.exceptions.HTTPError as err:
-        message(err, ip)
+        message(err, codec.name)
 
 #Getting Date for use by multiple functions
 today = datetime.datetime.now().strftime('%x').replace('/', '-')
@@ -158,11 +158,11 @@ def generate_checksum(directory='', sys_name=''):
         file.write(f'{string}')
 
 #Main function
-def backup_utility(ip):
-    sys_name = get_sys_name(ip)
+def backup_utility(codec):
+    sys_name = get_sys_name(codec)
     directory = f'{SAVE_PATH}/Backup_Date_{today}/{sys_name}_{today}'
     message(f'System name retrieved: {sys_name}\r\nPulling system backup...', sys_name)
-    config_xml = get_sys_config(ip)
+    config_xml = get_sys_config(codec)
     message('Configuration file retrieved', sys_name)
     message('Checking directory and filename...', sys_name)
     check_backup_file(sys_name, SAVE_PATH)
