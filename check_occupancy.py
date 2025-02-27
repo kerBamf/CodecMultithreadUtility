@@ -34,5 +34,10 @@ def check_occupancy(codec):
     return pres_dict
 
 if __name__ == "__main__":
-    print(check_occupancy('172.16.131.163'))
+    class Codec:
+        def __init__(self, ip):
+            self.name = 'One-Off Codec'
+            self.ip = ip
+
+    print(check_occupancy(Codec(input('Enter Codec IP: '))))
     

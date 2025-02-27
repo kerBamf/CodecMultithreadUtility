@@ -186,4 +186,8 @@ def backup_utility(codec):
         return err
 
 if __name__ == '__main__':
-    backup_utility(input('Enter codec IP: '))
+    class Codec:
+        def __init__(self, ip):
+            self.name = 'One-Off Codec'
+            self.ip = ip
+    backup_utility(Codec(input('Enter codec IP: ')))
