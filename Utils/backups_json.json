@@ -26,5 +26,9 @@
     "CommandCenterSplashV3": {
         "filename": "CommandCenterSplashV3.zip",
         "checksum": "df44ba6fe49cf12cbf95b5e02d6f8fa5194af69e73e19452fa30eb33a2ed8b663c31f41e195f6fb031c3d6cc542cd7fbf8ae041117f565cdb59992713a176a36"
+    },
+    "MergedDiallerV2": {
+        "filename": "MergedDiallerV2.zip",
+        "checksum": "e344b2c798800181d1597503dbafb9adeb50342a4f050dd71ace047958565c774bc3dd4fb7874193affe926b615d9e0be79de2a2230a2c43522eec4a67967ecc"
     }
 }
