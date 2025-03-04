@@ -60,7 +60,7 @@ all_sw_versions = {
 def check_codec(ip):
     headers = {'Authorization': f'basic {PASSCODE}'}
     hardware_list = {
-        'pro': ['Codec Pro', 'Room Bar'],
+        'pro': ['Codec Pro', 'Room Bar', 'Room Bar Pro'],
         'kit': ['Room Kit', 'Room Kit Mini', 'Codec Plus', 'Room 55'],
         'SX80': 'SX80'
     }
