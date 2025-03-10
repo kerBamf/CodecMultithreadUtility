@@ -30,5 +30,9 @@
     "MergedDiallerV2": {
         "filename": "MergedDiallerV2.zip",
         "checksum": "e344b2c798800181d1597503dbafb9adeb50342a4f050dd71ace047958565c774bc3dd4fb7874193affe926b615d9e0be79de2a2230a2c43522eec4a67967ecc"
+    },
+    "SplashPage3": {
+        "filename": "SplashPage3.zip",
+        "checksum": "768c9f6d2a907700d45d3ff844304e2d39d9bb469d6a80a98ed19fbb999967028e8a8cf358f00511b04f9cd62fb41c8e8ebc314444957ed66d7aaddebbcf0847"
     }
 }

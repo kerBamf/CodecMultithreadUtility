@@ -66,12 +66,12 @@ def get_sys_name(ip=''):
     except requests.exceptions.HTTPError as err:
         print(err, ip)
 
-def load_backup(ip, sup_file):
+def load_backup(codec, sup_file):
     #Getting device information
-    sys_name = get_sys_name(ip)
+    sys_name = get_sys_name(codec.ip)
     
     #Fetching and loading backup
-    backup_fetch_status = http_request(ip, fetch_backup_XML(sup_file['filename'], sup_file['checksum']))
+    backup_fetch_status = http_request(codec.ip, fetch_backup_XML(sup_file['filename'], sup_file['checksum']))
     message(f'{backup_fetch_status}', sys_name)
     
     if backup_fetch_status.find('<ServiceFetchResult status="OK">') != -1:
@@ -83,4 +83,9 @@ def load_backup(ip, sup_file):
 
 if __name__ == '__main__':
     backup_dict = select_backup()
-    load_backup(input('Enter Codec Ip: '), backup_dict)
+    class Codec:
+        def __init__(self, ip):
+            self.name = 'One-Off Codec'
+            self.ip = ip
+    (Codec(input('Enter codec IP: ')))
+    load_backup((Codec(input('Enter codec IP: '))), backup_dict)
