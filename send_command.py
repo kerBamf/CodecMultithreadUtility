@@ -21,18 +21,22 @@ def message(string, ip, path=LOGPATH):
     log_info(string, ip, path)
     print(string)
 
-def http_request(ip, string):
+def http_request(codec, string):
     try:
-        response = requests.post(f'http://{ip}/putxml', headers=headers, verify=False, data=string, timeout=60)
-        message(f'Command Response: {response.text}', ip)
+        response = requests.post(f'http://{codec.ip}/putxml', headers=headers, verify=False, data=string, timeout=60)
+        message(f'Command Response: {response.text}', codec.name)
     except requests.exceptions.HTTPError as err:
-        message(f'{ip} -> {err}', ip)
+        message(f'{codec.name} -> {err}', codec.name)
     return response
 
-def send_command(ip, xml):
-    response = http_request(ip, xml)
+def send_command(codec, xml):
+    response = http_request(codec, xml)
     return response.text
 
 if __name__ == '__main__':
     new_XML = xml_selector()
-    send_command(input('Enter Codec IP: '), new_XML)
+    class Codec:
+        def __init__(self, ip):
+            self.name = 'One-Off Codec'
+            self.ip = ip
+    send_command(Codec(input('Enter codec IP: ')), new_XML)
