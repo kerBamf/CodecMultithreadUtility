@@ -1,15 +1,15 @@
 {
-    "Macro_Consolidation": {
-        "filename": "Macro_Consolidation_TemplateV4.zip",
-        "checksum": "5a5a8ffce8b7f8452f8c33f82f52080974b55c9af9df0bf0351d9826676163d79107fbf7cedba39e87916161332675c6662230c60fe9473b5d43ded7e0ce3727"
+    "Macro_Bundle_V11": {
+        "filename": "MSK_Bundle_V11_03-2025.zip",
+        "checksum": "d9f90f948322d913fad9e22a61378bbbf785131d972c32d9a778ad9a00faf37c3da0c02b32b168d7dad70cf26800eb7a1bb464942c8f27c2c5bccf020b771d1b"
     },
     "OS11-20_Config_Update": {
         "filename": "OS1120_Update_Template.zip",
         "checksum": "1b2ef130e14a4fd6d02f16cfbdcf42841968c9eb61b017b4ed3b762ea389c76600bf8309ed9682c21e661129eb0ebbd9f631882608f716b17c7a9ab006192278"
     },
     "Zoom_Controls": {
-        "filename": "Zoom_Controls.zip",
-        "checksum": "c7a33300495326b488cdd553b2cacf1f00302aa46fb14ad7529ea00ce71bce8285b7129b1ba4e798bca1fbc9f344f3243d8eaa51786d4d9bac3d10b79841b29a"
+        "filename": "ZoomControlsV2.zip",
+        "checksum": "fa68215ac5160fd52245d2444430139308149207440d19d38fd0834166a9eec7dcbaae09bfb919b44bd28a3f6ce516c51ce9fbb67ea9afe380af44cbf3fa7ee7"
     },
     "Setup_Template": {
         "filename": "Setup_Template.zip",
