@@ -219,7 +219,7 @@ def quick_update(ip):
     assigned_sw_path = all_sw_paths[codec_info['hw_version']]
 
     # Returns chain update function if code is on the latest version. Changes will need to be added later to allow for dynamic edits to code versions as newer ones come out.
-    if (int(codec_info['sw_version'][0]) == int(final_sw_version[0]) and int(codec_info['sw_version'][1]) == int(final_sw_version[1])):
+    if (int(codec_info['sw_version'][0]) >= int(final_sw_version[0]) and int(codec_info['sw_version'][1]) >= int(final_sw_version[1])):
         message(f'{codec_info["sys_name"]} running latest software. Exiting script.', sys_name)
         return f'{codec_info["sys_name"]} running latest software. Exiting script.'
     

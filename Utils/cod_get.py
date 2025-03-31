@@ -23,9 +23,15 @@ def cod_get(ip, path, cookie=None):
     try:
         response = requests.get(f'http://{ip}/getxml?location=/{path}', headers=headers, verify=False, timeout=(10, 30))
         return response.text
-    except requests.exceptions.HTTPError as err:
-        print(err.response)
-        raise err
+    except requests.HTTPError as err:
+        print('HTTP Connection Error')
+        return 'HTTP Connection Error'
+    except requests.Timeout as err:
+        print('Connection Timeout Error')
+        return 'Connection Timeout Error'
+    except requests.RequestException as err:
+        print (err)
+        return err
 
 if __name__ == '__main__':
     info = cod_get('172.16.131.163', 'status/RoomAnalytics/PeopleCount/Current')
