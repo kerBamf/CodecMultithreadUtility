@@ -48,8 +48,7 @@ def get_sys_config(codec):
         xml_root = ET.fromstring(xml.text)
         return xml_root
     except requests.RequestException as err:
-        message(f'Backup failed on {codec.name} with this error: {err}', codec.name)
-        raise custom_exception(f'Backup failed on {codec.name} with this .responseor: {err}')
+        message(f'Failed to pull codec configuration on {codec.name}. Error: {err}', codec.name)
 
 #Getting Date for use by multiple functions
 today = datetime.datetime.now().strftime('%x').replace('/', '-')

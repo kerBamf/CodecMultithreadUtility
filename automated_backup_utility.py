@@ -19,8 +19,7 @@ FILEPATH = os.environ.get('REBOOT_EXCEL_PATH')
 FILENAME = os.environ.get('BACKUP_EXCEL_FILE')
 SAVE_PATH = os.environ.get('BACKUP_PATH')
 PASSCODE = os.environ.get('PASSCODE')
-
-#Setting up custom exception
+LOGPATH = os.environ.get('LOGPATH')
 
 class custom_exception(Exception):
     pass
@@ -34,24 +33,24 @@ def message(string='', sys_name=''):
 headers = {'Content-Type': 'text/xml', 'Authorization': f'basic {PASSCODE}'}
 
 #Function retrieving codec system name for logging purposes
-def get_sys_name(ip=''):
+def get_sys_name(codec):
     try:
-        xml = requests.get(f'http://{ip}/getxml?location=/Configuration/SystemUnit/Name', headers=headers, verify=False, timeout=(10, 30))
+        xml = requests.get(f'http://{codec.ip}/getxml?location=/Configuration/SystemUnit/Name', headers=headers, verify=False, timeout=(10, 30))
         print(xml.text)
         xml_root = ET.fromstring(xml.text)
         sys_name = xml_root[0][0].text
         return sys_name
-    except requests.exceptions.HTTPError as err:
-        message(err, ip)
+    except requests.RequestException as err:
+        message(f'Backup failed on {codec.name} with this error: {err}', codec.name)
 
 #Function retrieving codec configration to be parsed
-def get_sys_config(ip=''):
+def get_sys_config(codec):
     try:
-        xml = requests.get(f'http://{ip}/getxml?location=/Configuration', headers=headers, verify=False, timeout=(10, 30))
+        xml = requests.get(f'http://{codec.ip}/getxml?location=/Configuration', headers=headers, verify=False, timeout=(10, 30))
         xml_root = ET.fromstring(xml.text)
         return xml_root
-    except requests.exceptions.HTTPError as err:
-        message(err, ip)
+    except requests.RequestException as err:
+        message(f'Failed to pull codec configuration on {codec.name}. Error: {err}', codec.name)
 
 #Getting Date for use by multiple functions
 today = datetime.datetime.now().strftime('%x').replace('/', '-')
