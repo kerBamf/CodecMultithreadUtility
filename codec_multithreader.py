@@ -18,7 +18,7 @@ def message(string, function):
     log_info(string, function, LOGPATH)
 
 #Multithreading function
-def iterator(function, codec_list, file):
+def iterator(function, codec_list, file=None):
     if file:
         with concurrent.futures.ThreadPoolExecutor() as executor:
             futures = {executor.submit(function, codec, file): codec for codec in codec_list}

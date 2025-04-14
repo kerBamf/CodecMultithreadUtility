@@ -17,7 +17,7 @@ requests.packages.urllib3.disable_warnings()
 load_dotenv()
 FILEPATH = os.environ.get('REBOOT_EXCEL_PATH')
 FILENAME = os.environ.get('BACKUP_EXCEL_FILE')
-SAVE_PATH = os.environ.get('BACKUP_PATH')
+SAVE_PATH = os.environ.get('BACKUP_SAVE_PATH')
 PASSCODE = os.environ.get('PASSCODE')
 LOGPATH = os.environ.get('LOGPATH')
 
@@ -36,7 +36,6 @@ headers = {'Content-Type': 'text/xml', 'Authorization': f'basic {PASSCODE}'}
 def get_sys_name(codec):
     try:
         xml = requests.get(f'http://{codec.ip}/getxml?location=/Configuration/SystemUnit/Name', headers=headers, verify=False, timeout=(10, 30))
-        print(xml.text)
         xml_root = ET.fromstring(xml.text)
         sys_name = xml_root[0][0].text
         return sys_name
@@ -146,6 +145,7 @@ def compress_zip(directory='', sys_name=''):
 
 #Function generating a sha512 checksum for use by remote backup restoration commands
 def generate_checksum(directory='', sys_name=''):
+    print('Generating Checksum...')
     backup_file = f'{directory}/{sys_name}_{today}_backup.zip'
     filename = 'sha512_checksum.txt'
     if os.path.isfile(f'{directory}/{filename}'):
@@ -155,17 +155,15 @@ def generate_checksum(directory='', sys_name=''):
         string = raw_checksum.stdout.split(' ')[0]
     else:
         raise custom_exception(raw_checksum.stderr)
-    
-    print(string)
     with open(f'{directory}/{filename}', 'a', newline='') as file:
         file.write(f'{string}')
 
 #Main function
-def backup_utility(ip):
-    sys_name = get_sys_name(ip)
+def backup_utility(codec):
+    sys_name = get_sys_name(codec)
     directory = f'{SAVE_PATH}/Backup_Date_{today}/{sys_name}_{today}'
     message(f'System name retrieved: {sys_name}\r\nPulling system backup...', sys_name)
-    config_xml = get_sys_config(ip)
+    config_xml = get_sys_config(codec)
     message('Configuration file retrieved', sys_name)
     message('Checking directory and filename...', sys_name)
     check_backup_file(sys_name, SAVE_PATH)
