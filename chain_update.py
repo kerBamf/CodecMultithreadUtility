@@ -57,7 +57,7 @@ all_sw_versions = {
     }
 }
 #Checks codec information and assigns hw_version tag for use by the upgrade function
-def check_codec(ip):
+def check_codec(codec):
     headers = {'Authorization': f'basic {PASSCODE}'}
     hardware_list = {
         'pro': ['Codec Pro', 'Room Bar'],
@@ -73,29 +73,29 @@ def check_codec(ip):
     }
     #Retrieves name of codec
     try:
-        xml = requests.get(f'https://{ip}/getxml?location=/Configuration/SystemUnit/Name', headers=headers, verify=False, timeout=(10, 30))
+        xml = requests.get(f'https://{codec.ip}/getxml?location=/Configuration/SystemUnit/Name', headers=headers, verify=False, timeout=(10, 30))
         xml_root = ET.fromstring(xml.text)
         sys_name = xml_root[0][0].text
         codec_info['sys_name'] = sys_name
         message(f'Codec Name Found: {sys_name}', sys_name)
-    except requests.exceptions.HTTPError as err:
-        print(err.response)
-        raise err
+    except requests.RequestException as err:
+        message(f'{codec.name} failed to update with this error: {err}', codec.name)
+        raise UpgradeException(f'{codec.name} failed to update with this error: {err}', codec.name)
     
     #checks software version of the codec and splits the version info into a list for easier comparison in Upgrade function
     try:
-        soft_xml = requests.get(f'https://{ip}/getxml?location=/Status/SystemUnit/Software/Version', headers=headers, verify=False, timeout=(10, 30))
+        soft_xml = requests.get(f'https://{codec.ip}/getxml?location=/Status/SystemUnit/Software/Version', headers=headers, verify=False, timeout=(10, 30))
         xml_root = ET.fromstring(soft_xml.text)
         soft_text = xml_root[0][0][0].text
         codec_info['sw_version'] = soft_text.replace('ce','').split('.')
         message(f'Software found: {soft_text}', codec_info['sys_name'])
-    except requests.exceptions.HTTPError as err:
-        message(err.response)
-        raise err
+    except requests.RequestException as err:
+        message(f'{codec.name} failed to update with this error: {err}', codec.name)
+        raise UpgradeException(f'{codec.name} failed to update with this error: {err}')
 
     #Checks hardware version of the codec. Used to determine which upgrade file path to use. Returns a string of 'kit,' 'pro,' or 'SX80'   
     try:
-        soft_xml = requests.get(f'http://{ip}/getxml?location=/Status/SystemUnit/ProductPlatform', headers=headers, verify=False, timeout=(10, 30))
+        soft_xml = requests.get(f'http://{codec.ip}/getxml?location=/Status/SystemUnit/ProductPlatform', headers=headers, verify=False, timeout=(10, 30))
         xml_root = ET.fromstring(soft_xml.text)
         sys_type = xml_root[0][0].text
         codec_info['sys_type'] = sys_type
@@ -109,19 +109,19 @@ def check_codec(ip):
                 codec_info['hw_version'] = 'kit'
         message(f'Hardware found: {sys_type}. Assigning hardware version: {codec_info["hw_version"]}', codec_info['sys_name'])
 
-    except requests.exceptions.HTTPError as err:
-        message(err.response)
-        raise err
+    except requests.RequestException as err:
+        message(f'{codec.name} failed to update with this error: {err}', codec.name)
+        raise UpgradeException(f'{codec.name} failed to update with this error: {err}')
     
 
     return codec_info
 
 
 #Function called when upgrade is initiated. Hardware version determines filepath, software version determines file to be used
-def upgrade(sys_name, current_sw, sw_path, sw_file, ip):
+def upgrade(sys_name, current_sw, sw_path, sw_file, codec):
     message(f'Attempting to install {sw_file} on {sys_name}...', sys_name)
     try:
-        url = f'http://{ip}/putxml'
+        url = f'http://{codec.ip}/putxml'
         headers = {'Authorization': f'basic {PASSCODE}'}
         payload = upgrade_command_xml(sw_path, sw_file)
         response = requests.request("POST", url, headers=headers, data=payload, verify=False)
@@ -134,7 +134,8 @@ def upgrade(sys_name, current_sw, sw_path, sw_file, ip):
             message(f'Upgrade status: {status}. {xml_root[0][0].text}', sys_name)
             raise UpgradeException({'text': f'Upgrade status: Error. {xml_root[0][0].text}'})
     except requests.exceptions.HTTPError as err:
-        message(err.response, sys_name)
+        message(f'{codec.name} failed to update with this error: {err}', codec.name)
+        raise UpgradeException(f'{codec.name} failed to update with this error: {err}')
 
 
     def ping():
@@ -161,7 +162,7 @@ def upgrade(sys_name, current_sw, sw_path, sw_file, ip):
         time.sleep(1)
 
     if (restarted == False):
-        message(f'{sys_name} upgrade failed. Please troubleshoot.')
+        message(f'{sys_name} upgrade failed. Please troubleshoot.', sys_name)
         raise UpgradeException({'text':f'{sys_name} failed to pull update properly'})
         
     time.sleep(60)
@@ -208,9 +209,9 @@ def upgrade_command_xml(file_path, file_string):
 
 
 #Main command, iterates through available software versions and calls upgrade command as needed.
-def chain_update(ip):
+def chain_update(codec):
 
-    codec_info = check_codec(ip)
+    codec_info = check_codec(codec)
     #Assigns software version upgrade list to use
     assigned_sw_list = all_sw_versions[codec_info['hw_version']]
     assigned_sw_keys = list(assigned_sw_list.keys())
@@ -231,7 +232,7 @@ def chain_update(ip):
         split_key = key.split('.')
         if int(split_key[0]) == int(cur_sw_version[0]) and int(split_key[1]) > int(cur_sw_version[1]):
             try:
-                upgrade(codec_info['sys_name'], cur_sw_version, assigned_sw_path, assigned_sw_list[key], ip)
+                upgrade(codec_info['sys_name'], cur_sw_version, assigned_sw_path, assigned_sw_list[key], codec)
             except UpgradeException as error:
                 except_dictionary = error.args
                 message(except_dictionary["text"], sys_name)
@@ -239,7 +240,7 @@ def chain_update(ip):
                 raise error
         elif int(split_key[0]) > int(cur_sw_version[0]):
             try:
-                upgrade(codec_info['sys_name'], cur_sw_version, assigned_sw_path, assigned_sw_list[key], ip)
+                upgrade(codec_info['sys_name'], cur_sw_version, assigned_sw_path, assigned_sw_list[key], codec)
             except UpgradeException as error:
                 except_dictionary = error.args
                 message(except_dictionary["text"], sys_name)
@@ -247,7 +248,11 @@ def chain_update(ip):
                 raise error
     
     message(f'{codec_info["sys_name"]} successfully upgraded', sys_name)
-    return {'Status': f'{codec_info["sys_name"]} successfully upgraded', 'ip': ip}
+    return {'Status': f'{codec_info["sys_name"]} successfully upgraded', 'ip': codec.ip}
 
 if __name__ == '__main__':
-    chain_update(input('Enter Codec IP: '))
+    class Codec:
+        def __init__(self, ip):
+            self.name = 'One-Off Codec'
+            self.ip = ip
+    chain_update(Codec(input('Enter Codec IP: ')))

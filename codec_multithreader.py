@@ -18,13 +18,13 @@ def message(string, function):
     log_info(string, function, LOGPATH)
 
 #Multithreading function
-def iterator(function, ip_list, file):
+def iterator(function, codec_list, file=None):
     if file:
         with concurrent.futures.ThreadPoolExecutor() as executor:
-            futures = {executor.submit(function, ip, file): ip for ip in ip_list}
+            futures = {executor.submit(function, codec, file): codec for codec in codec_list}
     else:
         with concurrent.futures.ThreadPoolExecutor() as executor:
-            futures = {executor.submit(function, ip): ip for ip in ip_list}
+            futures = {executor.submit(function, codec): codec for codec in codec_list}
     
     for future in concurrent.futures.as_completed(futures):
         if (future.exception()):
@@ -33,7 +33,7 @@ def iterator(function, ip_list, file):
             message(future.result(), function.__name__)
 
 if __name__ == '__main__':
-    ip_list = excel_parser()
+    codec_list = excel_parser()
     selected_function = function_selector()
     if selected_function == "config_consolidation" or selected_function == 'load_backup':
         sup_file = select_backup()
@@ -46,4 +46,4 @@ if __name__ == '__main__':
     else:
         sup_file = None
     imported_func = getattr(import_module(selected_function), selected_function)
-    iterator(imported_func, ip_list, sup_file)
+    iterator(imported_func, codec_list, sup_file)

@@ -45,33 +45,37 @@ def fetch_backup_XML(backup_dict):
 
     return XML
 
-def http_request(ip, string):
+def http_request(codec, string):
     try:
-        response = requests.post(f'http://{ip}/putxml', headers=headers, verify=False, data=string, timeout=180)
-        log_info(response.text, ip, LOGPATH)
+        response = requests.post(f'http://{codec.ip}/putxml', headers=headers, verify=False, data=string, timeout=180)
+        log_info(response.text, codec.ip, LOGPATH)
         return response.text
     except requests.exceptions.HTTPError as err:
-        log_info(f'{ip} -> {err}', ip, LOGPATH)
+        log_info(f'{codec.ip} -> {err}', codec.ip, LOGPATH)
 
-def new_codec_setup(ip, backup_dict):
+def new_codec_setup(codec, backup_dict):
 
     #Setting transpile to false
-    set_transpile_status = http_request(ip, set_transpile_XML)
-    log_info(f'{set_transpile_status}', ip, LOGPATH)
+    set_transpile_status = http_request(codec.ip, set_transpile_XML)
+    log_info(f'{set_transpile_status}', codec.ip, LOGPATH)
     
     
     #Fetching and loading backup
-    backup_fetch_status = http_request(ip, fetch_backup_XML(backup_dict))
-    log_info(f'{backup_fetch_status}', ip, LOGPATH)
+    backup_fetch_status = http_request(codec.ip, fetch_backup_XML(backup_dict))
+    log_info(f'{backup_fetch_status}', codec.ip, LOGPATH)
     
     if backup_fetch_status.find('<p>The request could not be served due to a proxy error.</p>') != -1 or backup_fetch_status.find('<ServiceFetchResult status="OK">') != -1:
-        log_info('Update Successful', ip, LOGPATH)
-        return f'{ip} - Changes made successfully'
+        log_info('Update Successful', codec.ip, LOGPATH)
+        return f'{codec.ip} - Changes made successfully'
     else:
-        log_info(f'Could not complete setup for {ip}. Please investigate', ip, LOGPATH)
-        raise custom_exception(f'Could not complete setup for {ip}. Please investigate.')
+        log_info(f'Could not complete setup for {codec.ip}. Please investigate', codec.ip, LOGPATH)
+        raise custom_exception(f'Could not complete setup for {codec.ip}. Please investigate.')
 
 
 if __name__ == '__main__':
     backup_dict = select_backup()
-    new_codec_setup(input('Enter Codec Ip: '), backup_dict)
+    class Codec:
+        def __init__(self, ip):
+            self.name = 'One-Off Codec'
+            self.ip = ip
+    new_codec_setup(Codec(input('Enter Codec IP: ')), backup_dict)

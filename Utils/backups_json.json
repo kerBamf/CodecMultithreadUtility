@@ -1,15 +1,15 @@
 {
-    "Macro_Consolidation": {
-        "filename": "Macro_Consolidation_Template.zip",
-        "checksum": "2e34df599076bd44d62b9a2b80adcde6ba3b649a4b0010fbea074ef974a406e63b80929d9c9f1d311a5be942f6cf164ad8d2f1f91de08cee09fb1e0c11047bb8"
+    "Macro_Bundle_V11": {
+        "filename": "MSK_Bundle_V11_03-2025.zip",
+        "checksum": "d9f90f948322d913fad9e22a61378bbbf785131d972c32d9a778ad9a00faf37c3da0c02b32b168d7dad70cf26800eb7a1bb464942c8f27c2c5bccf020b771d1b"
     },
     "OS11-20_Config_Update": {
         "filename": "OS1120_Update_Template.zip",
         "checksum": "1b2ef130e14a4fd6d02f16cfbdcf42841968c9eb61b017b4ed3b762ea389c76600bf8309ed9682c21e661129eb0ebbd9f631882608f716b17c7a9ab006192278"
     },
     "Zoom_Controls": {
-        "filename": "Zoom_Controls.zip",
-        "checksum": "c7a33300495326b488cdd553b2cacf1f00302aa46fb14ad7529ea00ce71bce8285b7129b1ba4e798bca1fbc9f344f3243d8eaa51786d4d9bac3d10b79841b29a"
+        "filename": "ZoomControlsV2.zip",
+        "checksum": "fa68215ac5160fd52245d2444430139308149207440d19d38fd0834166a9eec7dcbaae09bfb919b44bd28a3f6ce516c51ce9fbb67ea9afe380af44cbf3fa7ee7"
     },
     "Setup_Template": {
         "filename": "Setup_Template.zip",
@@ -30,5 +30,9 @@
     "MergedDiallerV2": {
         "filename": "MergedDiallerV2.zip",
         "checksum": "e344b2c798800181d1597503dbafb9adeb50342a4f050dd71ace047958565c774bc3dd4fb7874193affe926b615d9e0be79de2a2230a2c43522eec4a67967ecc"
+    },
+    "SplashPage3": {
+        "filename": "SplashPage3.zip",
+        "checksum": "768c9f6d2a907700d45d3ff844304e2d39d9bb469d6a80a98ed19fbb999967028e8a8cf358f00511b04f9cd62fb41c8e8ebc314444957ed66d7aaddebbcf0847"
     }
 }

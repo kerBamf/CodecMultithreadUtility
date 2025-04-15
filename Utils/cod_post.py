@@ -23,9 +23,9 @@ def cod_post(ip, payload, cookie=None):
     try:
         response = requests.post(f'http://{ip}/putxml', headers=headers, data=payload, verify=False, timeout=(10, 30))
         return response.text
-    except requests.exceptions.HTTPError as err:
+    except requests.RequestException as err:
         print(err.response)
-        raise err
+        return err.response
 
 #Function for opening a codec session, decreasing latency for multiple-command scripts
 def cod_session_start(ip):
@@ -33,18 +33,18 @@ def cod_session_start(ip):
         response = requests.post(f'http://{ip}/xmlapi/session/begin', headers=default_headers, verify=False, timeout=(10, 30))
         print(response.cookies['SessionId'])
         return response.cookies['SessionId']
-    except requests.exceptions.HTTPError as err:
+    except requests.RequestException as err:
         print(err.response)
-        raise err
+        return err.response
 #Needed to end a codec session
 def cod_session_end(ip, cookie):
     headers = {'Cookie': f'SessionId={cookie}'}
     try:
         response = requests.post(f'http://{ip}/xmlapi/session/end', headers=headers, verify=False, timeout=(10, 30))
         return response.status_code
-    except requests.exceptions.HTTPError as err:
+    except requests.RequestException as err:
         print(err.response)
-        raise err
+        return err.response
 
 if __name__ == '__main__':
     with open('../xml_files/test_post.xml', encoding="utf-8") as f:

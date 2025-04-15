@@ -9,8 +9,9 @@ import smtplib
 import xml.etree.ElementTree as ET
 from email.message import EmailMessage
 from Utils.logger import log_info
-from codec_multithreader import iterator
 from Utils.excel_parser import excel_parser
+from Utils.cod_post import cod_post
+from codec_multithreader import iterator
 
 #Loading Environment Variables
 load_dotenv()
@@ -35,18 +36,41 @@ def message(string='', sys_name=''):
 headers = {'Content-Type': 'text/xml', 'Authorization': f'basic {PASSCODE}'}
 
 #Function retrieving codec system name for logging purposes
-def get_sys_name(ip=''):
+def get_sys_name(codec):
     try:
-        xml = requests.get(f'http://{ip}/getxml?location=/Configuration/SystemUnit/Name', headers=headers, verify=False, timeout=(10, 30))
+        xml = requests.get(f'http://{codec.ip}/getxml?location=/Configuration/SystemUnit/Name', headers=headers, verify=False, timeout=(10, 30))
         print(xml.text)
         xml_root = ET.fromstring(xml.text)
         sys_name = xml_root[0][0].text
         return sys_name
     except requests.exceptions.HTTPError as err:
-        message(err, ip)
+        message(err, codec.name)
+
+#Checking active macros on system for necessary reboot macro
+def check_macro_status(codec):
+    payload = '''<Command>
+                    <Macros>
+                        <Macro>
+                            <Get></Get>
+                        </Macro>
+                    </Macros>
+                </Command>'''
+    try:
+        xml = cod_post(codec.ip, payload)
+        xml_root = ET.fromstring(xml)
+        macro_active = xml_root.find(".//*[Name='External_Reboot']/Active").text
+        print(macro_active)
+
+    except requests.RequestException as err:
+        message(f'Could not retrieve macro information from {codec.name}', codec.name)
+    
+    except ET.ParseError as err:
+        message(f'Could not find reboot macro on {codec.name}', codec.name)
+
+    return macro_active
 
 #Base initiate reboot function
-def initiate_reboot(ip='', sys_name=''):
+def initiate_reboot(codec):
 
     payload = '''<Command>
                     <Standby>
@@ -66,19 +90,25 @@ def initiate_reboot(ip='', sys_name=''):
                 </Command>'''
 
     try:
-        response = requests.post( f'http://{ip}/putxml', headers=headers, verify=False, data=payload)
-        message(response.text, sys_name)
+        response = requests.post( f'http://{codec.ip}/putxml', headers=headers, verify=False, data=payload)
+        message(response.text, codec.name)
         return response.text
     except requests.exceptions.HTTPError as err:
-        message(err, sys_name)
+        message(err, codec.name)
 
 
 #Reboot Process Function
-def reboot_process(ip=''):
-    sys_name = get_sys_name(ip)
+def reboot_process(codec):
+    sys_name = get_sys_name(codec)
     message(f'Systname name retrived: {sys_name}', sys_name)
-    message('Initiating reboot...', sys_name)
-    initiate_reboot(ip, sys_name)
+    message('Checking macro status...', sys_name)
+    macro_active = check_macro_status(codec)
+    if (macro_active == 'True'):       
+        message('Initiating reboot...', sys_name)
+        initiate_reboot(codec)
+    else:
+        message(f'Reboot macro deactivated on {codec.name}', codec.name)
+        raise CustomException(f'Reboot macro deactivated on {codec.name}')
     
     time.sleep(10) #Sleep accounting for alert delay before countdown begins
 
@@ -87,7 +117,7 @@ def reboot_process(ip=''):
     time.sleep(45)
 
     def ping():
-        return subprocess.run(["ping", "-c", "1", ip], capture_output=True).returncode
+        return subprocess.run(["ping", "-c", "1", codec.ip], capture_output=True).returncode
 
     #Pinging codec after sending reboot
     awake = True

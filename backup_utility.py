@@ -30,24 +30,25 @@ def message(string='', sys_name=''):
 headers = {'Content-Type': 'text/xml', 'Authorization': f'basic {PASSCODE}'}
 
 #Function retrieving codec system name for logging purposes
-def get_sys_name(ip=''):
+def get_sys_name(codec):
     try:
-        xml = requests.get(f'http://{ip}/getxml?location=/Configuration/SystemUnit/Name', headers=headers, verify=False, timeout=(10, 30))
+        xml = requests.get(f'http://{codec.ip}/getxml?location=/Configuration/SystemUnit/Name', headers=headers, verify=False, timeout=(10, 30))
         print(xml.text)
         xml_root = ET.fromstring(xml.text)
         sys_name = xml_root[0][0].text
         return sys_name
-    except requests.exceptions.HTTPError as err:
-        message(err, ip)
+    except requests.RequestException as err:
+        message(f'Backup failed on {codec.name} with this error: {err}', codec.name)
+        raise custom_exception(f'Backup failed on {codec.name} with this error: {err}')
 
 #Function retrieving codec configration to be parsed
-def get_sys_config(ip=''):
+def get_sys_config(codec):
     try:
-        xml = requests.get(f'http://{ip}/getxml?location=/Configuration', headers=headers, verify=False, timeout=(10, 30))
+        xml = requests.get(f'http://{codec.ip}/getxml?location=/Configuration', headers=headers, verify=False, timeout=(10, 30))
         xml_root = ET.fromstring(xml.text)
         return xml_root
-    except requests.exceptions.HTTPError as err:
-        message(err, ip)
+    except requests.RequestException as err:
+        message(f'Failed to pull codec configuration on {codec.name}. Error: {err}', codec.name)
 
 #Getting Date for use by multiple functions
 today = datetime.datetime.now().strftime('%x').replace('/', '-')
@@ -158,27 +159,34 @@ def generate_checksum(directory='', sys_name=''):
         file.write(f'{string}')
 
 #Main function
-def backup_utility(ip):
-    sys_name = get_sys_name(ip)
-    directory = f'{SAVE_PATH}/Backup_Date_{today}/{sys_name}_{today}'
-    message(f'System name retrieved: {sys_name}\r\nPulling system backup...', sys_name)
-    config_xml = get_sys_config(ip)
-    message('Configuration file retrieved', sys_name)
-    message('Checking directory and filename...', sys_name)
-    check_backup_file(sys_name, SAVE_PATH)
-    message('Parsing XML...', sys_name)
-    parse_xml(config_xml, '', sys_name, directory)
-    message('Generating manifest', sys_name)
-    generate_manifest(sys_name, directory)
-    message('Compressing files...', sys_name)
-    compress_zip(directory, sys_name)
-    generate_checksum(directory, sys_name)
-    message('Backup completed', sys_name)
-    resolution = {
-        'Status': 'Backup Completed',
-        'System_name': sys_name
-    }
-    return resolution
+def backup_utility(codec):
+    try:
+        sys_name = get_sys_name(codec)
+        directory = f'{SAVE_PATH}/Backup_Date_{today}/{sys_name}_{today}'
+        message(f'System name retrieved: {sys_name}\r\nPulling system backup...', sys_name)
+        config_xml = get_sys_config(codec)
+        message('Configuration file retrieved', sys_name)
+        message('Checking directory and filename...', sys_name)
+        check_backup_file(sys_name, SAVE_PATH)
+        message('Parsing XML...', sys_name)
+        parse_xml(config_xml, '', sys_name, directory)
+        message('Generating manifest', sys_name)
+        generate_manifest(sys_name, directory)
+        message('Compressing files...', sys_name)
+        compress_zip(directory, sys_name)
+        generate_checksum(directory, sys_name)
+        message('Backup completed', sys_name)
+        resolution = {
+            'Status': 'Backup Completed',
+            'System_name': sys_name
+        }
+        return resolution
+    except custom_exception as err:
+        return err
 
 if __name__ == '__main__':
-    backup_utility(input('Enter codec IP: '))
+    class Codec:
+        def __init__(self, ip):
+            self.name = 'One-Off Codec'
+            self.ip = ip
+    backup_utility(Codec(input('Enter codec IP: ')))

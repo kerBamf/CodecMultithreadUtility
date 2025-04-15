@@ -1,6 +1,7 @@
 from os import listdir, getcwd
 from os.path import isfile, join
 from openpyxl import load_workbook
+from dataclasses import dataclass
 
 class Custom_Exception(Exception):
     pass
@@ -39,7 +40,13 @@ def user_choice(files):
     print('Your selection is invalid.')
     return user_choice()
 
+# Setting up class for codecs
+@dataclass
+class Codec:
+    name: str
+    ip: str
 
+# Main function
 def excel_parser(path='', file=''):
     if path == '':
         path = find_path()
@@ -47,9 +54,11 @@ def excel_parser(path='', file=''):
         file = select_file(find_path())
     wb = load_workbook(f'{path}/{file}')
     ws = wb.active
-    values = [value[0] for value in ws.iter_rows(min_row=2, min_col=3, max_col=3, values_only=True)]
-
-    return values
+    codecs = []
+    for value in ws.iter_rows(min_row=2, min_col=2, max_col=3, values_only=True):
+        codec = Codec(value[0], value[1])
+        codecs.append(codec)
+    return codecs
 
 # excel = load_workbook(f'./')
 
