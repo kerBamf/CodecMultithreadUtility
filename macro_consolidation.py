@@ -22,11 +22,6 @@ class custom_exception(Exception):
 #Removing insecure http warnings
 requests.packages.urllib3.disable_warnings()
 
-# Retrieving Backup Details
-raw_json = open('./Utils/backups_json.json', 'r', encoding="utf-8")
-backups_dict = json.load(raw_json)
-consolidation_dict = backups_dict['Macro_Consolidation']
-
 #Loading environment variable
 PASSCODE = environ.get('PASSCODE')
 LOGPATH = environ.get('LOGPATH')
@@ -84,18 +79,18 @@ def get_rm_UI_string(name):
     return string
 
 
-def fetch_backup_xml(backup_dict):
-    XML = f'''<Command>
-        <Provisioning>
-            <Service>
-                <Fetch>
-                    <Checksum item="1" valueSpaceRef="/Valuespace/Vs_string_0_128">{backup_dict['checksum']}</Checksum>
-                    <URL item="1" valueSpaceRef="/Valuespace/Vs_string_0_2048">{BACKUP_SERVER_PATH+backup_dict['filename']}</URL>
-                </Fetch>
-            </Service>
-        </Provisioning>
-    </Command>'''
-    return XML
+def fetch_backup_XML(file, checksum):
+    string =f'''<Command>
+            <Provisioning>
+                <Service>
+                    <Fetch>
+                        <Checksum item="1" valueSpaceRef="/Valuespace/Vs_string_0_128">{checksum}</Checksum>
+                        <URL item="1" valueSpaceRef="/Valuespace/Vs_string_0_2048">{BACKUP_SERVER_PATH}/{file}</URL>
+                    </Fetch>
+                </Service>
+            </Provisioning>
+        </Command>'''
+    return string
 
 set_transpile_XML = f'''<Configuration>
         <Macros>
@@ -114,14 +109,14 @@ set_transpile_XML = f'''<Configuration>
 def get_sys_name(codec):
     try:
         xml = cod_get(codec.ip, 'Configuration/SystemUnit/Name')
-        message(xml, codec.ip)
+        message(xml, codec.name)
         xml_root = ET.fromstring(xml)
         sys_name = xml_root[0][0].text
         return sys_name
     except requests.exceptions.HTTPError as err:
         message(err, codec.name)
 
-def config_consolidation(codec):
+def config_consolidation(codec, sup_file):
     try:
         #Getting device information
         sys_name = get_sys_name(codec)
@@ -144,7 +139,7 @@ def config_consolidation(codec):
         message(f'Transpile status: {set_transpile_status}', sys_name)
 
         #Fetching and loading backup
-        backup_fetch_status = cod_post(codec.ip, fetch_backup_xml(consolidation_dict), cookie)
+        backup_fetch_status = cod_post(codec.ip, fetch_backup_XML(sup_file['filename'], sup_file['checksum']), cookie)
         message(f'Backup status: {backup_fetch_status}', sys_name)
         
         if backup_fetch_status.find('<ServiceFetchResult status="OK">') != -1:
@@ -162,8 +157,9 @@ def config_consolidation(codec):
 
 
 if __name__ == '__main__':
+    backup_dict = select_backup()
     class Codec:
         def __init__(self, ip):
             self.name = 'One-Off Codec'
             self.ip = ip
-    config_consolidation(Codec(input('Enter Codec IP: ')))
+    config_consolidation(Codec(input('Enter Codec IP: ')), backup_dict)

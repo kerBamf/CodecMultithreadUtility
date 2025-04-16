@@ -87,4 +87,4 @@ if __name__ == '__main__':
         def __init__(self, ip):
             self.name = 'One-Off Codec'
             self.ip = ip
-    load_backup((Codec(input('Enter codec IP: '))), backup_dict)
+    load_backup(Codec(input('Enter codec IP: ')), backup_dict)
