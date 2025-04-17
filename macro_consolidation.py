@@ -152,6 +152,7 @@ def macro_consolidation(codec, sup_file):
     except custom_exception as err:
         message(err, codec.name)
         cod_session_end(codec.ip, cookie)
+        return f'Error occurred in macro consolidation for {codec.name}: {err}'
 
 
 
