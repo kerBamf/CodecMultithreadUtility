@@ -108,7 +108,7 @@ def check_codec(codec):
         message(f'Hardware found: {sys_type}. Assigning hardware version: {codec_info["hw_version"]}', codec_info['sys_name'])
 
     except requests.RequestException as err:
-        message(f'Error retrieving hardware version of {codec.ip}', codec.name)
+        message(f'Error retrieving hardware version of {codec.name}', codec.name)
         raise err
     
 
@@ -228,7 +228,7 @@ def quick_update(codec):
         split_key = key.split('.')
         if int(split_key[0]) == int(cur_sw_version[0]) and int(split_key[1]) > int(cur_sw_version[1]):
             try:
-                upgrade(codec_info['sys_name'], cur_sw_version, assigned_sw_path, assigned_sw_list[key], codec.ip)
+                upgrade(codec_info['sys_name'], cur_sw_version, assigned_sw_path, assigned_sw_list[key], codec)
             except UpgradeException as error:
                 (except_dictionary) = error.args
                 message(except_dictionary["text"], sys_name)
@@ -236,7 +236,7 @@ def quick_update(codec):
                 raise error
         elif int(split_key[0]) > int(cur_sw_version[0]):
             try:
-                upgrade(codec_info['sys_name'], cur_sw_version, assigned_sw_path, assigned_sw_list[key], codec.ip)
+                upgrade(codec_info['sys_name'], cur_sw_version, assigned_sw_path, assigned_sw_list[key], codec)
             except UpgradeException as error:
                 (except_dictionary) = error.args
                 message(except_dictionary["text"], sys_name)
@@ -244,7 +244,7 @@ def quick_update(codec):
                 raise error
     
     message(f'{codec_info["sys_name"]} successfully upgraded', sys_name)
-    return {'Status': f'{codec_info["sys_name"]} successfully upgraded', 'ip': codec.ip}
+    return {'Status': f'{codec_info["sys_name"]} successfully upgraded', 'ip': codec}
 
 if __name__ == '__main__':
     quick_update(input('Enter Codec IP: '))
