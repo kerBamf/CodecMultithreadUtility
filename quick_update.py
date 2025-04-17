@@ -244,7 +244,7 @@ def quick_update(codec):
                 raise error
     
     message(f'{codec_info["sys_name"]} successfully upgraded', sys_name)
-    return {'Status': f'{codec_info["sys_name"]} successfully upgraded', 'ip': codec}
+    return {'Status': f'{codec_info["sys_name"]} successfully upgraded', 'ip': codec.ip}
 
 if __name__ == '__main__':
     quick_update(input('Enter Codec IP: '))
