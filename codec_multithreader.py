@@ -35,7 +35,7 @@ def iterator(function, codec_list, file=None):
 if __name__ == '__main__':
     codec_list = excel_parser()
     selected_function = function_selector()
-    if selected_function == "config_consolidation" or selected_function == 'load_backup':
+    if selected_function == "macro_consolidation" or selected_function == 'load_backup':
         sup_file = select_backup()
     elif selected_function == "send_command":
         sup_file = xml_selector()
