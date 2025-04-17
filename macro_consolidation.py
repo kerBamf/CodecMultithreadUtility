@@ -116,7 +116,7 @@ def get_sys_name(codec):
     except requests.exceptions.HTTPError as err:
         message(err, codec.name)
 
-def config_consolidation(codec, sup_file):
+def macro_consolidation(codec, sup_file):
     try:
         #Getting device information
         sys_name = get_sys_name(codec)
@@ -162,4 +162,4 @@ if __name__ == '__main__':
         def __init__(self, ip):
             self.name = 'One-Off Codec'
             self.ip = ip
-    config_consolidation(Codec(input('Enter Codec IP: ')), backup_dict)
+    macro_consolidation(Codec(input('Enter Codec IP: ')), backup_dict)
