@@ -116,10 +116,10 @@ def check_codec(codec):
 
 
 #Function called when upgrade is initiated. Hardware version determines filepath, software version determines file to be used
-def upgrade(sys_name, current_sw, sw_path, sw_file, ip):
+def upgrade(sys_name, current_sw, sw_path, sw_file, codec):
     message(f'Attempting to install {sw_file} on {sys_name}...', sys_name)
     try:
-        url = f'http://{ip}/putxml'
+        url = f'http://{codec.ip}/putxml'
         headers = {'Authorization': f'basic {PASSCODE}'}
         payload = upgrade_command_xml(sw_path, sw_file)
         response = requests.request("POST", url, headers=headers, data=payload, verify=False)
@@ -129,14 +129,14 @@ def upgrade(sys_name, current_sw, sw_path, sw_file, ip):
         if (status == 'OK'):
             message('Upgrade status OK. Proceeding.', sys_name)
         else:
-            message(f'Upgrade status: {status}. {xml_root[0][0].text}', sys_name)
-            raise UpgradeException({'text': f'Upgrade status: Error. {xml_root[0][0].text}'})
+            message(f'{codec.name} Upgrade status: {status}. {xml_root[0][0].text}. Attempted Software upgrade: {sw_file}', sys_name)
+            raise UpgradeException({'text': f'{codec.name} Upgrade status: Error. {xml_root[0][0].text}. Attempted Software upgrade: {sw_file}'})
     except requests.exceptions.HTTPError as err:
         message(err.response, sys_name)
 
 
     def ping():
-        return subprocess.run(["ping", "-c", "1", ip], capture_output=True).returncode
+        return subprocess.run(["ping", "-c", "1", codec.ip], capture_output=True).returncode
     
     #Pinging codec after sending update command
     awake = True
@@ -185,7 +185,7 @@ def upgrade(sys_name, current_sw, sw_path, sw_file, ip):
     
     time.sleep(60)
 
-    new_sw_version = check_codec(ip)['sw_version']
+    new_sw_version = check_codec(codec)['sw_version']
 
     if (new_sw_version == current_sw):
         message(f'{sys_name} restarted, but failed to update properly. Please investigate', sys_name)
