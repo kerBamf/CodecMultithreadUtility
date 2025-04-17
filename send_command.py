@@ -31,7 +31,7 @@ def http_request(codec, string):
 
 def send_command(codec, xml):
     response = http_request(codec, xml)
-    return response.text
+    return f'{codec.name} Response: {response.text}'
 
 if __name__ == '__main__':
     new_XML = xml_selector()
