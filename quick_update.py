@@ -247,4 +247,8 @@ def quick_update(codec):
     return {'Status': f'{codec_info["sys_name"]} successfully upgraded', 'ip': codec.ip}
 
 if __name__ == '__main__':
-    quick_update(input('Enter Codec IP: '))
+    class Codec:
+        def __init__(self, ip):
+            self.name = 'One-Off Codec'
+            self.ip = ip
+    quick_update(Codec(input('Enter Codec IP: ')))
