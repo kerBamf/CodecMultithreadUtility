@@ -1,11 +1,15 @@
 {
-    "Macro_Bundle_V11": {
-        "filename": "MSK_Bundle_V11_03-2025.zip",
-        "checksum": "d9f90f948322d913fad9e22a61378bbbf785131d972c32d9a778ad9a00faf37c3da0c02b32b168d7dad70cf26800eb7a1bb464942c8f27c2c5bccf020b771d1b"
+    "Macro_Bundle_V12_05-2025": {
+        "filename": "MSK_Bundle_V12_05-2025.zip",
+        "checksum": "e1236066e15cba116ffd996b6b2072c5d2f525907ac82e6bfba93d77faa875ae3597fd93fb9c02b2a5cf2cb980f9b3675102c14c62b6c3f10e5e897e77476992"
     },
     "OS11-20_Config_Update": {
         "filename": "OS1120_Update_Template.zip",
         "checksum": "1b2ef130e14a4fd6d02f16cfbdcf42841968c9eb61b017b4ed3b762ea389c76600bf8309ed9682c21e661129eb0ebbd9f631882608f716b17c7a9ab006192278"
+    },
+    "Survey_Update_05-2025": {
+        "filename": "Survey_Update_05-2025.zip",
+        "checksum": "d1406e2921e3a1fafd574febe98a01cca87acb1177a1597a12b3b61c3e38f119f49d6e8dafc497a30240bc9f85cd8e63e31b2b7fedb03f4069bd47917df782f7"
     },
     "Zoom_Controls": {
         "filename": "ZoomControlsV2.zip",
@@ -14,18 +18,6 @@
     "Setup_Template": {
         "filename": "Setup_Template.zip",
         "checksum": "1b353434f4aebf2e75d0d5b71618bdc3121768c53a1e0bac93658a09a7336f5ca712cc006a4ca9ecce931bd44062ac1712bfea00e8b8fc2ccb904ad4f2df3a20"
-    },
-    "CommandCenterMacro": {
-        "filename": "CommandCenterMacro.zip",
-        "checksum": "ca58aea3b2cab75fb3c67dbddd5e566e3dc49254d44116f07e32c12e076ee58b4c3301a230f3dca54c18d42d83a609529d9aafb055a46185db846e82553d7365"
-    },
-    "CommandCenterMacroV4": {
-        "filename": "CommandCenterMacroV4.zip",
-        "checksum": "c22db9362cf1fb0c5d4b071ebdae916a03148c5e8831b478262ed28ca285880d93c5ce30a1e9cc887f554df856467b9de9ab69405bbfdffadf883b4bbf1eed4f"
-    },
-    "CommandCenterSplashV3": {
-        "filename": "CommandCenterSplashV3.zip",
-        "checksum": "df44ba6fe49cf12cbf95b5e02d6f8fa5194af69e73e19452fa30eb33a2ed8b663c31f41e195f6fb031c3d6cc542cd7fbf8ae041117f565cdb59992713a176a36"
     },
     "MergedDiallerV2": {
         "filename": "MergedDiallerV2.zip",
