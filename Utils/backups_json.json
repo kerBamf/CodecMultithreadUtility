@@ -1,11 +1,7 @@
 {
-    "Macro_Bundle_V12_05-2025": {
-        "filename": "MSK_Bundle_V12_05-2025.zip",
-        "checksum": "e1236066e15cba116ffd996b6b2072c5d2f525907ac82e6bfba93d77faa875ae3597fd93fb9c02b2a5cf2cb980f9b3675102c14c62b6c3f10e5e897e77476992"
-    },
-    "OS11-20_Config_Update": {
-        "filename": "OS1120_Update_Template.zip",
-        "checksum": "1b2ef130e14a4fd6d02f16cfbdcf42841968c9eb61b017b4ed3b762ea389c76600bf8309ed9682c21e661129eb0ebbd9f631882608f716b17c7a9ab006192278"
+    "Macro_Bundle_V13_05-2025": {
+        "filename": "MSK_Bundle_V13_05-2025.zip",
+        "checksum": "0697c0fd1196b6beb2597f9748301277cd28bc2e32771ffa950f472c4a3a39e91c2d3028826ed8942109f345f83351dca838c3599ed4662e204bb69e5b772158"
     },
     "Survey_Update_05-2025": {
         "filename": "Survey_Update_05-2025.zip",
@@ -15,13 +11,9 @@
         "filename": "ZoomControlsV2.zip",
         "checksum": "fa68215ac5160fd52245d2444430139308149207440d19d38fd0834166a9eec7dcbaae09bfb919b44bd28a3f6ce516c51ce9fbb67ea9afe380af44cbf3fa7ee7"
     },
-    "Setup_Template": {
-        "filename": "Setup_Template.zip",
-        "checksum": "1b353434f4aebf2e75d0d5b71618bdc3121768c53a1e0bac93658a09a7336f5ca712cc006a4ca9ecce931bd44062ac1712bfea00e8b8fc2ccb904ad4f2df3a20"
-    },
-    "MergedDiallerV2": {
-        "filename": "MergedDiallerV2.zip",
-        "checksum": "e344b2c798800181d1597503dbafb9adeb50342a4f050dd71ace047958565c774bc3dd4fb7874193affe926b615d9e0be79de2a2230a2c43522eec4a67967ecc"
+    "Config_Template": {
+        "filename": "Config_Template_V2_06-2025.zip",
+        "checksum": "4bbbc6d1590749733f065d0698cccb25137b5a77300b034dc8064ef84f844c281d8dd52cd7e15e1296626d0b38726cb7a3f6863d2d14a5f7f3d64c091823b32c"
     },
     "SplashPage3": {
         "filename": "SplashPage3.zip",
