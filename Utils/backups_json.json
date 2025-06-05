@@ -18,5 +18,9 @@
     "SplashPage3": {
         "filename": "SplashPage3.zip",
         "checksum": "768c9f6d2a907700d45d3ff844304e2d39d9bb469d6a80a98ed19fbb999967028e8a8cf358f00511b04f9cd62fb41c8e8ebc314444957ed66d7aaddebbcf0847"
+    },
+    "UdpatedDialer": {
+        "filename": "MergedDiallerV3.zip",
+        "checksum": "6d045ee45352c2d52a2a79a673772dbc5c0b03a7987e60767aef28b62b0e0e8b1228f7ff2eb187228fbf1e5db322c1a934aaefe5dd57b522bfe5cf7984a09e9c"
     }
 }
