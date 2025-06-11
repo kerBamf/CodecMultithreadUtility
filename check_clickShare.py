@@ -1,13 +1,10 @@
 from os import environ
 from dotenv import load_dotenv
 import xml.etree.ElementTree as ET
-from time import sleep
 from Utils.logger import log_info
-from Utils.xml_selector import xml_selector
 from Utils.cod_get import cod_get
 from Utils.cod_post import cod_post
 from Utils.excel_parser import excel_parser
-import xml.etree.ElementTree as ET
 import openpyxl
 import concurrent.futures
 
