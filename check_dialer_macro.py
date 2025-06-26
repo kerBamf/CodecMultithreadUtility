@@ -8,10 +8,6 @@ import openpyxl
 import concurrent.futures
 
 
-class CustomException(Exception):
-    pass
-
-
 # Loading environment variable
 load_dotenv()
 PASSCODE = environ.get("PASSCODE")
