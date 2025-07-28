@@ -27,7 +27,7 @@ def signage_xml(url):
         <Signage>
             <Mode>On</Mode>
             <RefreshInterval>60</RefreshInterval>
-            <Url>{url}</Url>
+            <Url>http://{url}</Url>
         </Signage>
         <Delay>480</Delay>
     </Standby>
@@ -38,9 +38,7 @@ def signage_xml(url):
         <UseHttpProxy>Off</UseHttpProxy>
     </HttpClient>
     <WebEngine>
-        <MinimumTLSVersion>
-            TLSv1.2
-        </MinimumTLSVersion>
+        <MinimumTLSVersion>TLSv1.2</MinimumTLSVersion>
         <Mode>On</Mode>
         <UseHTTPProxy>Off</UseHTTPProxy>
         <Features>
@@ -53,7 +51,7 @@ def signage_xml(url):
 
 
 def process(codec):
-    payload = signage_excel_parser(codec.url)
+    payload = signage_xml(codec.url)
     result = cod_post(codec.ip, payload)
     codec.result = result
     message(f"{codec.name} signage configuration result: {result}", codec.name)
