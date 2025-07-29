@@ -64,7 +64,7 @@ all_sw_versions = {
 def check_codec(codec):
     headers = {"Authorization": f"basic {PASSCODE}"}
     hardware_list = {
-        "pro": ["Codec Pro", "Room Bar", "Room Bar Pro"],
+        "pro": ["Codec Pro", "Room Bar", "Room Bar Pro", "Room Kit EQ"],
         "kit": ["Room Kit", "Room Kit Mini", "Codec Plus", "Room 55"],
         "SX80": "SX80",
     }
@@ -268,7 +268,11 @@ def quick_update(codec):
             f'{codec_info["sys_name"]} running latest software. Exiting script.',
             sys_name,
         )
-        return f'{codec_info["sys_name"]} running latest software. Exiting script.'
+        codec.result = (
+            f'{codec_info["sys_name"]} running latest software. Exiting script.'
+        )
+        # print(type(codec))
+        return codec
 
     # Beginning upgrade iteration
     for key in assigned_sw_keys:
@@ -289,7 +293,8 @@ def quick_update(codec):
                 (except_dictionary) = error.args
                 message(except_dictionary["text"], sys_name)
                 # print(error['text'])
-                raise error
+                codec.result = except_dictionary["text"]
+                return codec
         elif int(split_key[0]) > int(cur_sw_version[0]):
             try:
                 upgrade(
@@ -303,10 +308,14 @@ def quick_update(codec):
                 (except_dictionary) = error.args
                 message(except_dictionary["text"], sys_name)
                 # print(error['text'])
-                raise error
+                codec.result = except_dictionary["text"]
+                return codec
 
     message(f'{codec_info["sys_name"]} successfully upgraded', sys_name)
-    return {"Status": f'{codec_info["sys_name"]} successfully upgraded', "ip": codec.ip}
+    # return {"Status": f'{codec_info["sys_name"]} successfully upgraded', "ip": codec.ip}
+    codec.result = f'{codec_info["sys_name"]} successfully upgraded'
+    # print(codec)
+    return codec
 
 
 if __name__ == "__main__":
