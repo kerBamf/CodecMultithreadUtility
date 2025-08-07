@@ -1,4 +1,5 @@
 import os
+import datetime
 import concurrent.futures
 from importlib import import_module
 from Utils.excel_parser import excel_parser
@@ -45,9 +46,12 @@ def iterator(function, codec_list, file=None):
             message(future.result(), function.__name__)
             codec_row = [codec.name, codec.ip, codec.result]
             codecs_processed.append(codec_row)
-            print(codecs_processed)
-
-    excel_output(codecs_processed, f"{function.__name__}.xlsx")
+            # print(codecs_processed)
+    date = datetime.datetime.now()
+    excel_output(
+        codecs_processed,
+        f"{function.__name__}-{date.strftime('%m')}-{date.strftime('%d')}.xlsx",
+    )
 
 
 if __name__ == "__main__":
