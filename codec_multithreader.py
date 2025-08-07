@@ -38,8 +38,10 @@ def iterator(function, codec_list, file=None):
         if future.exception():
             #     message(future.exception(), function.__name__)
             # else:
-            message(future.exception(), function.__name__)
-            codecs_processed.append(future.exception())
+            error = future.exception()
+            message(error, function.__name__)
+            codec_row = ["Error", "Exception", error]
+            codecs_processed.append(codec_row)
         else:
             # print(future.result())
             codec = future.result()

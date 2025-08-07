@@ -24,7 +24,7 @@ def cod_post(ip, payload, cookie=None):
             headers=headers,
             data=payload,
             verify=False,
-            timeout=(10, 30),
+            timeout=(10, 120),
         )
         return response.text
     except requests.HTTPError as err:
@@ -35,7 +35,7 @@ def cod_post(ip, payload, cookie=None):
         return "Connection Timeout Error"
     except requests.RequestException as err:
         print(err)
-        return err
+        raise
 
 
 # Function for opening a codec session, decreasing latency for multiple-command scripts
@@ -57,7 +57,7 @@ def cod_session_start(ip):
         return "Connection Timeout Error"
     except requests.RequestException as err:
         print(err)
-        return err
+        raise
 
 
 # Needed to end a codec session
@@ -79,7 +79,7 @@ def cod_session_end(ip, cookie):
         return "Connection Timeout Error"
     except requests.RequestException as err:
         print(err)
-        return err
+        raise
 
 
 if __name__ == "__main__":
