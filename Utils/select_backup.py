@@ -11,7 +11,7 @@ JSON_FILE = environ.get("BACKUP_JSON")
 
 # Loading file dictionary from JSON
 
-raw_json = open("./Utils/backups_json.json", "r", encoding="utf-8")
+raw_json = open(JSON_FILE, "r", encoding="utf-8")
 backups_dict = json.load(raw_json)
 
 
