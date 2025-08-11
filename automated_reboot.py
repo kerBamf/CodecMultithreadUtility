@@ -19,6 +19,7 @@ load_dotenv()
 PASSCODE = os.environ.get("PASSCODE")
 FILENAME = os.environ.get("REBOOT_EXCEL_FILE")
 FILEPATH = os.environ.get("REBOOT_EXCEL_PATH")
+OUTPUT_PATH = os.environ.get("OUTPUT_FILE_PATH")
 LOGPATH = os.environ.get("REBOOT_LOGPATH")
 
 # Disable ssl warning

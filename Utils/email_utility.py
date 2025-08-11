@@ -9,7 +9,7 @@ from dotenv import load_dotenv
 # Importing environment variables
 load_dotenv()
 
-TEST_PATH = os.environ.get("OUTPUT_FILES_PATH")
+TEST_PATH = os.environ.get("OUTPUT_FILE_PATH")
 
 
 def email_utility(email_from, email_to, email_subject, email_text, file_path=None):

@@ -8,11 +8,13 @@ from Utils.logger import log_info
 from Utils.select_backup import select_backup
 from Utils.xml_selector import xml_selector
 from Utils.excel_output import excel_output
+from Utils.email_utility import email_utility
 from dotenv import load_dotenv
 
 # Loading environment variables
 load_dotenv()
 LOGPATH = os.environ.get("LOGPATH")
+OUTPUT_PATH = os.environ.get("OUTPUT_FILE_PATH")
 
 
 # Logger
@@ -23,6 +25,7 @@ def message(string, function):
 
 # Multithreading function
 def iterator(function, codec_list, file=None):
+    # If file exists, executor includes file. Otherwise it proceeds without
     if file:
         with concurrent.futures.ThreadPoolExecutor() as executor:
             futures = {
@@ -32,6 +35,7 @@ def iterator(function, codec_list, file=None):
         with concurrent.futures.ThreadPoolExecutor() as executor:
             futures = {executor.submit(function, codec): codec for codec in codec_list}
 
+    # Initiating codec list for excel output
     codecs_processed = [["Name", "IP", "Result"]]
 
     for future in concurrent.futures.as_completed(futures):
@@ -50,10 +54,21 @@ def iterator(function, codec_list, file=None):
             codecs_processed.append(codec_row)
             # print(codecs_processed)
     date = datetime.datetime.now()
+    output_file_name = (
+        f"{function.__name__}-{date.strftime('%m')}-{date.strftime('%d')}.xlsx"
+    )
     excel_output(
         codecs_processed,
-        f"{function.__name__}-{date.strftime('%m')}-{date.strftime('%d')}.xlsx",
+        output_file_name,
     )
+    email_utility(
+        "codec_multithreader_noreply@mskcc.org",
+        "pedigoz@mskcc.org",
+        f"{function.__name__}-{date.strftime('%m')}-{date.strftime('%d')} Results",
+        "Hello,\r\n\r\nHere are the results from the most recently run multithreader.\r\n\r\nCodec Robit",
+        OUTPUT_PATH + output_file_name,
+    )
+    message("Proccess Completed", function.__name__)
 
 
 if __name__ == "__main__":
