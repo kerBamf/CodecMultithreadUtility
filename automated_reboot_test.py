@@ -17,7 +17,7 @@ from codec_multithreader import iterator
 # Loading Environment Variables
 load_dotenv()
 PASSCODE = os.environ.get("PASSCODE")
-FILENAME = os.environ.get("REBOOT_EXCEL_FILE")
+FILENAME = os.environ.get("REBOOT_EXCEL_TESTFILE")
 FILEPATH = os.environ.get("REBOOT_EXCEL_PATH")
 OUTPUT_PATH = os.environ.get("OUTPUT_FILE_PATH")
 LOGPATH = os.environ.get("REBOOT_LOGPATH")
