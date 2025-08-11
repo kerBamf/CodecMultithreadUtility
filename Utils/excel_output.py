@@ -4,6 +4,7 @@ import openpyxl
 
 # Loading envionment variable
 load_dotenv()
+OUTPUT_PATH = environ.get("OUTPUT_FILE_PATH")
 
 # Creating openpyxl output logic
 
@@ -22,7 +23,7 @@ def excel_output(codecs, filename):
         for cell in row:
             cell.font = ft
 
-    new_wb.save(f"../output_files/{filename}")
+    new_wb.save(OUTPUT_PATH + filename)
     return "Excel File Saved"
 
 
