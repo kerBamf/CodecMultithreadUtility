@@ -86,15 +86,18 @@ def check_inputs(codec, cookie):
     try:
         response = cod_get(codec.ip, "Configuration/Video/Input/Connector/Name", cookie)
         root = ET.fromstring(response)
-        inputs = root.findall(".//Name")
-        for idx, input in enumerate(inputs):
-            inputs[idx] = input.text
+        raw_inputs = root.findall(".//Name")
+        inputs = []
+        for input in raw_inputs:
+            if input.text.lower().find("camera") != -1 or input.text != "":
+                inputs.append(input.text)
         return inputs
+
     except Exception as err:
         return err
 
 
-external_XML = f"""<Command>
+XML = f"""<Command>
     <UserInterface>
         <Presentation>
             <ExternalSource>
@@ -146,7 +149,6 @@ def check_system(codec):
     try:
         cookie = startSession(codec)
         vid_inputs = check_inputs(codec, cookie)
-        print(vid_inputs)
         # ext_inputs = check_external(codec)
         # lightware = check_lightware(codec)
 
