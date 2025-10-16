@@ -87,11 +87,15 @@ def check_inputs(codec, cookie):
         response = cod_get(codec.ip, "Configuration/Video/Input/Connector/Name", cookie)
         root = ET.fromstring(response)
         raw_inputs = root.findall(".//Name")
-        inputs = []
+        inputString = ""
         for input in raw_inputs:
-            if input.text.lower().find("camera") != -1 or input.text != "":
-                inputs.append(input.text)
-        return inputs
+            text = input.text
+            if text.casefold().find("camera") == -1 and text != "":
+                if inputString == "":
+                    inputString += f"{input.text};"
+                else:
+                    inputString += f" {input.text};"
+        return inputString
 
     except Exception as err:
         return err
