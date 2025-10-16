@@ -82,6 +82,24 @@ def startSession(codec):
         return error
 
 
+def check_cams(codec, cookie):
+    try:
+        response = cod_get(codec.ip, "Status/Cameras/Camera/Model", cookie)
+        root = ET.fromstring(response)
+        elements = root.findall(".//Model")
+        camString = ""
+        for element in elements:
+            text = element.text
+            if camString == "":
+                camString += f"{text};"
+            else:
+                camString += f" {text};"
+        return camString
+    except Exception as err:
+        print(err)
+        return err
+
+
 def check_inputs(codec, cookie):
     try:
         response = cod_get(codec.ip, "Configuration/Video/Input/Connector/Name", cookie)
@@ -90,7 +108,7 @@ def check_inputs(codec, cookie):
         inputString = ""
         for input in raw_inputs:
             text = input.text
-            if text.casefold().find("camera") == -1 and text != "":
+            if text.lower().find("camera") == -1 and text != "":
                 if inputString == "":
                     inputString += f"{input.text};"
                 else:
@@ -145,11 +163,49 @@ def check_lwr_sources(codec, cookie):
                     inputString += f"{text};"
                 else:
                     inputString += f" {text};"
-        print(inputString)
         return inputString
     except Exception as error:
         message(f"Unable to retrieve info at {codec.name} --> {error}", codec.name)
         return "error"
+
+
+def check_outputs(codec, cookie):
+    def getElements(response, attr):
+        root = ET.fromstring(response)
+        elements = root.findall(f".//{attr}")
+        return elements
+
+    try:
+        conn_res = cod_get(codec.ip, "Status/Video/Output/Connector/Connected", cookie)
+        conn = getElements(conn_res, "Connected")
+
+        outputString = ""
+        for idx, port in enumerate(conn):
+            text = port.text
+            if text == "True":
+                name_res = cod_get(
+                    codec.ip,
+                    f"Status/Video/Output/Connector[{idx+1}]/ConnectedDevice/Name",
+                    cookie,
+                )
+                name = getElements(name_res, "Name")[0].text
+
+                size_res = cod_get(
+                    codec.ip,
+                    f"Status/Video/Output/Connector[{idx+1}]/ConnectedDevice/ScreenSize",
+                    cookie,
+                )
+                size = getElements(size_res, "ScreenSize")[0].text
+                output = f"{name} {size}"
+                if outputString == "":
+                    outputString += output + ";"
+                else:
+                    outputString += f" {output};"
+        return outputString
+
+    except Exception as err:
+        print(err)
+        return err
 
 
 # Calling functions to fully check system
@@ -160,18 +216,23 @@ def check_system(codec):
 
     try:
         cookie = startSession(codec)
+        cams = check_cams(codec, cookie)
+        codec.cameras = cams
         vid_inputs = check_inputs(codec, cookie)
         codec.input_sources = vid_inputs
         if vid_inputs.lower().find("source") != -1:
-            lwr_present = check_lwr_macro(codec, cookie)
-            if lwr_present == True:
-                codec.lightware = "Present"
-                lwr_sources = check_lwr_sources(codec, cookie)
-                codec.lwr_input_sources = lwr_sources
-        print(f"{codec.lightware} {codec.lwr_input_sources}")
+            codec.lightware = "Present"
+            lwr_sources = check_lwr_sources(codec, cookie)
+            codec.lwr_input_sources = lwr_sources
+        outputs = check_outputs(codec, cookie)
+        codec.output_devices = outputs
+        print(
+            f"{codec.name} {codec.cameras} {codec.lightware} {codec.lwr_input_sources} {codec.output_devices}"
+        )
 
     except Exception as err:
         codec.error = err
+        cod_session_end(codec.ip, cookie)
         return err
 
     # if vid_inputs == True or ext_inputs == True:
