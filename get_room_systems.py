@@ -101,7 +101,27 @@ def check_inputs(codec, cookie):
         return err
 
 
-XML = f"""<Command>
+def check_lwr_macro(codec, cookie):
+    try:
+        macro_xml = f"""<Command>
+    <Macros>
+        <Macro>
+            <Get></Get>
+        </Macro>
+    </Macros>
+</Command>"""
+
+        response = cod_post(codec.ip, macro_xml, cookie)
+        if response.find("Lightware Integration") != -1:
+            return True
+        else:
+            return False
+    except Exception as err:
+        print(err)
+        return "err"
+
+
+lwr_src_XML = f"""<Command>
     <UserInterface>
         <Presentation>
             <ExternalSource>
@@ -112,33 +132,21 @@ XML = f"""<Command>
 </Command>"""
 
 
-def check_external(codec):
+def check_lwr_sources(codec, cookie):
     try:
-        response = cod_post(codec.ip, external_XML)
-        response = response.lower().replace(" ", "").replace("-", "")
-        if response.find("clickshare") != -1:
-            return True
-        elif response.find("error") != -1:
-            message(f"Unable to retrieve info from {codec.name}", codec.name)
-            return "error"
-        else:
-            return False
-    except Exception as error:
-        message(f"Unable to retrieve info at {codec.name} --> {error}", codec.name)
-        return "error"
-
-
-def check_lightware(codec):
-    try:
-        response = cod_get(codec.ip, "Configuration/Video/Input/Connector/Name")
-        response = response.lower().replace(" ", "").replace("-", "")
-        if response.find("source") != -1:
-            return True
-        elif response.find("error") != -1:
-            message(f"Unable to retrieve info from {codec.name}", codec.name)
-            return "error"
-        else:
-            return False
+        response = cod_post(codec.ip, lwr_src_XML, cookie)
+        root = ET.fromstring(response)
+        elements = root.findall(".//Name")
+        inputString = ""
+        for element in elements:
+            text = element.text
+            if text != "":
+                if inputString == "":
+                    inputString += f"{text};"
+                else:
+                    inputString += f" {text};"
+        print(inputString)
+        return inputString
     except Exception as error:
         message(f"Unable to retrieve info at {codec.name} --> {error}", codec.name)
         return "error"
@@ -153,8 +161,14 @@ def check_system(codec):
     try:
         cookie = startSession(codec)
         vid_inputs = check_inputs(codec, cookie)
-        # ext_inputs = check_external(codec)
-        # lightware = check_lightware(codec)
+        codec.input_sources = vid_inputs
+        if vid_inputs.lower().find("source") != -1:
+            lwr_present = check_lwr_macro(codec, cookie)
+            if lwr_present == True:
+                codec.lightware = "Present"
+                lwr_sources = check_lwr_sources(codec, cookie)
+                codec.lwr_input_sources = lwr_sources
+        print(f"{codec.lightware} {codec.lwr_input_sources}")
 
     except Exception as err:
         codec.error = err
