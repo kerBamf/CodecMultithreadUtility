@@ -9,7 +9,7 @@ from Utils.cod_post import cod_post, cod_session_start, cod_session_end
 from Utils.excel_parser import excel_parser
 import openpyxl
 import concurrent.futures
-from dataclasses import dataclass
+from dataclasses import dataclass, astuple
 
 
 # **************
@@ -102,19 +102,21 @@ def check_cams(codec, cookie):
 
 def check_inputs(codec, cookie):
     try:
-        response = cod_get(codec.ip, "Configuration/Video/Input/Connector/Name", cookie)
+        response = cod_get(codec.ip, "Configuration/Video/Input/Connector", cookie)
         root = ET.fromstring(response)
         raw_inputs = root.findall(".//Name")
         inputString = ""
         for input in raw_inputs:
-            text = input.text
-            if text.lower().find("camera") == -1 and text != "":
+            if (
+                input.text != None
+                and input.text != ""
+                and input.text.find("Camera") == -1
+            ):
                 if inputString == "":
                     inputString += f"{input.text};"
                 else:
                     inputString += f" {input.text};"
         return inputString
-
     except Exception as err:
         return err
 
@@ -178,7 +180,6 @@ def check_outputs(codec, cookie):
     try:
         conn_res = cod_get(codec.ip, "Status/Video/Output/Connector/Connected", cookie)
         conn = getElements(conn_res, "Connected")
-
         outputString = ""
         for idx, port in enumerate(conn):
             text = port.text
@@ -220,35 +221,26 @@ def check_system(codec):
         codec.cameras = cams
         vid_inputs = check_inputs(codec, cookie)
         codec.input_sources = vid_inputs
-        if vid_inputs.lower().find("source") != -1:
+        if vid_inputs.find("Source") != -1:
             codec.lightware = "Present"
             lwr_sources = check_lwr_sources(codec, cookie)
             codec.lwr_input_sources = lwr_sources
-        outputs = check_outputs(codec, cookie)
-        codec.output_devices = outputs
-        print(
-            f"{codec.name} {codec.cameras} {codec.lightware} {codec.lwr_input_sources} {codec.output_devices}"
-        )
+        if (
+            codec.type_description != "Cisco Room 55"
+            and codec.type_description != "Cisco Desk Pro"
+        ):
+            outputs = check_outputs(codec, cookie)
+            codec.output_devices = outputs
+        # print(
+        #     f"{codec.name} {codec.type_description} {codec.cameras} {codec.input_sources} {codec.lightware} {codec.lwr_input_sources} {codec.output_devices}"
+        # )
+        cod_session_end(codec.ip, cookie)
+        return codec
 
     except Exception as err:
         codec.error = err
         cod_session_end(codec.ip, cookie)
-        return err
-
-    # if vid_inputs == True or ext_inputs == True:
-    #     codec.ClickShare = "Present"
-    # elif vid_inputs == "error" or ext_inputs == "error":
-    #     codec.ClickShare = "Unable to retrieve info"
-    # else:
-    #     codec.ClickShare = "Not Detected"
-    # if lightware == True:
-    #     codec.Lightware = "Present"
-    # elif lightware == "error":
-    #     codec.Lightware = "Unable to retrive info"
-    # else:
-    #     codec.Lightware = "Not Present"
-
-    cod_session_end(codec.ip, cookie)
+        return codec
 
     # return codec
 
@@ -310,9 +302,12 @@ def get_room_systems():
 
     for future in concurrent.futures.as_completed(futures):
         codec = future.result()
-        codecs_processed.append(
-            [codec.name, codec.ip, codec.ClickShare, codec.Lightware]
-        )
+        print(list(astuple(codec)))
+    #     codec_values = list(codec.values())
+    #     codecs_processed.append(codec_values)
+
+    # for item in codecs_processed:
+    #     print(item)
 
     # # Creating new Excel file
 
