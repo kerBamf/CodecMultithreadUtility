@@ -303,22 +303,23 @@ def get_room_systems():
     for future in concurrent.futures.as_completed(futures):
         codec = future.result()
         print(list(astuple(codec)))
-    #     codec_values = list(codec.values())
-    #     codecs_processed.append(codec_values)
+        codec_values = list(astuple(codec))
+        codecs_processed.append(codec_values)
 
-    # for item in codecs_processed:
-    #     print(item)
+    # Creating new Excel file
+    new_wb = openpyxl.Workbook()
+    new_ws = new_wb.active
+    new_ws.title = "RoomSystems"
+    ft = openpyxl.styles.Font(bold=True)
 
-    # # Creating new Excel file
+    for row in codecs_processed:
+        new_ws.append(row)
 
-    # for row in codecs_processed:
-    #     new_ws.append(row)
+    for row in new_ws["A1:K1"]:
+        for cell in row:
+            cell.font = ft
 
-    # for row in new_ws["A1:C1"]:
-    #     for cell in row:
-    #         cell.font = ft
-
-    # new_wb.save("../output_files/ClickShareSpreadsheet.xlsx")
+    new_wb.save("../output_files/FullSystemOutput.xlsx")
 
 
 if __name__ == "__main__":
