@@ -15,35 +15,40 @@ from dataclasses import dataclass
 load_dotenv()
 environ = os.environ
 
+
 # Setting up custom exception class
 class custom_exception(Exception):
     pass
 
-#Removing insecure http warnings
+
+# Removing insecure http warnings
 requests.packages.urllib3.disable_warnings()
 
-#Loading environment variable
-PASSCODE = environ.get('PASSCODE')
-LOGPATH = environ.get('LOGPATH')
-BACKUP_SERVER_PATH = environ.get('BACKUP_SERVER_PATH')
+# Loading environment variable
+PASSCODE = environ.get("PASSCODE")
+LOGPATH = environ.get("LOGPATH")
+BACKUP_SERVER_PATH = environ.get("BACKUP_SERVER_PATH")
 
-#Logger
+
+# Logger
 def message(string, device):
     print(string)
     log_info(string, device, LOGPATH)
 
+
 # Listing all macros to remove for loop iteration
 macros_to_remove = [
-    'Nightly_Reboot',
-    'Check_Standby',
-    'External_reset',
-    'TeamsDialler',
-    'ZoomDialler',
-    'InstructionsPanel'
+    "Nightly_Reboot",
+    "Check_Standby",
+    "External_reset",
+    "TeamsDialler",
+    "ZoomDialler",
+    "InstructionsPanel",
 ]
 
+
 def get_rm_macro_string(name):
-    string = f'''<Body>
+    string = f"""<Body>
             <Command>
                 <Macros>
                     <Macro>
@@ -53,17 +58,16 @@ def get_rm_macro_string(name):
                     </Macro>
                 </Macros>
             </Command>
-        </Body>'''
+        </Body>"""
     return string
 
-UIs_to_remove = [
-    'instructions',
-    'closeInstructionsHome'
-]
+
+UIs_to_remove = ["instructions", "closeInstructionsHome"]
+
 
 # Listing all UI elements to remove for loop iteration
 def get_rm_UI_string(name):
-    string = f'''<Body>
+    string = f"""<Body>
         <Command>
             <UserInterface>
                 <Extensions>
@@ -75,12 +79,12 @@ def get_rm_UI_string(name):
                 </Extensions>
             </UserInterface>
         </Command>
-    </Body>'''
+    </Body>"""
     return string
 
 
 def fetch_backup_XML(file, checksum):
-    string =f'''<Command>
+    string = f"""<Command>
             <Provisioning>
                 <Service>
                     <Fetch>
@@ -89,14 +93,15 @@ def fetch_backup_XML(file, checksum):
                     </Fetch>
                 </Service>
             </Provisioning>
-        </Command>'''
+        </Command>"""
     return string
 
-set_transpile_XML = f'''<Configuration>
+
+set_transpile_XML = f"""<Configuration>
         <Macros>
             <EvaluateTranspiled>False</EvaluateTranspiled>
         </Macros>
-    </Configuration>'''
+    </Configuration>"""
 
 # def http_request(ip, string):
 #     try:
@@ -106,9 +111,10 @@ set_transpile_XML = f'''<Configuration>
 #     except requests.exceptions.HTTPError as err:
 #         message(f'{ip} -> {err}', ip)
 
+
 def get_sys_name(codec):
     try:
-        xml = cod_get(codec.ip, 'Configuration/SystemUnit/Name')
+        xml = cod_get(codec.ip, "Configuration/SystemUnit/Name")
         message(xml, codec.name)
         xml_root = ET.fromstring(xml)
         sys_name = xml_root[0][0].text
@@ -116,51 +122,64 @@ def get_sys_name(codec):
     except requests.exceptions.HTTPError as err:
         message(err, codec.name)
 
+
 def macro_consolidation(codec, sup_file):
     try:
-        #Getting device information
+        # Getting device information
         sys_name = get_sys_name(codec)
 
-        #Begin Session
+        # Begin Session
         cookie = cod_session_start(codec.ip)
 
-        #Removing macros
+        # Removing macros
         for macro in macros_to_remove:
             cod_post(codec.ip, get_rm_macro_string(macro), cookie)
-            message(f'Removing {macro}...', sys_name)
-        
-        #removing UI elements
+            message(f"Removing {macro}...", sys_name)
+
+        # removing UI elements
         for ui in UIs_to_remove:
             cod_post(codec.ip, get_rm_UI_string(ui), cookie)
-            message(f'Removing {ui}...', sys_name)
-        
-        #setting EvaluateTranspiled to False
-        set_transpile_status = cod_post(codec.ip, set_transpile_XML, cookie)
-        message(f'Transpile status: {set_transpile_status}', sys_name)
+            message(f"Removing {ui}...", sys_name)
 
-        #Fetching and loading backup
-        backup_fetch_status = cod_post(codec.ip, fetch_backup_XML(sup_file['filename'], sup_file['checksum']), cookie)
-        message(f'Backup status: {backup_fetch_status}', sys_name)
-        
+        # setting EvaluateTranspiled to False
+        set_transpile_status = cod_post(codec.ip, set_transpile_XML, cookie)
+        message(f"Transpile status: {set_transpile_status}", sys_name)
+
+        # Fetching and loading backup
+        backup_fetch_status = cod_post(
+            codec.ip,
+            fetch_backup_XML(sup_file["filename"], sup_file["checksum"]),
+            cookie,
+        )
+        message(f"Backup status: {backup_fetch_status}", sys_name)
+
         if backup_fetch_status.find('<ServiceFetchResult status="OK">') != -1:
-            message('Update Successful', sys_name)
+            message("Update Successful", sys_name)
             cod_session_end(codec.ip, cookie)
-            return f'{sys_name} - Changes made successfully'
+            codec.result = f"Changes made successfully on {codec.name}"
+            return codec
         else:
-            message(f'Could not complete consolidation for {sys_name}. Please investigate', sys_name)
-            raise custom_exception(f'Could not complete consolidation for {sys_name}. Please investigate.')
+            message(
+                f"Could not complete consolidation for {sys_name}. Please investigate",
+                sys_name,
+            )
+            codec.result = (
+                f"Could not complete consolidation for {sys_name}. Please investigate"
+            )
+            return codec
     except custom_exception as err:
         message(err, codec.name)
         cod_session_end(codec.ip, cookie)
-        return f'Error occurred in macro consolidation for {codec.name}: {err}'
+        codec.result = f"Error occurred in macro consolidation for {codec.name}: {err}"
+        return codec
 
 
-
-
-if __name__ == '__main__':
+if __name__ == "__main__":
     backup_dict = select_backup()
+
     class Codec:
         def __init__(self, ip):
-            self.name = 'One-Off Codec'
+            self.name = "One-Off Codec"
             self.ip = ip
-    macro_consolidation(Codec(input('Enter Codec IP: ')), backup_dict)
+
+    macro_consolidation(Codec(input("Enter Codec IP: ")), backup_dict)
