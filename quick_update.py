@@ -226,12 +226,16 @@ def upgrade_command_xml(file_path, file_string):
 
 # Main command, iterates through available software versions and calls upgrade command as needed.
 def quick_update(codec):
-    new_cookie = cod_session_start(codec.ip)
-    if new_cookie.find("Error") != -1:
-        codec.result = new_cookie
+    try:
+        new_cookie = cod_session_start(codec.ip)
+        if new_cookie.find("Error") != -1:
+            codec.result = f"Failed to connect to {codec.name}. Please investigate"
+            return codec
+        codec_info = check_codec(codec, new_cookie)
+        cod_session_end(codec.ip, new_cookie)
+    except Exception as err:
+        codec.result = f"Failed to connect to {codec.name}. Please investigate"
         return codec
-    codec_info = check_codec(codec, new_cookie)
-    cod_session_end(codec.ip, new_cookie)
     # Assigns software version upgrade list to use
     assigned_sw_list = all_sw_versions[codec_info["hw_version"]]
     assigned_sw_keys = list(assigned_sw_list.keys())

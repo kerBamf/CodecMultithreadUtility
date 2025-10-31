@@ -110,6 +110,7 @@ def check_inputs(codec, cookie):
             if (
                 input.text != None
                 and input.text != ""
+                and type(input.text) == str
                 and input.text.find("Camera") == -1
             ):
                 if inputString == "":
@@ -221,7 +222,7 @@ def check_system(codec):
         codec.cameras = cams
         vid_inputs = check_inputs(codec, cookie)
         codec.input_sources = vid_inputs
-        if vid_inputs.find("Source") != -1:
+        if vid_inputs.find("Source") != -1 and type(vid_inputs) == str:
             codec.lightware = "Present"
             lwr_sources = check_lwr_sources(codec, cookie)
             codec.lwr_input_sources = lwr_sources

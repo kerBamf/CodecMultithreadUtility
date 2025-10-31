@@ -54,12 +54,15 @@ def terminate_all_sessions(codec):
         </Session>
     </Security>
 </Command>"""
-
-        term_res = cod_post(codec.ip, term_xml)
-        return term_res
+            cod_post(codec.ip, term_xml)
+        codec.result = "All sessions terminated"
+        message(f"All sessions terminate on {codec.name}", codec.ip)
+        return codec
 
     except Exception as err:
-        return err
+        message(f"Error terminating sessions on {codec.name}", codec.ip)
+        codec.result = f"Error terminating sessions on {codec.name}"
+        return codec
 
 
 if __name__ == "__main__":

@@ -47,16 +47,19 @@ def get_info(codec, path):
             res_value = res_root.find(f".//{info_node}")
             res_dict = {"name": codec.name, "response": res_value.text}
             message(f"Response from {codec.name}: {res_value.text}", codec.name)
-            return res_dict
+            codec.result = res_value.text
+            return codec
         else:
             message(
                 f"Unable to retrieve info at {codec.name} --> {response}", codec.name
             )
-            raise Exception(f"Unable to retrieve info at {codec.name} --> {response}")
+            codec.result = f"Unable to retrive info at {codec.name} --> {response}"
+            return codec
 
     except Exception as error:
         message(f"Unable to retrieve info at {codec.name} --> {error}", codec.name)
-        return f"Unable to retrieve info at {codec.name} --> {error}"
+        codec.result = f"Unable to retrive info at {codec.name} --> {error}"
+        return codec
 
 
 if __name__ == "__main__":
