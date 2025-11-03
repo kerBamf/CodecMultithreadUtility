@@ -167,7 +167,7 @@ def macro_consolidation(codec, sup_file):
                 f"Could not complete consolidation for {sys_name}. Please investigate"
             )
             return codec
-    except custom_exception as err:
+    except Exception as err:
         message(err, codec.name)
         # cod_session_end(codec.ip, cookie)
         codec.result = f"Error occurred in macro consolidation for {codec.name}. Please investigate."
