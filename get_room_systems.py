@@ -79,7 +79,8 @@ def startSession(codec):
     try:
         return cod_session_start(codec.ip)
     except Exception as error:
-        return error
+        print(f"{codec.name} Error: {error}")
+        raise
 
 
 def check_cams(codec, cookie):
@@ -97,7 +98,7 @@ def check_cams(codec, cookie):
         return camString
     except Exception as err:
         print(err)
-        return err
+        raise
 
 
 def check_inputs(codec, cookie):
@@ -119,7 +120,7 @@ def check_inputs(codec, cookie):
                     inputString += f" {input.text};"
         return inputString
     except Exception as err:
-        return err
+        raise
 
 
 def check_lwr_macro(codec, cookie):
@@ -139,7 +140,7 @@ def check_lwr_macro(codec, cookie):
             return False
     except Exception as err:
         print(err)
-        return "err"
+        raise
 
 
 lwr_src_XML = f"""<Command>
@@ -169,7 +170,7 @@ def check_lwr_sources(codec, cookie):
         return inputString
     except Exception as error:
         message(f"Unable to retrieve info at {codec.name} --> {error}", codec.name)
-        return "error"
+        raise
 
 
 def check_outputs(codec, cookie):
@@ -207,7 +208,7 @@ def check_outputs(codec, cookie):
 
     except Exception as err:
         print(err)
-        return err
+        raise
 
 
 # Calling functions to fully check system
@@ -215,6 +216,8 @@ def check_system(codec):
     if codec.status == "No Response":
         codec.error == "Codec offline. Unable to gather information"
         return codec
+
+    cookie = None
 
     try:
         cookie = startSession(codec)
@@ -240,7 +243,12 @@ def check_system(codec):
 
     except Exception as err:
         codec.error = err
-        cod_session_end(codec.ip, cookie)
+        if (
+            cookie
+            and type(cookie) == "<class 'str'>"
+            and cookie.find("SessionId") != -1
+        ):
+            cod_session_end(codec.ip, cookie)
         return codec
 
     # return codec
@@ -261,33 +269,37 @@ def get_room_systems():
 
     @dataclass
     class Codec:
-        name: str
-        ip: str
-        type_description: str
-        serial: str
-        status: str
-        error: str
-        cameras: str
-        input_sources: str
-        lightware: str
-        lwr_input_sources: str
-        output_devices: str
+        name: str = ""
+        ip: str = ""
+        status: str = ""
+        serial: str = ""
+        type_description: str = ""
+        error: str = ""
+        cameras: str = ""
+        input_sources: str = ""
+        lightware: str = ""
+        lwr_input_sources: str = ""
+        output_devices: str = ""
 
     codec_list = []
 
-    for value in worksheet.iter_rows(
-        min_row=2, min_col=2, max_col=12, values_only=True
-    ):
-        codec = Codec(*value)
+    for value in worksheet.iter_rows(min_row=2, min_col=2, max_col=6, values_only=True):
+        codec = Codec(
+            name=value[0],
+            ip=value[1],
+            status=value[2],
+            serial=value[3],
+            type_description=value[4],
+        )
         codec_list.append(codec)
 
     codecs_processed = [
         [
             "System Name",
             "IP Address",
-            "Specific System Type Description",
-            "Hardware Serial Number",
             "Status",
+            "Hardware Serial Number",
+            "Specific System Type Description",
             "Error",
             "Cameras",
             "Input Sources",
