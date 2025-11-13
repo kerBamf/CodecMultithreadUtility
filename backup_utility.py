@@ -222,7 +222,7 @@ def backup_utility(codec):
         codec.result = f"Backup on {sys_name} completed"
         return codec
     except Exception as err:
-        codec.result = err
+        codec.result = f"Error taking backup: {err}"
         return codec
 
 
