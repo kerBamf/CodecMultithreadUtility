@@ -16,7 +16,7 @@ from dataclasses import dataclass, astuple
 # Loading dependencies and file retrieval functionality
 # **************
 
-
+ 
 # Loading environment variable
 load_dotenv()
 PASSCODE = environ.get("PASSCODE")
@@ -79,7 +79,7 @@ def startSession(codec):
     try:
         return cod_session_start(codec.ip)
     except Exception as error:
-        print(f"{codec.name} Error: {error}")
+        print(f"{codec.name} Error: Error starting session - {error.text}")
         raise
 
 
@@ -97,7 +97,7 @@ def check_cams(codec, cookie):
                 camString += f" {text};"
         return camString
     except Exception as err:
-        print(err)
+        print(f"{codec.name} Error: Unable to check cams - {err.text}")
         raise
 
 
@@ -120,6 +120,7 @@ def check_inputs(codec, cookie):
                     inputString += f" {input.text};"
         return inputString
     except Exception as err:
+        print(f"{codec.name} Error: Unable to check cams - {err.text}")
         raise
 
 
@@ -139,7 +140,7 @@ def check_lwr_macro(codec, cookie):
         else:
             return False
     except Exception as err:
-        print(err)
+        print(f"{codec.name} Error: Unable to check macros - {err.text}")
         raise
 
 
@@ -169,7 +170,7 @@ def check_lwr_sources(codec, cookie):
                     inputString += f" {text};"
         return inputString
     except Exception as error:
-        message(f"Unable to retrieve info at {codec.name} --> {error}", codec.name)
+        message(f"Unable to retrieve info at {codec.name} --> {error.text}", codec.name)
         raise
 
 
@@ -207,7 +208,7 @@ def check_outputs(codec, cookie):
         return outputString
 
     except Exception as err:
-        print(err)
+        print(f"{codec.name} Error: Unable to check outputs - {err.text}")
         raise
 
 
@@ -242,7 +243,7 @@ def check_system(codec):
         return codec
 
     except Exception as err:
-        codec.error = err
+        codec.error = err.text
         if (
             cookie
             and type(cookie) == "<class 'str'>"
