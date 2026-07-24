@@ -38,25 +38,27 @@ def message(string, sys_name):
 # Defining filenames to be appended to filepath in the upgrade_command_xml() function
 all_sw_versions = {
     "kit": {
-        "9.15": "cmterm-s53200ce9_15_3_22.k3.cop.sgn",
-        "10.15": "cmterm-s53200ce10_15_4_1.k3.cop.sgn",
-        "10.19": "cmterm-s53200ce10_19_5_6.k3.cop.sgn",
+        "9.15.3": "cmterm-s53200ce9_15_3_22.k3.cop.sgn",
+        "10.15.4": "cmterm-s53200ce10_15_4_1.k3.cop.sgn",
+        "10.19.5": "cmterm-s53200ce10_19_5_6.k3.cop.sgn",
         # '11.5': 'cmterm-s53200ce11_5_2_4.k4.cop.sha512',
         # '11.9': 'cmterm-s53200ce11_9_3_1.k4.cop.sha512',
         # '11.14': 'cmterm-s53200ce11_14_3_0.k4.cop.sha512',
         # '11.17': 'cmterm-s53200ce11_17_3_0.k4.cop.sha512',
-        "11.20": "cmterm-s53200ce11_20_2_3.k4.cop.sha512",
+        # "11.20": "cmterm-s53200ce11_20_2_3.k4.cop.sha512",
         # "11.27": "cmterm-s53200ce11_27_3_0.k4.cop.sha512",
+        "11.27.4": "cmterm-s53200ce11_27_4_0.k4.cop.sha512",
     },
     "pro": {
-        "10.15": "cmterm-s53300ce10_15_4_1.k3.cop.sgn",
-        "10.19": "cmterm-s53300ce10_19_5_6.k3.cop.sgn",
+        "10.15.4": "cmterm-s53300ce10_15_4_1.k3.cop.sgn",
+        "10.19.5": "cmterm-s53300ce10_19_5_6.k3.cop.sgn",
         # '11.5': 'cmterm-s53300ce11_5_4_6.k4.cop.sha512',
         # '11.9': 'cmterm-s53300ce11_9_3_1.k4.cop.sha512',
         # '11.14': 'cmterm-s53300ce11_14_2_3.k4.cop.sha512',
         # '11.17': 'cmterm-s53300ce11_17_3_0.k4.cop.sha512',
         # '11.20': 'cmterm-s53300ce11_20_2_3.k4.cop.sha512',
-        "11.27": "cmterm-s53300ce11_27_3_0.k4.cop.sha512",
+        # "11.27.3": "cmterm-s53300ce11_27_3_0.k4.cop.sha512",
+        "11.27.4": "cmterm-s53300ce11_27_4_0.k4.cop.sha512",
     },
 }
 
@@ -224,12 +226,16 @@ def upgrade_command_xml(file_path, file_string):
 
 # Main command, iterates through available software versions and calls upgrade command as needed.
 def quick_update(codec):
-    new_cookie = cod_session_start(codec.ip)
-    if new_cookie.find("Error") != -1:
-        codec.result = new_cookie
+    try:
+        new_cookie = cod_session_start(codec.ip)
+        if new_cookie.find("Error") != -1:
+            codec.result = f"Failed to connect to {codec.name}. Please investigate"
+            return codec
+        codec_info = check_codec(codec, new_cookie)
+        cod_session_end(codec.ip, new_cookie)
+    except Exception as err:
+        codec.result = f"Failed to connect to {codec.name}. Please investigate"
         return codec
-    codec_info = check_codec(codec, new_cookie)
-    cod_session_end(codec.ip, new_cookie)
     # Assigns software version upgrade list to use
     assigned_sw_list = all_sw_versions[codec_info["hw_version"]]
     assigned_sw_keys = list(assigned_sw_list.keys())
@@ -240,9 +246,11 @@ def quick_update(codec):
     assigned_sw_path = all_sw_paths[codec_info["hw_version"]]
 
     # Returns chain update function if code is on the latest version. Changes will need to be added later to allow for dynamic edits to code versions as newer ones come out.
-    if int(codec_info["sw_version"][0]) >= int(final_sw_version[0]) and int(
-        codec_info["sw_version"][1]
-    ) >= int(final_sw_version[1]):
+    if (
+        int(codec_info["sw_version"][0]) >= int(final_sw_version[0])
+        and int(codec_info["sw_version"][1]) >= int(final_sw_version[1])
+        and int(codec_info["sw_version"][2]) >= int(final_sw_version[2])
+    ):
         message(
             f'{codec_info["sys_name"]} running latest software. Exiting script.',
             sys_name,
@@ -257,7 +265,26 @@ def quick_update(codec):
     for key in assigned_sw_keys:
         cur_sw_version = codec_info["sw_version"]
         split_key = key.split(".")
-        if int(split_key[0]) == int(cur_sw_version[0]) and int(split_key[1]) > int(
+        if (
+            int(split_key[0]) == int(cur_sw_version[0])
+            and int(split_key[1]) == int(cur_sw_version[1])
+            and int(split_key[2]) > int(cur_sw_version[2])
+        ):
+            try:
+                upgrade(
+                    codec_info["sys_name"],
+                    cur_sw_version,
+                    assigned_sw_path,
+                    assigned_sw_list[key],
+                    codec,
+                )
+            except UpgradeException as error:
+                (except_dictionary) = error.args
+                message(except_dictionary["text"], sys_name)
+                # print(error['text'])
+                codec.result = except_dictionary["text"]
+                return codec
+        elif int(split_key[0]) == int(cur_sw_version[0]) and int(split_key[1]) > int(
             cur_sw_version[1]
         ):
             try:

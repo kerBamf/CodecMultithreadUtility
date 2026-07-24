@@ -1,15 +1,19 @@
 {
-    "Macro_Bundle_V13_05-2025": {
-        "filename": "MSK_Bundle_V13_05-2025.zip",
-        "checksum": "0697c0fd1196b6beb2597f9748301277cd28bc2e32771ffa950f472c4a3a39e91c2d3028826ed8942109f345f83351dca838c3599ed4662e204bb69e5b772158"
+    "Macro_Bundle_V15": {
+        "filename": "MSK_Bundle_V15_11-2025.zip",
+        "checksum": "dad4a9375727a8958886245c5d6d9d26683fc113294a6b1f8a41dfc7f430d85b064091cfaffd62b69e6d72fd9db72ed65127082873a98e9dae3433691b7fc88d"
+    },
+    "Macro_Bundle_V14": {
+        "filename": "MSK_Bundle_V14_10-2025.zip",
+        "checksum": "9e5069c2f0194922c99d43e50609ec611f5c183e5e565fafd419d5db028ffa878b21932b0e7fcb3abac0a17bfefb1af1c62edcbc7931f682efa5dbacaa2b4d05"
     },
     "Survey_Update_05-2025": {
         "filename": "Survey_Update_05-2025.zip",
         "checksum": "d1406e2921e3a1fafd574febe98a01cca87acb1177a1597a12b3b61c3e38f119f49d6e8dafc497a30240bc9f85cd8e63e31b2b7fedb03f4069bd47917df782f7"
     },
     "Zoom_Controls": {
-        "filename": "ZoomControlsV2.zip",
-        "checksum": "fa68215ac5160fd52245d2444430139308149207440d19d38fd0834166a9eec7dcbaae09bfb919b44bd28a3f6ce516c51ce9fbb67ea9afe380af44cbf3fa7ee7"
+        "filename": "ZoomControlsV3.zip",
+        "checksum": "ea9e2706982ed41e49bf9bda02515dfb8e22e8d72f69472f0f19d2b2a3db4eaef0e5485745f29650081df662ba9c7ff9045267b0c200c08193fee154a6b2893e"
     },
     "Config_Template": {
         "filename": "Config_Template_V2_06-2025.zip",

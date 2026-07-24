@@ -44,12 +44,12 @@ def iterator(function, codec_list, file=None):
             # else:
             error = future.exception()
             message(error, function.__name__)
-            codec_row = ["Error", "Exception", error]
+            codec_row = ["Error", "Exception", f"{error}"]
             codecs_processed.append(codec_row)
         else:
             # print(future.result())
             codec = future.result()
-            message(future.result(), function.__name__)
+            message(codec.result, function.__name__)
             codec_row = [codec.name, codec.ip, codec.result]
             codecs_processed.append(codec_row)
             # print(codecs_processed)

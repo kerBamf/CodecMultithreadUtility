@@ -47,7 +47,7 @@ def cod_session_start(ip):
             verify=False,
             timeout=(10, 30),
         )
-        print(response.cookies["SessionId"])
+        # print(response.cookies["SessionId"])
         return response.cookies["SessionId"]
     except requests.HTTPError as err:
         print("HTTP Connection Error")

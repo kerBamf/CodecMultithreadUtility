@@ -24,15 +24,19 @@ def message(string, ip, path=LOGPATH):
 
 
 def send_command(codec, xml):
-    response = cod_post(codec.ip, xml)
-    if response.find("Error") != -1:
-        codec.result = response
-        return codec
-    elif response.find('status="OK"') != -1 or response.find("Success") != -1:
-        codec.result = f"Command received successfully"
-        return codec
-    else:
-        codec.result = response
+    try:
+        response = cod_post(codec.ip, xml)
+        if response.find("Error") != -1:
+            codec.result = f"Error connecting to {codec.name}. Please investigate"
+            return codec
+        elif response.find('status="OK"') != -1 or response.find("Success") != -1:
+            codec.result = f"Command received successfully"
+            return codec
+        else:
+            codec.result = f"Error sending command to {codec.name}. Please investigate"
+            return codec
+    except Exception as err:
+        codec.result = f"Issue sending command to {codec.name}: {err}"
         return codec
 
     # return f'{codec.name} Response: {response.text}'
