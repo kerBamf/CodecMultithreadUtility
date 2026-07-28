@@ -5,6 +5,7 @@ import subprocess
 import requests
 import json
 from dotenv import load_dotenv
+from Utils.cod_post import cod_post
 from Utils.logger import log_info
 
 # Disable ssl warning
@@ -73,6 +74,71 @@ def get_sys_config(codec):
 # Getting Date for use by multiple functions
 today = datetime.datetime.now().strftime("%x").replace("/", "-")
 
+# Function retrieving macros
+
+macro_list_xml = f"""<Command>
+        <Macros>
+            <Macro>
+                <Get>
+                    <Content>True</Content>
+                </Get>
+            </Macro>
+        </Macros>
+    </Command>"""
+
+
+# Appends strings to new backup file as a line of text
+def save_macro(name="", content="", directory="", sys_name=""):
+    filename = f"{name}.js"
+
+    try:
+        with open(f"{directory}/{filename}", "a", newline="") as file:
+            file.write(f"{content}")
+        return filename
+    except Exception as err:
+        message(f"Failed to write macro {name} to file", sys_name)
+        raise err
+
+
+def get_sys_macros(codec, directory="", sys_name=""):
+    # First, check for macros
+    xml_root = None
+    try:
+        xml = cod_post(codec.ip, macro_list_xml)
+        # print(xml)
+        xml_root = ET.fromstring(xml)
+        # print(xml_root)
+        macro_list = []
+        # print(xml_root.findall(".//Macro"))
+        for macro in xml_root.findall(".//Macro"):
+            macro_name = macro.find("./Name").text
+            macro_content = macro.find("./Content").text
+            meta = macro.find("./Active").text
+            macro_meta = "active" if meta == "True" else "inactive"
+            save_macro(macro_name, macro_content, directory, sys_name)
+            macro_list.append(
+                {
+                    "payload": macro_name + ".js",
+                    "type": "zip",
+                    "id": macro_name,
+                    "meta": macro_meta,
+                }
+            )
+            print(macro_list)
+
+        return macro_list
+
+    except requests.RequestException as err:
+        message(
+            f"Failed to pull macros from {sys_name}. Error: {err}",
+            sys_name,
+        )
+        raise custom_exception(f"Backup failed on {sys_name} with this error: {err}")
+
+    except ET.ParseError as err:
+        message(f"{sys_name} is not using any macros")
+        return []
+
 
 # Checks to see if directory and backup file already exists, and deletes it if it does. This ensures that redundant configurations won't be saved to the same file.
 def check_backup_file(sys_name="", save_path=""):
@@ -139,7 +205,7 @@ def parse_xml(root, string="", sys_name="", directory=""):
 
 
 # Generates manifest, deleting old one if it already exists.
-def generate_manifest(sys_name="", directory=""):
+def generate_manifest(sys_name="", directory="", macro_list=[]):
     now = datetime.datetime.now().strftime("%X")
     manifest = {
         "version": "1",
@@ -148,7 +214,8 @@ def generate_manifest(sys_name="", directory=""):
                 "items": [
                     {"payload": "configuration.txt", "type": "zip", "id": "_singleton"}
                 ]
-            }
+            },
+            "macro": {"items": macro_list},
         },
         "profileName": f"{sys_name}-{now}",
         "generatedAt": f"{now}",
@@ -207,13 +274,14 @@ def backup_utility(codec):
             f"System name retrieved: {sys_name}\r\nPulling system backup...", sys_name
         )
         config_xml = get_sys_config(codec)
+        macro_list = get_sys_macros(codec, directory, sys_name)
         message("Configuration file retrieved", sys_name)
         message("Checking directory and filename...", sys_name)
         check_backup_file(sys_name, SAVE_PATH)
         message("Parsing XML...", sys_name)
         parse_xml(config_xml, "", sys_name, directory)
         message("Generating manifest", sys_name)
-        generate_manifest(sys_name, directory)
+        generate_manifest(sys_name, directory, macro_list)
         message("Compressing files...", sys_name)
         compress_zip(directory, sys_name)
         generate_checksum(directory, sys_name)
