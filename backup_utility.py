@@ -146,12 +146,12 @@ def check_backup_file(sys_name="", save_path=""):
     sys_directory = f"{save_path}/Backup_Date_{today}/{sys_name}_{today}"
     if not os.path.isdir(day_directory):
         subprocess.run(["mkdir", f"{day_directory}"], capture_output=True)
-    if not os.path.isdir(sys_directory):
-        subprocess.run(["mkdir", f"{sys_directory}"], capture_output=True)
     if os.path.isdir(f"{sys_directory}"):
         subprocess.run(["rm", "-rf", sys_directory], capture_output=True)
         subprocess.run(["mkdir", f"{sys_directory}"], capture_output=True)
         message("Old backup deleted. Generating new backup directory", sys_name)
+    if not os.path.isdir(sys_directory):
+        subprocess.run(["mkdir", f"{sys_directory}"], capture_output=True)
 
 
 # Appends strings to new backup file as a line of text
