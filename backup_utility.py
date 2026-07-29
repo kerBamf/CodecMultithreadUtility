@@ -124,7 +124,7 @@ def get_sys_macros(codec, directory="", sys_name=""):
                     "meta": macro_meta,
                 }
             )
-            print(macro_list)
+            # print(macro_list)
 
         return macro_list
 
@@ -148,10 +148,10 @@ def check_backup_file(sys_name="", save_path=""):
         subprocess.run(["mkdir", f"{day_directory}"], capture_output=True)
     if not os.path.isdir(sys_directory):
         subprocess.run(["mkdir", f"{sys_directory}"], capture_output=True)
-    filename = "configuration.txt"
-    if os.path.isfile(f"{sys_directory}/{filename}"):
-        subprocess.run(["rm", f"{sys_directory}/{filename}"])
-        message("Old backup deleted.", sys_name)
+    if os.path.isdir(f"{sys_directory}"):
+        subprocess.run(["rm", "-rf", sys_directory], capture_output=True)
+        subprocess.run(["mkdir", f"{sys_directory}"], capture_output=True)
+        message("Old backup deleted. Generating new backup directory", sys_name)
 
 
 # Appends strings to new backup file as a line of text
@@ -230,20 +230,25 @@ def generate_manifest(sys_name="", directory="", macro_list=[]):
 
 
 def compress_zip(directory="", sys_name=""):
-    filename = f"{sys_name}_{today}.zip"
-    if os.path.isfile(f"{directory}/{filename}"):
-        subprocess.run(
-            ["rm", f"{directory}/{sys_name}_{today}_backup.zip"], capture_output=True
-        )
-    subprocess.run(
+    result = subprocess.run(
         [
             "zip",
-            f"{directory}/{sys_name}_{today}_backup.zip",
-            f"{directory}/configuration.txt",
-            f"{directory}/manifest.json",
+            "-r",
+            f"./{sys_name}_{today}_backup.zip",
+            f"."
         ],
+        cwd=f"{directory}",
         capture_output=True,
     )
+    print(result.returncode)
+    # subprocess.run(
+    #     [
+    #         "rm",
+    #         "-rf",
+    #         f"{directory}/{sys_name}_{today}"
+    #     ]
+    # )
+    
 
 
 # Function generating a sha512 checksum for use by remote backup restoration commands
@@ -274,12 +279,12 @@ def backup_utility(codec):
             f"System name retrieved: {sys_name}\r\nPulling system backup...", sys_name
         )
         config_xml = get_sys_config(codec)
-        macro_list = get_sys_macros(codec, directory, sys_name)
         message("Configuration file retrieved", sys_name)
         message("Checking directory and filename...", sys_name)
         check_backup_file(sys_name, SAVE_PATH)
         message("Parsing XML...", sys_name)
         parse_xml(config_xml, "", sys_name, directory)
+        macro_list = get_sys_macros(codec, directory, sys_name)
         message("Generating manifest", sys_name)
         generate_manifest(sys_name, directory, macro_list)
         message("Compressing files...", sys_name)
