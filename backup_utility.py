@@ -90,9 +90,9 @@ macro_list_xml = f"""<Command>
 # Appends strings to new backup file as a line of text
 def save_macro(name="", content="", directory="", sys_name=""):
     filename = f"{name}.js"
-
+    # print(content)
     try:
-        with open(f"{directory}/{filename}", "a", newline="") as file:
+        with open(f"{directory}/{filename}", "w") as file:
             file.write(f"{content}")
         return filename
     except Exception as err:
