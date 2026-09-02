@@ -5,10 +5,10 @@ name = "pypi"
 
 [packages]
 python-dotenv = "*"
-requests = "*"
 openpyxl = "*"
 pypi = "*"
 urllib3 = "*"
+requests = "*"
 
 [dev-packages]
 
