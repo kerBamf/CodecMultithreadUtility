@@ -56,7 +56,7 @@ def update_macro(ip, javascript):
         javascript = gen_xml_javascript(javascript)
     else:
         print("Codec using proper syntax")
-        return
+        return "Codec using proper syntax"
 
     payload = f"""<Command>
     <Macros>
