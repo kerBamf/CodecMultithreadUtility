@@ -80,21 +80,25 @@ def fix_macro_syntax(codec):
         if len(macros_fixed) < 1:
             cod_session_end(codec.ip, cookie)
             print("All macros using proper syntax")
-            codec.response = "All macros using proper syntax"
+            codec.result = "All macros using proper syntax"
             return codec
         else:
             cod_session_end(codec.ip, cookie)
             print(f'Macros Fixed: {" ".join(macros_fixed)}')
-            codec.response = f'Macros Fixed: {" ".join(macros_fixed)}'
+            codec.result = f'Macros Fixed: {" ".join(macros_fixed)}'
             return codec
 
     except requests.RequestException as err:
         print(err)
         cod_session_end(ip, cookie)
+        codec.result = err
+        return codec
 
     except ET.ParseError as err:
         print(err)
         cod_session_end(ip, cookie)
+        codec.result = err
+        return codec
 
 
 if __name__ == "__main__":

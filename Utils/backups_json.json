@@ -30,5 +30,13 @@
     "633ThirdAve_5thFl_TechLabCodecEQ_07-28-26_backup": {
         "filename": "633ThirdAve_5thFl_TechLabCodecEQ_07-28-26_backup.zip",
         "checksum": "73bb27854f0fa4e4a1ba16136d107f2a58b7ccc9ef41cb9930785771405b2cc06629fd27d4d55dab02b15a2c41cb63ee344aac35357eaeaa87b2a884bd9711cd"
+    },
+    "Fixed_Dialler_Syntax": {
+        "filename": "FixedDialler.zip",
+        "checksum": "949359132912acc4e2e45fe8e52d246e258a9ee89f2fd368c195f5ec9b25f8025a149e8027d73758f3313b890ff95a81645cb249746860c2c3f6f4f2b78eabea"
+    },
+    "ShareFix_Dialler_Syntax": {
+        "filename": "ShareFix+DiallerMacros.zip",
+        "checksum": "482bdca7a63b622a7cc67534ec5452253a832a3f09977b83fcbf1451901e923de400fbe0921256102c354a4ee2f86ec4101cfc50797c8afbdac0f3454b226075"
     }
 }
